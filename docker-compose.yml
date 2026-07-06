@@ -1,0 +1,28 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      - DATABASE_URL=file:/app/data/skill-market.db
+      - SKILLS_DIR=/app/skills
+      - API_PORT=3001
+    volumes:
+      - ./skills:/app/skills:ro
+      - skill_market_data:/app/data
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "${WEB_PUBLIC_PORT:-8080}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  skill_market_data:

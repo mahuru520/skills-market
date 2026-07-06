@@ -1,0 +1,40 @@
+{
+  "id": "official/invoice-ocr",
+  "name": "invoice-ocr",
+  "display_name": "发票 OCR 识别",
+  "description": "调用 Dify 批量识别发票并导出 CSV。当用户请求发票识别、批量提取发票信息、导出 CSV 时触发。",
+  "version": "2.0.0",
+  "icon": "🧾",
+  "category": "code_debug",
+  "runtime_type": "gateway_migrated_api",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    { "key": "GW", "description": "外网网关地址", "required": true, "source": "固定 https://ai.ospreyai.cn", "example": "https://ai.ospreyai.cn" },
+    { "key": "API_KEY", "description": "网关 new-api key", "required": true, "source": "网关控制台申请", "example": "sk-xxx" },
+    { "key": "DIFY_TOKEN", "description": "Dify 后端 token", "required": true, "source": "Dify 应用 API Key", "example": "app-xxx" }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway_plus_backend",
+    "endpoints": [
+      { "method": "POST", "path": "/v1/files/upload", "desc": "上传发票 PDF/图片" },
+      { "method": "POST", "path": "/v1/workflows/run", "desc": "运行发票识别工作流（需实测透传）" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 300
+  },
+  "migration": {
+    "migrated_from": "http://192.168.1.236/v1",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "批量发票易触发限流，需串行 + 退避；workflows/run 透传待实测，不透传需改 chatflow。输出落盘（result/md、result/json、result/invoices.csv）保持不变。",
+    "status": "pending"
+  },
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["skill-install"] },
+  "changelog": [
+    { "version": "2.0.0", "date": "2026-06-25", "changes": ["内网 Dify 迁移至外网网关", "双 token 鉴权", "批量限流退避"], "type": "MAJOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z"
+}

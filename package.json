@@ -1,0 +1,19 @@
+{
+  "name": "skill-market",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter @skill-market/api dev & pnpm --filter @skill-market/web dev",
+    "dev:api": "pnpm --filter @skill-market/api dev",
+    "dev:web": "pnpm --filter @skill-market/web dev",
+    "build": "pnpm -r build",
+    "sync": "pnpm --filter @skill-market/api sync",
+    "db:generate": "pnpm --filter @skill-market/api db:generate",
+    "db:migrate": "pnpm --filter @skill-market/api db:migrate",
+    "db:studio": "pnpm --filter @skill-market/api db:studio"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.15.9"
+}

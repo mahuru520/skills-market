@@ -1,0 +1,40 @@
+{
+  "id": "official/contract-review",
+  "name": "contract-review",
+  "display_name": "合同审核",
+  "description": "调用 Dify 工作流审核合同风险。当用户上传合同文件并请求风险审查、条款分析时触发。",
+  "version": "2.0.0",
+  "icon": "📑",
+  "category": "code_debug",
+  "runtime_type": "gateway_migrated_api",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    { "key": "GW", "description": "外网网关地址", "required": true, "source": "固定 https://ai.ospreyai.cn", "example": "https://ai.ospreyai.cn" },
+    { "key": "API_KEY", "description": "网关 new-api key", "required": true, "source": "网关控制台申请", "example": "sk-xxx" },
+    { "key": "DIFY_TOKEN", "description": "Dify 后端 token", "required": true, "source": "Dify 应用 API Key", "example": "app-xxx" }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway_plus_backend",
+    "endpoints": [
+      { "method": "POST", "path": "/v1/files/upload", "desc": "上传合同文件" },
+      { "method": "POST", "path": "/v1/workflows/run", "desc": "运行合同审核工作流（timeout 1800s，需实测网关是否透传）" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 1800
+  },
+  "migration": {
+    "migrated_from": "http://192.168.1.236/v1",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "网关是否透传 POST /v1/workflows/run 待实测；若不透传需将 Dify 工作流型应用改为对话型/chatflow，改调 /api/v1/ai/workflow/chat-messages。鉴权改为网关 + 后端 X-Authorization 双 token。",
+    "status": "pending"
+  },
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["skill-install"] },
+  "changelog": [
+    { "version": "2.0.0", "date": "2026-06-25", "changes": ["内网 Dify 迁移至外网网关", "双 token 鉴权", "workflows/run 透传待实测"], "type": "MAJOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z"
+}

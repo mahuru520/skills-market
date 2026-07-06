@@ -1,0 +1,75 @@
+// Prisma schema —— skill-market 全栈技能市场
+// 见 SPEC.md 第 3 节。SQLite 默认,可切 Postgres。
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/prisma"
+  binaryTargets = ["debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  displayName   String
+  description   String
+  descriptionEn String?
+  summary       String?  @default("")
+  version       String
+  icon          String   @default("")
+  category      String
+  runtimeType   String
+  source        String   @default("official")
+  ownerName     String   @default("")
+  ownerVerified Boolean  @default(true)
+  readmePath    String   @default("SKILL.md")
+  envVars       String?
+  dependencies  String?
+  api           String?
+  migration     String?
+  platform      String?
+  tags          String?
+  examples      String?
+  hot           Boolean  @default(false)
+  installCount  Int      @default(0)
+  stars         Int      @default(0)
+  score         Int      @default(0)
+  billing       String   @default("free")
+  readme        String   @default("")
+  files         String?
+  sha           String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  versions SkillVersion[]
+
+  @@index([category])
+  @@index([runtimeType])
+  @@index([billing])
+  @@index([score(sort: Desc)])
+}
+
+model SkillVersion {
+  id        String   @id @default(cuid())
+  skill     Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  skillId   String
+  version   String
+  changelog String
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@index([skillId])
+}
+
+model Category {
+  key       String   @id
+  name      String
+  nameEn    String
+  sortOrder Int      @default(0)
+  level     Int      @default(1)
+  active    Boolean  @default(true)
+}

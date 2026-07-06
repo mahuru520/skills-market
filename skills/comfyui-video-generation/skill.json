@@ -1,0 +1,41 @@
+{
+  "id": "official/comfyui-video-generation",
+  "name": "comfyui-video-generation",
+  "display_name": "ComfyUI 图生视频",
+  "description": "调用 ComfyUI 工作流生成视频并下载 mp4。当用户请求图生视频、生成视频时触发。",
+  "version": "2.0.0",
+  "icon": "🎬",
+  "category": "image_video",
+  "runtime_type": "gateway_migrated_api",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    { "key": "GW", "description": "外网网关地址", "required": true, "source": "固定 https://ai.ospreyai.cn", "example": "https://ai.ospreyai.cn" },
+    { "key": "API_KEY", "description": "网关 new-api key", "required": true, "source": "网关控制台申请", "example": "sk-xxx" }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      { "method": "POST", "path": "/api/v1/upload", "desc": "上传输入图片" },
+      { "method": "POST", "path": "/api/v1/ai/video/generate", "desc": "提交图生视频工作流" },
+      { "method": "GET", "path": "/api/v1/ai/queue", "desc": "轮询队列" },
+      { "method": "GET", "path": "/api/v1/ai/image/view/", "desc": "下载视频" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 180
+  },
+  "migration": {
+    "migrated_from": "http://192.168.1.236:8188",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "视频生成耗时较长（1–2 分钟）叠加外网延迟体感更长；中文文件名需 URL 编码；图片上传与视频提交接口路径变更。",
+    "status": "verified"
+  },
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["skill-install"] },
+  "changelog": [
+    { "version": "2.0.0", "date": "2026-06-25", "changes": ["内网 API 迁移至外网网关", "增加 429 限流退避"], "type": "MAJOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z"
+}

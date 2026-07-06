@@ -1,0 +1,23 @@
+{
+  "id": "official/model-price-updater",
+  "name": "model-price-updater",
+  "display_name": "模型价格更新",
+  "description": "自动从 ospreyai.cn 获取模型价格并更新 OpenClaw 配置。当用户请求更新模型价格、价格调整时触发。",
+  "version": "1.0.0",
+  "icon": "💰",
+  "category": "system_config",
+  "runtime_type": "local",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [],
+  "dependencies": [
+    { "name": "python", "min_version": "3.10", "type": "runtime" }
+  ],
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["local-execution"] },
+  "changelog": [
+    { "version": "1.0.0", "date": "2026-01-01", "changes": ["初始版本"], "type": "MINOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:00:00Z"
+}

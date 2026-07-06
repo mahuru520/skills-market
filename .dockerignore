@@ -1,0 +1,26 @@
+# 依赖与产物 —— 一律在容器内重新生成,绝不从宿主带入
+**/node_modules
+**/dist
+**/build
+apps/api/generated
+
+# 数据
+data
+*.db
+*.db-journal
+
+# 版本控制与 IDE
+.git
+.gitignore
+.vscode
+.idea
+
+# 临时/日志
+*.log
+*.tmp
+.env
+
+# 早期探索样本(非项目资产)
+_sh.js
+_detail.json
+_cat.json

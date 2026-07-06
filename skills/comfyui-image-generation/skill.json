@@ -1,0 +1,82 @@
+{
+  "id": "official/comfyui-image-generation",
+  "name": "comfyui-image-generation",
+  "display_name": "ComfyUI 文生图",
+  "description": "调用 ComfyUI 工作流生成图片并下载。当用户请求文生图、生成图片、出图时触发。",
+  "version": "2.0.0",
+  "icon": "🎨",
+  "category": "image_video",
+  "runtime_type": "gateway_migrated_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api 鉴权 key",
+      "required": true,
+      "source": "外网网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "dependencies": [],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      { "method": "POST", "path": "/api/v1/ai/image/generate", "desc": "提交文生图工作流（请求体 prompt 工作流 JSON 不变）" },
+      { "method": "GET", "path": "/api/v1/ai/queue", "desc": "轮询队列" },
+      { "method": "GET", "path": "/api/v1/ai/tasks/{prompt_id}", "desc": "按任务查（原 /history 改为按 prompt_id 查）" },
+      { "method": "GET", "path": "/api/v1/ai/image/view/", "desc": "下载图片" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 120
+  },
+  "migration": {
+    "migrated_from": "http://192.168.1.236:8188",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "原 /history 一次返回全部历史；网关改 GET /api/v1/ai/tasks/{prompt_id} 按任务查，需自行记录 prompt_id。提交接口由 :8188/prompt 改为 /api/v1/ai/image/generate，请求体不变。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": ["skill-install"]
+  },
+  "install_count": 128,
+  "hot": true,
+  "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2026-06-25",
+      "changes": [
+        "内网 API 迁移至外网网关 https://ai.ospreyai.cn",
+        "提交接口改为 POST /api/v1/ai/image/generate",
+        "历史查询改为按 prompt_id 查任务",
+        "增加 429 限流退避"
+      ],
+      "type": "MAJOR"
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-01-01",
+      "changes": ["初始版本，调用内网 ComfyUI"],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z"
+}

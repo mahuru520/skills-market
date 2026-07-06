@@ -1,0 +1,25 @@
+node_modules
+dist
+build
+.env
+
+# Prisma 生成产物(本地是 Windows 二进制,容器内重新生成)
+apps/api/generated
+
+# SQLite 数据
+*.db
+*.db-journal
+data/
+
+# 临时/探索样本
+_sh.js
+_detail.json
+_cat.json
+
+# 系统/IDE
+.DS_Store
+.vscode
+.idea
+*.log
+coverage
+.vite

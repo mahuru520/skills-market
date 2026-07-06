@@ -1,0 +1,31 @@
+{
+  "id": "official/whisper-transcribe",
+  "name": "whisper-transcribe",
+  "display_name": "音频转录",
+  "description": "音频转录文本并生成会议纪要。当用户请求音频转文字、转录、生成会议纪要时触发。",
+  "version": "1.0.0",
+  "icon": "🎙️",
+  "category": "code_debug",
+  "runtime_type": "external_api",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    { "key": "API_KEY", "description": "转录服务 API key", "required": true, "source": "供应商控制台申请", "example": "sk-xxx" }
+  ],
+  "api": {
+    "base_url": "https://mini-tokens.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      { "method": "POST", "path": "/v1/audio/transcriptions", "desc": "上传音频转录（model=whisper-1）" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 120
+  },
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["skill-install"] },
+  "changelog": [
+    { "version": "1.0.0", "date": "2026-01-01", "changes": ["初始版本"], "type": "MINOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-01-01T00:00:00Z"
+}

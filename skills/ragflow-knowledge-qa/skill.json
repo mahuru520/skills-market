@@ -1,0 +1,40 @@
+{
+  "id": "official/ragflow-knowledge-qa",
+  "name": "ragflow-knowledge-qa",
+  "display_name": "RAGFlow 知识库问答",
+  "description": "RAGFlow 企业知识库问答检索。当用户请求知识库问答、文档检索、基于文档回答问题时触发。",
+  "version": "2.0.0",
+  "icon": "📚",
+  "category": "code_debug",
+  "runtime_type": "gateway_migrated_api",
+  "owner": { "name": "official", "type": "official", "verified": true, "avatar": "🏢", "url": "" },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [
+    { "key": "GW", "description": "外网网关地址", "required": true, "source": "固定 https://ai.ospreyai.cn", "example": "https://ai.ospreyai.cn" },
+    { "key": "API_KEY", "description": "网关 new-api key", "required": true, "source": "网关控制台申请", "example": "sk-xxx" },
+    { "key": "RAGFLOW_TOKEN", "description": "RAGFlow 后端 token", "required": true, "source": "RAGFlow API Key", "example": "ragflow-xxx" }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway_plus_backend",
+    "endpoints": [
+      { "method": "POST", "path": "/api/v1/rag/chats", "desc": "RAG 问答（检索 + 生成）" },
+      { "method": "POST", "path": "/api/v1/embed/embeddings", "desc": "embedding（需纯切片原文时使用）" }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 120
+  },
+  "migration": {
+    "migrated_from": "http://192.168.150.202:1280",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "由纯检索（POST /datasets/{id}/chunks）→ 检索 + 生成（POST /api/v1/rag/chats），行为略变；若下游依赖 chunk 原文需改走 embedding 自建检索。",
+    "status": "verified"
+  },
+  "platform": { "host": "openclaw", "min_version": "1.0", "capabilities": ["skill-install"] },
+  "changelog": [
+    { "version": "2.0.0", "date": "2026-06-25", "changes": ["内网 RAGFlow 迁移至外网网关", "纯检索 → 检索 + 生成（行为略变）", "双 token 鉴权"], "type": "MAJOR" }
+  ],
+  "created_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-06-25T00:00:00Z"
+}
