@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchShowcase, fetchCategories } from "../api/skills";
 import { SkillCard } from "../components/SkillCard";
-import { CATEGORY_LABEL } from "../lib/labels";
 
 export function Home() {
   const navigate = useNavigate();
@@ -24,8 +23,8 @@ export function Home() {
       {/* Hero */}
       <section className="bg-gradient-to-b from-white to-canvas border-b border-black/5">
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-4xl font-bold text-ink">技能市场</h1>
-          <p className="text-ink-mute mt-3">浏览、搜索、了解全部 Claude Skills</p>
+          <h1 className="text-4xl font-bold text-ink">Osprey 技能市场</h1>
+          <p className="text-ink-mute mt-3">浏览、搜索、了解全部 Osprey Skills</p>
           <form onSubmit={onSearch} className="max-w-xl mx-auto mt-8 flex gap-2">
             <input
               value={keyword}

@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSkills, fetchCategories } from "../api/skills";
@@ -6,11 +5,11 @@ import { SkillCard } from "../components/SkillCard";
 import { SORT_OPTIONS, RUNTIME_LABEL } from "../lib/labels";
 import type { SortBy, RuntimeType, Billing } from "@skill-market/shared";
 
-const PAGE_SIZE = 12;
+// 一页全量展示,不分页
+const PAGE_SIZE = 200;
 
 export function SkillList() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [page, setPage] = useState(1);
 
   const sortBy = (searchParams.get("sortBy") as SortBy) || "score";
   const keyword = searchParams.get("keyword") || "";
@@ -18,16 +17,11 @@ export function SkillList() {
   const runtimeType = (searchParams.get("runtimeType") as RuntimeType) || "";
   const billing = (searchParams.get("billing") as Billing) || "";
 
-  // 切换筛选条件时重置页码
-  useEffect(() => {
-    setPage(1);
-  }, [sortBy, keyword, category, runtimeType, billing]);
-
   const { data, isLoading } = useQuery({
-    queryKey: ["skills", { page, sortBy, keyword, category, runtimeType, billing }],
+    queryKey: ["skills", { sortBy, keyword, category, runtimeType, billing }],
     queryFn: () =>
       fetchSkills({
-        page,
+        page: 1,
         pageSize: PAGE_SIZE,
         sortBy,
         keyword: keyword || undefined,
@@ -48,7 +42,6 @@ export function SkillList() {
 
   const skills = data?.skills ?? [];
   const total = data?.total ?? 0;
-  const hasMore = skills.length < total;
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
@@ -130,15 +123,10 @@ export function SkillList() {
         ))}
       </div>
 
-      {/* 加载更多 */}
-      {hasMore && (
-        <div className="text-center mt-8">
-          <button
-            onClick={() => setPage((p) => p + 1)}
-            className="bg-white border border-black/10 text-ink px-6 py-2 rounded-card hover:border-brand hover:text-brand transition-colors"
-          >
-            加载更多（{skills.length}/{total}）
-          </button>
+      {/* 空状态 */}
+      {!isLoading && skills.length === 0 && (
+        <div className="text-center py-16 text-ink-mute">
+          没有匹配的技能,试试调整筛选条件。
         </div>
       )}
     </div>

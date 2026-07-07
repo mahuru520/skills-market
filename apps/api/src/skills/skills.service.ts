@@ -51,7 +51,8 @@ export class SkillsService {
     billing?: Billing;
   }): Promise<Paginated<SkillListItem>> {
     const page = Math.max(1, params.page ?? 1);
-    const pageSize = Math.min(50, Math.max(1, params.pageSize ?? 12));
+    // 上限放开到 500,配合前端「全部技能一页全量展示」(当前 25 个技能)
+    const pageSize = Math.min(500, Math.max(1, params.pageSize ?? 12));
     const sortBy = params.sortBy ?? "score";
     const order = params.order ?? "desc";
     const sortField = SORT_FIELD[sortBy] ?? "score";

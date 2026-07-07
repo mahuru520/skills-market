@@ -71,9 +71,9 @@ export function SkillDetail() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8">
-        {/* 左侧主区 */}
-        <div>
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_300px] gap-8">
+        {/* 左侧主区 —— minmax(0,1fr) 让此列可收缩,内部超宽元素不会撑破整页 */}
+        <div className="min-w-0">
           {/* Tab */}
           <div className="border-b border-black/10 flex gap-6 mb-6">
             <TabButton active={tab === "overview"} onClick={() => setTab("overview")}>
@@ -85,7 +85,7 @@ export function SkillDetail() {
           </div>
 
           {tab === "overview" ? (
-            <article className="prose prose-sm max-w-none">
+            <article className="prose prose-sm max-w-none break-words [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-md [&_pre]:border [&_pre]:border-black/10 [&_pre]:bg-gray-50 [&_pre]:p-3 [&_pre]:text-black [&_code]:break-all [&_code]:text-black [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full [&_img]:max-w-full [&_a]:break-all">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {s.readme || "（无说明文档）"}
               </ReactMarkdown>
