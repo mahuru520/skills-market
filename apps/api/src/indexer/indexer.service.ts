@@ -57,12 +57,10 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
   constructor(private readonly prisma: PrismaService) {}
 
   async onModuleInit() {
-    // DB skill 表为空时自动跑一次全量导入
-    const count = await this.prisma.skill.count();
-    if (count === 0) {
-      this.logger.log("DB empty, running initial import...");
-      await this.importAll();
-    }
+    // 每次启动都跑一次增量导入:有 sha-skip 兜底,未变更的技能不会重写。
+    // 这样「往 skills/ 加技能 → 重启 api 容器」即可生效,无需手动 exec 跑 indexer。
+    this.logger.log("running incremental import on startup...");
+    await this.importAll();
   }
 
   async onModuleDestroy() {}
@@ -115,7 +113,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
     // sha 未变则跳过
     const existing = await this.prisma.skill.findUnique({
       where: { slug },
-      select: { sha: true },
+      select: { sha: true, installCount: true },
     });
     if (existing?.sha === sha) {
       this.logger.debug(`skip unchanged: ${slug}`);
@@ -130,7 +128,10 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
 
     const files = this.scanFiles(skillDir);
     const billing = this.deriveBilling(raw.runtime_type);
-    const installCount = raw.install_count ?? 0;
+    // 下载数:已存在的技能保留 DB 真实计数(升级版本/skill.json 改动不抹零),
+    // 全新技能用 skill.json 的 seed 值。
+    const installCount =
+      existing != null ? existing.installCount : raw.install_count ?? 0;
     const stars = 0; // 用户行为,初始 0
     const migrationStatus = raw.migration?.status;
     const hot = raw.hot ?? false;
@@ -200,7 +201,6 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         tags: raw.tags ? JSON.stringify(raw.tags) : null,
         examples: raw.examples ? JSON.stringify(raw.examples) : null,
         hot,
-        installCount,
         score,
         billing,
         readme,
