@@ -1,9 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { fetchSkillDetail, fetchSkillVersions } from "../api/skills";
+import { BASE } from "../api/client";
 import { Badge } from "../components/SkillCard";
 import {
   RUNTIME_LABEL,
@@ -17,6 +18,7 @@ import type { SkillFile, ChangelogEntry } from "@skill-market/shared";
 export function SkillDetail() {
   const { slug } = useParams<{ slug: string }>();
   const [tab, setTab] = useState<"overview" | "versions">("overview");
+  const queryClient = useQueryClient();
 
   const detailQ = useQuery({
     queryKey: ["skill", slug],
@@ -85,11 +87,18 @@ export function SkillDetail() {
           </div>
 
           {tab === "overview" ? (
-            <article className="prose prose-sm max-w-none break-words [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-md [&_pre]:border [&_pre]:border-black/10 [&_pre]:bg-gray-50 [&_pre]:p-3 [&_pre]:text-black [&_code]:break-all [&_code]:text-black [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full [&_img]:max-w-full [&_a]:break-all">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {s.readme || "（无说明文档）"}
-              </ReactMarkdown>
-            </article>
+            <>
+              {s.description && (
+                <p className="text-base text-ink-mute leading-relaxed border-b border-black/10 pb-4 mb-6">
+                  {s.description}
+                </p>
+              )}
+              <article className="prose max-w-none break-words [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-md [&_pre]:border [&_pre]:border-black/10 [&_pre]:bg-gray-50 [&_pre]:p-3 [&_pre]:text-black [&_code]:break-all [&_code]:text-black [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full [&_img]:max-w-full [&_a]:break-all">
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {stripFrontMatter(s.readme || "（无说明文档）")}
+                </ReactMarkdown>
+              </article>
+            </>
           ) : (
             <VersionsTab
               versions={versionsQ.data ?? []}
@@ -100,6 +109,9 @@ export function SkillDetail() {
 
         {/* 右侧基础信息卡 */}
         <aside className="space-y-6">
+          <PromptCard displayName={s.displayName} />
+          <DownloadCard slug={s.slug} onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })} />
+
           <div className="bg-white rounded-card shadow-card p-5">
             <h3 className="font-semibold text-ink mb-3">基础信息</h3>
             <dl className="text-sm space-y-2">
@@ -215,8 +227,110 @@ function FileList({ files }: { files?: SkillFile[] }) {
   );
 }
 
+function PromptCard({ displayName }: { displayName: string }) {
+  const prompt = `请先检查是否已安装${displayName},若未安装,请根据技能 skill-expansion 安装${displayName}技能。`;
+  const [copied, setCopied] = useState(false);
+
+  const onCopy = async () => {
+    const ok = await copyText(prompt);
+    if (ok) {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
+  return (
+    <div className="bg-white rounded-card shadow-card p-5">
+      <div className="flex items-center justify-between mb-3">
+        <h3 className="font-semibold text-ink">发送给你的 AI 安装</h3>
+        <button
+          onClick={onCopy}
+          className="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-ink-mute hover:bg-gray-200 transition-colors"
+        >
+          {copied ? "已复制" : "复制"}
+        </button>
+      </div>
+      <p className="text-sm text-ink leading-relaxed break-words whitespace-pre-wrap font-mono">
+        {prompt}
+      </p>
+    </div>
+  );
+}
+
+// 复制到剪贴板:优先 Clipboard API,HTTP 环境下 fallback 到 execCommand
+async function copyText(text: string): Promise<boolean> {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch {
+    // 落到 fallback
+  }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+function DownloadCard({
+  slug,
+  onDownloaded,
+}: {
+  slug: string;
+  onDownloaded: () => void;
+}) {
+  const [busy, setBusy] = useState(false);
+  const downloadUrl = `${BASE}/v1/skills/${encodeURIComponent(slug)}/download`;
+
+  const onClick = () => {
+    // 浏览器原生 <a download> 触发下载;延迟刷新让后端 +1 落库
+    setBusy(true);
+    setTimeout(() => {
+      onDownloaded();
+      setBusy(false);
+    }, 1500);
+  };
+
+  return (
+    <div className="bg-white rounded-card shadow-card p-5">
+      <h3 className="font-semibold text-ink mb-3">下载</h3>
+      <a
+        href={downloadUrl}
+        download={`${slug}.zip`}
+        onClick={onClick}
+        className={`block text-center text-sm px-4 py-2.5 rounded-card transition-colors ${
+          busy
+            ? "bg-gray-100 text-ink-mute"
+            : "bg-brand text-white hover:bg-brand-dark"
+        }`}
+      >
+        {busy ? "下载中…" : "⬇ 下载技能(zip)"}
+      </a>
+      <p className="text-xs text-ink-mute mt-2 text-center">
+        下载整个技能目录打包文件
+      </p>
+    </div>
+  );
+}
+
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes}B`;
   if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)}K`;
   return `${(bytes / 1024 / 1024).toFixed(1)}M`;
+}
+
+// 剥掉 SKILL.md 开头的 YAML front matter(---\n...\n---),避免渲染成杂乱元数据
+function stripFrontMatter(md: string): string {
+  return md.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, "").trimStart();
 }

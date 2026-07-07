@@ -3,8 +3,10 @@ import {
   Get,
   Param,
   Query,
+  Res,
   NotFoundException,
 } from "@nestjs/common";
+import type { Response } from "express";
 import { SkillsService } from "./skills.service";
 import type {
   ApiResponse,
@@ -66,5 +68,15 @@ export class SkillsController {
   ): Promise<ApiResponse<ChangelogEntry[]>> {
     const data = await this.service.versions(slug);
     return { code: 0, data, message: "ok" };
+  }
+
+  // 下载技能整目录 zip,同时 installCount +1。
+  // 用 GET 让前端 <a download> 直接触发浏览器原生下载。
+  @Get("v1/skills/:slug/download")
+  async download(
+    @Param("slug") slug: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    await this.service.download(slug, res);
   }
 }

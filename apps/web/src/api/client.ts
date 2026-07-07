@@ -1,6 +1,6 @@
 import { type ApiResponse } from "@skill-market/shared";
 
-const BASE = import.meta.env.VITE_API_BASE_URL || "/api";
+export const BASE = import.meta.env.VITE_API_BASE_URL || "/api";
 
 export async function apiGet<T>(path: string): Promise<T> {
   // path 形如 "/skills" "/v1/skills/:slug"

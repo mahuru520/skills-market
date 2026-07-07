@@ -2,6 +2,10 @@ import {
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
+import type { Response } from "express";
+import { createReadStream, existsSync, statSync } from "node:fs";
+import { join } from "node:path";
+import archiver from "archiver";
 import { PrismaService } from "../prisma/prisma.service";
 import type {
   SkillDetail,
@@ -153,6 +157,44 @@ export class SkillsService {
       latestVersion,
       contentZhAvailable: !!r.description,
     };
+  }
+
+  /**
+   * 下载技能整目录 zip:installCount +1,流式返回 zip。
+   * 用 GET 而非 POST,使前端 <a download> 能直接触发浏览器原生下载。
+   */
+  async download(slug: string, res: Response): Promise<void> {
+    const skill = await this.prisma.skill.findUnique({
+      where: { slug },
+      select: { slug: true },
+    });
+    if (!skill) throw new NotFoundException(`skill not found: ${slug}`);
+
+    const skillsDir = process.env.SKILLS_DIR ?? "";
+    const dir = join(skillsDir, slug);
+    if (!skillsDir || !existsSync(dir) || !statSync(dir).isDirectory()) {
+      throw new NotFoundException(`skill directory not found: ${slug}`);
+    }
+
+    // 原子自增下载数(不阻塞下载流程,失败仅日志)
+    this.prisma.skill
+      .update({ where: { slug }, data: { installCount: { increment: 1 } } })
+      .catch(() => undefined);
+
+    res.setHeader("Content-Type", "application/zip");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="${encodeURIComponent(slug)}.zip"`,
+    );
+
+    const archive = archiver("zip", { zlib: { level: 5 } });
+    archive.on("error", (err) => {
+      // 流已开始,只能 abort
+      res.destroy(err);
+    });
+    archive.pipe(res);
+    archive.directory(dir, false);
+    archive.finalize();
   }
 
   async versions(slug: string): Promise<ChangelogEntry[]> {
