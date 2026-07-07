@@ -5,9 +5,9 @@ export const RUNTIME_LABEL: Record<string, string> = {
 };
 
 export const RUNTIME_COLOR: Record<string, string> = {
-  local: "bg-gray-100 text-gray-700",
-  external_api: "bg-blue-50 text-blue-700",
-  gateway_migrated_api: "bg-purple-50 text-purple-700",
+  local: "bg-canvas text-ink-soft border border-line",
+  external_api: "bg-orange-50 text-brand border border-orange-100",
+  gateway_migrated_api: "bg-rose-50 text-rose-700 border border-rose-100",
 };
 
 export const BILLING_LABEL: Record<string, string> = {
@@ -16,8 +16,8 @@ export const BILLING_LABEL: Record<string, string> = {
 };
 
 export const BILLING_COLOR: Record<string, string> = {
-  free: "bg-green-50 text-green-700",
-  paid: "bg-amber-50 text-amber-700",
+  free: "bg-emerald-50 text-emerald-700 border border-emerald-100",
+  paid: "bg-amber-50 text-amber-700 border border-amber-100",
 };
 
 export const CATEGORY_LABEL: Record<string, string> = {

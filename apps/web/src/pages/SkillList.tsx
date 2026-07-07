@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { fetchSkills, fetchCategories } from "../api/skills";
 import { SkillCard } from "../components/SkillCard";
 import { SORT_OPTIONS, RUNTIME_LABEL } from "../lib/labels";
@@ -33,6 +34,13 @@ export function SkillList() {
 
   const catQ = useQuery({ queryKey: ["categories"], queryFn: fetchCategories });
 
+  // 搜索框本地受控,提交(回车/失焦)时写入 URL;输入态不触发请求
+  const [keywordInput, setKeywordInput] = useState(keyword);
+  useEffect(() => setKeywordInput(keyword), [keyword]);
+  const submitKeyword = () => {
+    if (keywordInput.trim() !== keyword) update("keyword", keywordInput.trim());
+  };
+
   const update = (key: string, value: string) => {
     const next = new URLSearchParams(searchParams);
     if (value) next.set(key, value);
@@ -45,17 +53,45 @@ export function SkillList() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
-      <h1 className="text-2xl font-bold text-ink mb-4">全部技能</h1>
+      <div className="flex items-center gap-3 mb-6">
+        <h1 className="text-3xl font-extrabold tracking-tight text-ink">全部技能</h1>
+        <div className="flex-1" />
+        <div className="relative w-72 max-w-full">
+          <input
+            value={keywordInput}
+            onChange={(e) => setKeywordInput(e.target.value)}
+            onBlur={submitKeyword}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") submitKeyword();
+            }}
+            placeholder="搜索技能名称或描述…"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-card border border-line bg-surface focus:outline-none focus:border-brand"
+          />
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-mute text-sm">🔍</span>
+          {keywordInput && (
+            <button
+              onClick={() => {
+                setKeywordInput("");
+                update("keyword", "");
+              }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-ink-mute hover:text-ink text-sm px-1"
+              aria-label="清除"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* 筛选区 */}
-      <div className="bg-white rounded-card shadow-card p-4 mb-6 space-y-3">
+      <div className="bg-surface rounded-card shadow-card p-4 mb-6 space-y-3">
         {/* 排序 */}
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-sm text-ink-mute">排序：</span>
           <select
             value={sortBy}
             onChange={(e) => update("sortBy", e.target.value)}
-            className="text-sm border border-black/10 rounded-lg px-2 py-1 bg-white focus:outline-none focus:border-brand"
+            className="text-sm border border-line rounded-lg px-2 py-1 bg-surface focus:outline-none focus:border-brand"
           >
             {SORT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -163,7 +199,7 @@ function Chip({
       className={`text-xs px-3 py-1 rounded-full transition-colors ${
         active
           ? "bg-brand text-white"
-          : "bg-gray-100 text-ink-mute hover:bg-gray-200"
+          : "bg-canvas text-ink-soft border border-line hover:border-brand/40"
       }`}
     >
       {children}

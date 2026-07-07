@@ -3,9 +3,9 @@ import { Link, NavLink } from "react-router-dom";
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-full flex flex-col">
-      <header className="sticky top-0 z-20 bg-white/80 backdrop-blur border-b border-black/5">
+      <header className="sticky top-0 z-20 bg-surface/80 backdrop-blur border-b border-line">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center gap-8">
-          <Link to="/" className="font-bold text-lg text-ink">
+          <Link to="/" className="font-bold text-xl text-ink tracking-tight">
             Osprey Skill Market
           </Link>
           <nav className="flex items-center gap-6 text-sm">

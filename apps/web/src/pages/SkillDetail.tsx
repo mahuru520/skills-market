@@ -57,7 +57,7 @@ export function SkillDetail() {
       <div className="flex items-start gap-4 mt-4 mb-6">
         <span className="text-5xl leading-none">{s.icon || "📦"}</span>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-ink">{s.displayName}</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-ink">{s.displayName}</h1>
           <p className="text-ink-mute mt-1">{s.description}</p>
           <div className="flex flex-wrap items-center gap-1.5 mt-3">
             <Badge className={RUNTIME_COLOR[s.runtimeType]}>
@@ -66,7 +66,7 @@ export function SkillDetail() {
             <Badge className={BILLING_COLOR[s.billing]}>
               {BILLING_LABEL[s.billing] ?? s.billing}
             </Badge>
-            <Badge className="bg-gray-100 text-gray-700">
+            <Badge className="bg-canvas text-ink-soft border border-line">
               {CATEGORY_LABEL[s.category] ?? s.category}
             </Badge>
           </div>
@@ -77,7 +77,7 @@ export function SkillDetail() {
         {/* 左侧主区 —— minmax(0,1fr) 让此列可收缩,内部超宽元素不会撑破整页 */}
         <div className="min-w-0">
           {/* Tab */}
-          <div className="border-b border-black/10 flex gap-6 mb-6">
+          <div className="border-b border-line flex gap-6 mb-6">
             <TabButton active={tab === "overview"} onClick={() => setTab("overview")}>
               概述
             </TabButton>
@@ -89,11 +89,11 @@ export function SkillDetail() {
           {tab === "overview" ? (
             <>
               {s.description && (
-                <p className="text-base text-ink-mute leading-relaxed border-b border-black/10 pb-4 mb-6">
+                <p className="text-base text-ink-mute leading-relaxed border-b border-line pb-4 mb-6">
                   {s.description}
                 </p>
               )}
-              <article className="prose max-w-none break-words [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-md [&_pre]:border [&_pre]:border-black/10 [&_pre]:bg-gray-50 [&_pre]:p-3 [&_pre]:text-black [&_code]:break-all [&_code]:text-black [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full [&_img]:max-w-full [&_a]:break-all">
+              <article className="prose max-w-none break-words [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-md [&_pre]:border [&_pre]:border-line [&_pre]:bg-canvas [&_pre]:p-3 [&_pre]:text-black [&_code]:break-all [&_code]:text-black [&_table]:block [&_table]:overflow-x-auto [&_table]:w-full [&_img]:max-w-full [&_a]:break-all">
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {stripFrontMatter(s.readme || "（无说明文档）")}
                 </ReactMarkdown>
@@ -112,7 +112,7 @@ export function SkillDetail() {
           <PromptCard displayName={s.displayName} />
           <DownloadCard slug={s.slug} onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })} />
 
-          <div className="bg-white rounded-card shadow-card p-5">
+          <div className="bg-surface rounded-card shadow-card p-5">
             <h3 className="font-semibold text-ink mb-3">基础信息</h3>
             <dl className="text-sm space-y-2">
               <InfoRow label="分类" value={CATEGORY_LABEL[s.category] ?? s.category} />
@@ -181,11 +181,11 @@ function VersionsTab({
   return (
     <ol className="space-y-4">
       {versions.map((v) => (
-        <li key={v.version} className="border-l-2 border-black/10 pl-4">
+        <li key={v.version} className="border-l-2 border-line pl-4">
           <div className="flex items-center gap-2">
             <span className="font-medium text-ink">v{v.version}</span>
             <span className="text-xs text-ink-mute">{v.date}</span>
-            <Badge className="bg-gray-100 text-gray-600">{v.type}</Badge>
+            <Badge className="bg-canvas text-ink-soft border border-line">{v.type}</Badge>
           </div>
           <ul className="text-sm text-ink-mute mt-1 list-disc list-inside space-y-0.5">
             {v.changes.map((c, i) => (
@@ -201,7 +201,7 @@ function VersionsTab({
 function FileList({ files }: { files?: SkillFile[] }) {
   if (!files || files.length === 0) return null;
   return (
-    <div className="bg-white rounded-card shadow-card p-5">
+    <div className="bg-surface rounded-card shadow-card p-5">
       <h3 className="font-semibold text-ink mb-3">文件清单</h3>
       <ul className="text-sm space-y-1 font-mono">
         {files.map((f) => (
@@ -240,12 +240,12 @@ function PromptCard({ displayName }: { displayName: string }) {
   };
 
   return (
-    <div className="bg-white rounded-card shadow-card p-5">
+    <div className="bg-surface rounded-card shadow-card p-5">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-ink">发送给你的 AI 安装</h3>
         <button
           onClick={onCopy}
-          className="text-xs px-2.5 py-1 rounded-full bg-gray-100 text-ink-mute hover:bg-gray-200 transition-colors"
+          className="text-xs px-2.5 py-1 rounded-full bg-canvas border border-line text-ink-soft hover:border-brand/40 transition-colors"
         >
           {copied ? "已复制" : "复制"}
         </button>
@@ -303,7 +303,7 @@ function DownloadCard({
   };
 
   return (
-    <div className="bg-white rounded-card shadow-card p-5">
+    <div className="bg-surface rounded-card shadow-card p-5">
       <h3 className="font-semibold text-ink mb-3">下载</h3>
       <a
         href={downloadUrl}
@@ -311,7 +311,7 @@ function DownloadCard({
         onClick={onClick}
         className={`block text-center text-sm px-4 py-2.5 rounded-card transition-colors ${
           busy
-            ? "bg-gray-100 text-ink-mute"
+            ? "bg-canvas border border-line text-ink-mute"
             : "bg-brand text-white hover:bg-brand-dark"
         }`}
       >

@@ -11,7 +11,7 @@ export function SkillCard({ skill }: { skill: SkillListItem }) {
   return (
     <Link
       to={`/skills/${skill.slug}`}
-      className="block bg-white rounded-card shadow-card p-5 hover:shadow-lg hover:-translate-y-0.5 transition-all"
+      className="block bg-surface rounded-card shadow-card p-6 hover:shadow-cardHover hover:-translate-y-0.5 transition-all"
     >
       <div className="flex items-start gap-3">
         <span className="text-3xl leading-none">{skill.icon || "📦"}</span>
@@ -48,7 +48,7 @@ export function Badge({
 }) {
   return (
     <span
-      className={`text-xs px-2 py-0.5 rounded-full ${className ?? "bg-gray-100 text-gray-700"}`}
+      className={`text-xs px-2 py-0.5 rounded-full ${className ?? "bg-canvas text-ink-soft border border-line"}`}
     >
       {children}
     </span>
