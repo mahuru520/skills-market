@@ -32,6 +32,7 @@ ENV NODE_ENV=production
 ENV DATABASE_URL=file:/app/data/skill-market.db
 ENV SKILLS_DIR=/app/skills
 COPY --from=base /repo /app
-RUN mkdir -p /app/data
+COPY apps/api/entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh && mkdir -p /app/data
 EXPOSE 3001
-CMD ["node", "apps/api/dist/main.js"]
+CMD ["/app/entrypoint.sh"]
