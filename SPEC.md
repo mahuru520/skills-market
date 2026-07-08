@@ -11,14 +11,15 @@
 | 层 | 选型 | 选型理由 |
 |----|------|----------|
 | 前端 | React 18 + Vite + TypeScript | SPA,对齐 skillhub |
-| UI | Tailwind + shadcn/ui | 源码进项目,可移植,无内部库依赖 |
+| UI | Tailwind + @tailwindcss/typography | 原子类 + prose 渲染 SKILL.md |
 | 路由 | react-router-dom v6 | |
-| 状态 | zustand + React Query | 列表缓存/分页用 RQ,UI 状态用 zustand |
+| 状态 | React Query | 列表/详情缓存,无 zustand |
 | Markdown | react-markdown + remark-gfm | 渲染 SKILL.md |
-| 后端 | NestJS + TypeScript | 模块化/DI/Swagger/DTO 校验 |
+| 后端 | NestJS + TypeScript | 模块化/DI |
 | ORM | Prisma | 一行连接串切库(SQLite→Postgres) |
 | DB | SQLite(默认) | 单文件零运维,随目录迁移 |
-| 搜索 | SQLite FTS5 | 轻量,无额外服务 |
+| 搜索 | SQLite LIKE / Prisma `contains` | 轻量,无额外服务(未启用 FTS5,见 §6) |
+| 打包下载 | archiver | 整目录流式 zip |
 | 部署 | Docker Compose | 换服务器 `docker compose up`,不绑云厂商 |
 
 ### 1.2 数据流(DB 自包含)
@@ -36,7 +37,7 @@ skills/*/skill.json + SKILL.md   (一次性导入源)
    React SPA (nginx 托管静态产物)
 ```
 
-indexer 跑一次把 25 个 skill.json + SKILL.md 正文 + 目录文件清单写入 DB。之后 `skills/` 目录与 DB 解耦——不挂 GitLab、不依赖磁盘、无 webhook。改数据 = 改 skill.json 重跑 `pnpm sync`。
+indexer 跑一次把 25 个 skill.json + SKILL.md 正文 + 目录文件清单写入 DB。之后 `skills/` 目录与 DB **半解耦**——不挂 GitLab、不依赖磁盘、无 webhook。改数据 = 改 skill.json 后重启 api 容器(启动即增量导入,见 §6)。
 
 ---
 
@@ -158,14 +159,9 @@ model Category {
 
 基础分 = `installCount × 1 + stars × 5 + (migration.status === "verified" ? 100 : 0) + (hot ? 50 : 0)`
 
-### 3.3 FTS5 虚拟表(raw migration)
+### 3.3 搜索实现(未用 FTS5)
 
-```sql
-CREATE VIRTUAL TABLE skills_fts USING fts5(
-  slug, displayName, description, summary,
-  content='Skill', content_rowid='id'
-);
-```
+搜索走 Prisma `contains`(SQLite LIKE),`keyword` 命中 `slug` / `displayName` / `description` 任一即匹配(见 `skills.service.ts` list 的 `where.OR`)。原设计的 FTS5 虚拟表为预留,未落地——25 条数据量 LIKE 足够,避免维护虚拟表同步。
 
 ### 3.4 Category seed(6 类)
 
@@ -191,6 +187,11 @@ CREATE VIRTUAL TABLE skills_fts USING fts5(
 | GET | `/api/v1/categories` | 分类树 `{count, items}` |
 | GET | `/api/v1/showcase/:type` | 首页榜单,`type=featured/top/hot/recommended` |
 | GET | `/api/v1/skills/:slug/versions` | 版本历史 |
+| GET | `/api/v1/skills/:slug/download` | 下载技能整目录 zip(GET 供 `<a download>` 触发),installCount +1 |
+
+**`/skills` pageSize 上限**:500(配合「全部技能一页全量展示」,前端 `PAGE_SIZE=200`)。
+
+**下载接口**:archiver 整目录流式 zip,`Content-Disposition: attachment; filename="<slug>.zip"`。`installCount` 异步自增(`prisma.update ... { increment: 1 }`.catch 不阻塞流)。仅校验 slug 存在 + `SKILLS_DIR/<slug>` 是目录,否则 404。
 
 **sortBy 枚举**:`score`(默认) / `downloads` / `stars` / `rank` / `updated_at`
 
@@ -205,56 +206,76 @@ CREATE VIRTUAL TABLE skills_fts USING fts5(
 ### 5.1 全局布局
 - **顶部导航仅两项**:首页 / 全部技能
 - **无页脚快捷入口**:不建服务协议、隐私协议、建议反馈等跳转
-- 配色:主色蓝 `#007AFF`、辅 `#0052D9`、中性灰 `#f5f5f5`/`#1c1c1e`
-- 字体:`PingFang SC` + `Plus Jakarta Sans`
-- 卡片圆角 12px、轻阴影 `0 4px 16px #0000001a`
+- 配色(weppy.app 暖白系):主色暖橙红 `#FF5C28`、hover `#E0451A`;页底暖米白 `#FAF8F3`;卡片纯白 `#FFFFFF`;标题近黑 `#111111`、正文 `#3A3A3A`、弱化 `#8A8A8A`;边框 `#ECE9E2`
+- 字体:`Plus Jakarta Sans` → `PingFang SC` → system-ui;标题用 `font-extrabold tracking-tight` 拉层级,正文默认 `ink-soft`
+- 卡片圆角 16px、柔和双层阴影(`shadow-card` / hover `shadow-cardHover`)
+- Tailwind 令牌见 `apps/web/tailwind.config.js`(`brand` / `ink{DEFAULT,soft,mute}` / `canvas` / `line` / `surface` / `rounded-card` / `shadow-card{,Hover}`)
 
 ### 5.2 首页 `/`
-- Hero:标题 + 搜索框(搜索跳 `/skills?keyword=`)
-- 榜单区:`/api/v1/showcase/top` 渲染 Top 技能横滑卡
+- Hero:暖橙 eyebrow 小标签(`OSPREY SKILL MARKET`,uppercase tracking-widest)+ 超大标题(`text-5xl/6xl font-extrabold`)+ 副标题 + 搜索框(搜索跳 `/skills?keyword=`)
+- 榜单区:`/api/v1/showcase/top` 渲染 Top 技能卡(统一 `SectionHeader`:eyebrow + 大标题 + 可选右侧链接)
 - 分类入口:6 个 category 卡片,点击带 `category` 参数跳列表页
 - 推荐精选:`showcase/featured`
+- section 间距 `py-16`/`py-20`,大留白
 - **不出现**任何「快捷入口」服务区
 
 ### 5.3 列表页 `/skills`(导航的「全部技能」)
+- 标题区:`全部技能` + 右侧搜索栏(`w-72`,回车/失焦提交写入 URL `keyword`,带 ✕ 清除)
 - 排序下拉:`score`(默认) / `downloads` / `stars` / `rank` / `updated_at`
-- 筛选 chip 组:
+- 筛选 chip 组(暖中性未选中态 `bg-canvas border-line`,选中态 `bg-brand text-white`):
   - 运行方式:`本地运行` / `外网API` / `网关迁移`
   - 计费:`免费` / `计费`
-- 卡片网格 `grid-cols-2`(桌面):icon + displayName + description + category 徽章 + runtime_type 徽章 + 计费徽章 + installCount
-- 无限加载(pageSize + 加载更多)
+  - 分类:全部 + 6 类
+- 卡片网格 `grid-cols-1 sm:2 lg:3`(icon + displayName + description + runtime/billing 徽章 + installCount)
+- **一页全量展示**:`PAGE_SIZE=200`,无分页/无加载更多;空状态提示
 
-### 5.4 详情页 `/skills/:slug`(两 Tab + 文件清单)
+### 5.4 详情页 `/skills/:slug`(两 Tab + 右侧三板块)
 
 左侧主区,**仅两个 Tab**:
-- **概述**:渲染 SKILL.md(`react-markdown`)
+- **概述**:开头一句功能概括(`description` 引言段,底部分隔线)+ 渲染 SKILL.md(剥掉 YAML front matter,`prose` 标准字号,代码块/表格各自横向滚动不撑破整页)
 - **历史版本**:`/api/v1/skills/:slug/versions` 渲染 changelog 时间轴
 
-> 不做 skillhub 的「效果预览」Tab、测评报告、安全验证(科恩/云鼎/内容指纹/数字签名/如何验证/使用说明)整个右侧安全区。
+> 不做 skillhub 的「效果预览」Tab、测评报告、安全验证整个右侧安全区。
 
-右侧基础信息卡:分类、运行方式、计费、版本、更新时间、安装数(仅展示元数据,无安装按钮、无价格区、无迁移验证区)。
+右侧三个卡片(自上而下):
+- **发送给你的 AI 安装**(提示词卡):模板 `请先检查是否已安装<此技能>,若未安装,请根据技能 skill-expansion 安装<此技能>技能。`,`<此技能>` 用 `displayName` 填充;复制按钮(HTTP 非 secure context 下 fallback `execCommand`)
+- **下载**:`<a href="/api/v1/skills/:slug/download" download>`,点击后延迟刷新查询让后端 +1 落库
+- **基础信息**:分类、运行方式、计费、版本、来源、更新时间、安装数(仅展示元数据,无价格区、无迁移验证区)
 
-**文件清单区**(替代原「安装区」):展示该技能目录的文件树(`skill.files` 字段),如 `SKILL.md / skill.json / scripts/*.py`,纯展示,不提供下载/clone。
+**文件清单区**(基础信息下方):展示该技能目录的文件树(`skill.files` 字段),纯展示不提供下载。
 
 ---
 
 ## 6. Indexer 导入机制
 
 `apps/api/src/indexer/indexer.service.ts`:
-1. glob 扫描 `skills/*/skill.json`
+1. 扫描 `skills/*/skill.json`(`SKILLS_DIR` 环境变量,默认项目根 `skills/`)
 2. 解析 JSON → 映射 Prisma 模型 → upsert(按 slug)
 3. **读取并写入 SKILL.md 正文**到 `skill.readme`(DB 自包含)
-4. **生成文件清单**:遍历技能目录(递归,跳过 `node_modules`/`.git`),记录 `{path, size, type}` 写入 `skill.files`
-5. 同步 `SkillVersion`(changelog 数组)
-6. `deriveBilling()` 计算 billing
-7. 重建 FTS5 索引
-8. 记录 `sha`(skill.json 内容 hash),重跑时未变化则跳过该 skill
+4. **生成文件清单**:遍历技能目录(递归,跳过 `node_modules`/`.git`/`dist`/`build`),记录 `{path, size, type}` 写入 `skill.files`
+5. 同步 `SkillVersion`(changelog 数组,先 deleteMany 再 create)
+6. `deriveBilling()` 计算 billing(`local→free`,API 类→`paid`)
+7. 记录 `sha`(skill.json 内容 hash),**重跑时 sha 未变则跳过该 skill**(增量导入,幂等)
+
+### 6.1 启动即增量导入(`onModuleInit`)
+每次 api 容器启动都执行 `importAll()`,不判断 DB 是否为空。配合 sha-skip,未变更技能不重写,成本很低。
+
+**运维含义**:加/改技能 = 改 `skills/<slug>/` → 重启 api 容器(`docker compose restart api`)。无需手动 `pnpm sync`、无需 build 镜像(skills 是 bind mount)。
+
+### 6.2 下载数不抹零(增量保护)
+`importOne` 中,`installCount` 计算规则:
+- **已存在的技能**:保留 DB 真实计数(`existing.installCount`),不被 skill.json 的 `install_count` 覆盖
+- **全新技能**:用 skill.json 的 `install_count ?? 0` 作 seed
+
+upsert 的 `update` 分支**不写 `installCount`**(也不写 `stars`)——升级 skill.json 版本/内容不会丢失真实下载/收藏数。`hot`、`score`、`billing`、`readme`、`files` 等元数据仍随 skill.json 更新。
+
+### 6.3 未实现项(与原 SPEC 的差异)
+- **FTS5 虚拟表未启用**:搜索走 Prisma `contains`(LIKE),查询 `slug/displayName/description`。§3.3 的 FTS5 schema 为设计预留,未落地。
+- **Category seed**:categories 由 indexer/seed 写入(见 3.4),非独立迁移脚本。
 
 触发方式:
-- CLI:`pnpm sync`(手动重导)
-- 首次启动:NestJS `OnModuleInit` 检测 DB skill 表为空时自动跑一次全量
-
-categories 由 seed 脚本初始化(见 3.4)。
+- 自动:api 容器启动时(`onModuleInit`,见 6.1)
+- CLI:`pnpm sync`(手动重导,走 `apps/api/src/indexer/run.ts`)
 
 ---
 
@@ -279,6 +300,13 @@ services:
 ```
 
 `apps/web/nginx.conf`:静态托管 `dist/` + `location /api { proxy_pass http://api:3001; }`。
+
+**实际部署形态**(腾讯云 Ubuntu,119.45.250.95:8080):
+- `docker-compose.yml` 关键点:`api` 卷 `./skills:/app/skills:ro`(bind mount,加技能无需 build)+ named volume `skill_market_data:/app/data`(SQLite 持久化);`web` 端口 `${WEB_PUBLIC_PORT:-8080}:80`
+- api Dockerfile:多阶段构建,runner 装 `openssl`(Prisma 运行时探测 3.0.x 引擎需要),`entrypoint.sh` 先 `prisma db push` 建表再启动 `dist/main.js`
+- 换服务器:`scp` 项目 + `docker compose up -d`(DB 已含全部数据)
+- 切 Postgres:改 `DATABASE_URL` + `pnpm prisma migrate deploy`
+- GitHub 仅作代码镜像(国内不可达),部署不依赖 Git
 
 **可移植性保证**:
 - 零云厂商依赖(无 EdgeOne/CDN/OSS/GitLab)
@@ -306,6 +334,6 @@ services:
 ## 9. 验证方案
 
 1. **M1**:`pnpm sync` → `pnpm prisma studio` 看到 25 条 skill;`readme` 非空;`files` 为清单数组;`billing` = 18 free + 7 paid
-2. **M2**:`curl 'localhost:3001/api/skills?sortBy=score&pageSize=2'` 返回 `{code:0,data:{skills:[...],total:25}}`;`curl localhost:3001/api/v1/skills/comfyui-image-generation` 返回含 readme/files
-3. **M3**:列表页 sortBy=downloads 排序变化;筛选「网关迁移」剩 5 个;详情页概述 Tab 渲染 SKILL.md、历史版本 Tab 显示 changelog、文件清单显示技能目录文件
-4. **M4**:`docker compose up -d` → 浏览器 `localhost:8080` 全功能可用;导航仅「首页/全部技能」;首页无快捷入口区;停服删容器重启数据仍在
+2. **M2**:`curl 'localhost:3001/api/skills?sortBy=score&pageSize=2'` 返回 `{code:0,data:{skills:[...],total:25}}`;`curl localhost:3001/api/v1/skills/comfyui-image-generation` 返回含 readme/files;`curl -O localhost:3001/api/v1/skills/comfyui-image-generation/download` 得到 zip 且 installCount +1
+3. **M3**:列表页 sortBy=downloads 排序变化;筛选「网关迁移」剩 5 个;标题右侧搜索栏回车筛选生效;详情页概述 Tab 剥 YAML、渲染 SKILL.md、提示词可复制、下载触发 zip、文件清单显示
+4. **M4**:`docker compose up -d` → 浏览器 `localhost:8080` 全功能可用;导航仅「首页/全部技能」;首页无快捷入口区;往 `skills/` 加目录后 `docker compose restart api` 新技能出现且不抹已有下载数;停服删容器重启数据仍在
