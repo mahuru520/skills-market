@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(echo \"=== 综合评级档位逻辑 ===\" *)",
-      "Read(//tmp/**)"
-    ]
-  }
-}
