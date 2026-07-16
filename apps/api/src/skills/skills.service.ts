@@ -190,13 +190,15 @@ export class SkillsService {
     );
 
     const archive = archiver("zip", { zlib: { level: 5 } });
-    archive.on("error", (err) => {
-      // 流已开始,只能 abort
-      res.destroy(err);
+    await new Promise<void>((resolve, reject) => {
+      archive.on("error", (err) => {
+        res.destroy(err);
+        reject(err);
+      });
+      archive.pipe(res);
+      archive.directory(dir, false);
+      archive.finalize().then(() => resolve());
     });
-    archive.pipe(res);
-    archive.directory(dir, false);
-    archive.finalize();
   }
 
   /**
