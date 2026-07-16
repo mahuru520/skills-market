@@ -1,0 +1,111 @@
+{
+  "id": "official/comfyui-qwen-image-edit",
+  "name": "comfyui-qwen-image-edit",
+  "display_name": "ComfyUI Qwen-Image-Edit 图片编辑",
+  "description": "通过公网网关使用 Qwen-Image-Edit-2511 模型编辑图片（换装、改背景、物体替换等）。当用户要求编辑图片、改图、换衣服、改背景、P掉物体、给图片加元素时使用。",
+  "version": "1.0.0",
+  "icon": "🖼️",
+  "category": "image_video",
+  "runtime_type": "gateway_migrated_api",
+  "billing": "token",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "hot": true,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 5310
+    },
+    {
+      "path": "scripts/img_edit.py",
+      "type": "file",
+      "size": 0
+    }
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传输入图片"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/image/generate",
+        "desc": "提交图生图工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/queue",
+        "desc": "轮询队列"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载结果图片"
+      }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 120
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 Qwen-Image-Edit-2511 模型做图片编辑。支持单图自我编辑和双图换装，Turbo 4步（~2-6s）/ Native 40步（~15-20s）。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-16",
+      "changes": [
+        "新增 Qwen-Image-Edit-2511 图片编辑技能"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-16T00:00:00Z",
+  "updated_at": "2026-07-16T00:00:00Z",
+  "quickstart": {
+    "overview": "基于 Qwen-VL 的高质量图片编辑",
+    "scenarios": [
+      "单图自我编辑",
+      "双图换装/换物",
+      "三图多参考编辑"
+    ],
+    "example": "去掉外套保留T恤，用 'Remove the jacket, keep the T-shirt' 编辑 input.png",
+    "notes": "仅支持英文提示词，首次加载约30秒"
+  }
+}

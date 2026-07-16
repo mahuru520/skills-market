@@ -1,0 +1,116 @@
+{
+  "id": "official/comfyui-flux2-edit",
+  "name": "comfyui-flux2-edit",
+  "display_name": "ComfyUI FLUX.2-klein 图生图编辑",
+  "description": "通过公网网关使用 ComfyUI FLUX.2-klein-9b-kv 图生图/局部编辑，上传图片+写 prompt 即可生成，支持换装、换背景、局部修改。",
+  "version": "1.0.0",
+  "icon": "🎨",
+  "category": "image_video",
+  "runtime_type": "gateway_migrated_api",
+  "billing": "token",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "hot": true,
+  "files": [
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 3567
+    },
+    {
+      "path": "scripts/submit_and_poll.py",
+      "type": "file",
+      "size": 0
+    },
+    {
+      "path": "scripts/upload.py",
+      "type": "file",
+      "size": 0
+    }
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传输入图片"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/image/generate",
+        "desc": "提交图生图工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/queue",
+        "desc": "轮询队列"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载结果图片"
+      }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 120
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 FLUX.2-klein-9b-kv-fp8 模型做 Reference Conditioning 图生图编辑。4 步生成速度极快（<1秒）。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-16",
+      "changes": [
+        "新增 FLUX.2-klein 图生图编辑技能"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-16T00:00:00Z",
+  "updated_at": "2026-07-16T00:00:00Z",
+  "quickstart": {
+    "overview": "通过FLUX.2模型进行服装迁移和背景编辑",
+    "scenarios": [
+      "换装",
+      "更改背景",
+      "移除特定元素"
+    ],
+    "example": "Have the man in Figure 1 put on the clothes from Figure 2, keep same posture.",
+    "notes": "提示词需用英文；图片需先上传；若出错检查图片是否成功上传"
+  }
+}
