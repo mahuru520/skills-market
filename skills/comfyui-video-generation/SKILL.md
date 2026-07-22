@@ -260,8 +260,7 @@ curl -s -H "Authorization: Bearer $API_KEY" \
 - 视频输出的 `subfolder` 为 `video`（不是空字符串）
 - 视频输出的 `type` 为 `output`
 - 下载的是 MP4 格式，可直接播放
-
-- 建议下载到 `/data/file/`
+- 保存路径通过 `get-output-dir.sh` 获取
 
 See `references/queue-history-download.md` for details.
 

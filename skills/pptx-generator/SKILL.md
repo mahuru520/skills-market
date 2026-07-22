@@ -83,7 +83,7 @@ Create one JS file per slide in `slides/` directory. Each file must export a syn
 **Tell each subagent:**
 1. File naming: `slides/slide-01.js`, `slides/slide-02.js`, etc.
 2. Images go in: `slides/imgs/`
-3. Final PPTX goes in: `slides/output/`
+3. Final PPTX goes in: output directory returned by `get-output-dir.sh` (fallback `slides/output/`)
 4. Dimensions: 10" x 5.625" (LAYOUT_16x9)
 5. Fonts: Chinese = Microsoft YaHei, English = Arial (or approved alternative)
 6. Colors: 6-char hex without # (e.g. `"FF0000"`)
@@ -114,7 +114,15 @@ for (let i = 1; i <= 12; i++) {  // adjust count as needed
   slideModule.createSlide(pres, theme);
 }
 
-pres.writeFile({ fileName: './output/presentation.pptx' });
+// 输出目录由 user-initialization 技能统一约定
+const { execSync } = require('child_process');
+let outDir;
+try {
+  outDir = execSync('bash ../skills/user-initialization/scripts/get-output-dir.sh --mkdir', { encoding: 'utf-8' }).trim();
+} catch (e) {
+  outDir = './output';  // 兜底：保持向后兼容
+}
+pres.writeFile({ fileName: `${outDir}/presentation.pptx` });
 ```
 
 Run with: `cd slides && node compile.js`
@@ -131,7 +139,7 @@ slides/
 ├── slide-02.js
 ├── ...
 ├── imgs/                # Images used in slides
-└── output/              # Final artifacts
+└── <输出目录>/          # Final artifacts (get-output-dir.sh 返回,兜底 slides/output/)
     └── presentation.pptx
 ```
 

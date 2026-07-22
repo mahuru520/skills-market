@@ -15,7 +15,7 @@
 
 ## 环境约定
 
-- 用户目录：`/data/file/`
+- 输出目录由 `user-initialization` 技能的 `get-output-dir.sh` 统一约定
 - 输出视频通常位于网关侧的 `video` 子目录（`subfolder=video`）
 - 首次使用前应确保视频生成技能已加载
 - 所有请求必须带 `Authorization: Bearer $API_KEY` 头

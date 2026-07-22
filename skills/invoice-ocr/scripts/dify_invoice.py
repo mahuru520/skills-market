@@ -5,6 +5,7 @@ import requests
 import os
 import json
 import csv
+import subprocess
 from datetime import datetime
 
 # Dify 配置（经公网网关，双 token 鉴权）
@@ -17,6 +18,35 @@ HEADERS = {
     "Authorization": f"Bearer {API_KEY}",          # 网关层鉴权
     "X-Authorization": f"Bearer {AUTH_TOKEN}",     # 后端 Dify 鉴权
 }
+
+
+def _resolve_out_dir():
+    """确定输出目录：环境变量 OUT 优先 → get-output-dir.sh → 回退 result/。
+
+    遵循 user-initialization 技能的输出目录约定。
+    """
+    out = os.environ.get("OUT", "").strip()
+    if out:
+        return out
+    # 调用 user-initialization 的 helper（路径相对 skills/ 目录）
+    here = os.path.dirname(os.path.abspath(__file__))
+    helper = os.path.join(here, "..", "user-initialization", "scripts", "get-output-dir.sh")
+    try:
+        res = subprocess.run(
+            ["bash", helper], capture_output=True, text=True, timeout=5
+        )
+        if res.returncode == 0:
+            val = res.stdout.strip()
+            if val:
+                return val
+    except Exception:
+        pass
+    # 兜底：保持向后兼容
+    return "result"
+
+
+# 输出目录（模块级，供所有写入处使用）
+OUT_DIR = _resolve_out_dir()
 
 
 def upload_file(file_path):
@@ -87,7 +117,7 @@ def run_workflow(upload_file_id, file_path):
                     if result_content.startswith('"') or result_content.startswith('发票抬头'):
                         # CSV 格式 - 保存为 md 文件
                         print(f"识别结果(CSV): {result_content[:100]}...")
-                        csv_path = os.path.join("result", "md",
+                        csv_path = os.path.join(OUT_DIR, "md",
                                                 os.path.splitext(os.path.basename(file_path))[0] + ".md")
                         os.makedirs(os.path.dirname(csv_path), exist_ok=True)
                         with open(csv_path, 'w', encoding='utf-8-sig') as f:
@@ -99,7 +129,7 @@ def run_workflow(upload_file_id, file_path):
                         try:
                             invoice_data = json.loads(result_content)
                             print(f"识别结果: {invoice_data}")
-                            json_path = os.path.join("result", "json",
+                            json_path = os.path.join(OUT_DIR, "json",
                                                      os.path.splitext(os.path.basename(file_path))[0] + ".json")
                             os.makedirs(os.path.dirname(json_path), exist_ok=True)
                             with open(json_path, 'w', encoding='utf-8') as f:
@@ -220,7 +250,7 @@ def process_invoice(file_path):
         return None
 
     # 3. 处理结果（可能是本地路径或 URL）
-    result_path = os.path.join("result", "md", os.path.splitext(os.path.basename(file_path))[0] + ".md")
+    result_path = os.path.join(OUT_DIR, "md", os.path.splitext(os.path.basename(file_path))[0] + ".md")
 
     if result_url.startswith('http://') or result_url.startswith('https://'):
         # 是 URL，下载文件
@@ -236,7 +266,7 @@ def process_invoice(file_path):
 if __name__ == "__main__":
     # 处理文件夹中的所有发票
     invoice_dir = r"C:\Users\lc_y2\Desktop\4轮报销-41692.71"
-    output_csv = "result/invoices.csv"
+    output_csv = os.path.join(OUT_DIR, "invoices.csv")
 
     if os.path.exists(invoice_dir):
         file_list = [os.path.join(invoice_dir, f) for f in os.listdir(invoice_dir)

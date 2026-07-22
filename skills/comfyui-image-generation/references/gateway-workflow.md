@@ -35,8 +35,9 @@ curl -s "$GW/api/v1/ai/tasks/$PROMPT_ID" -H "Authorization: Bearer $API_KEY"
 ## 下载图片
 
 ```bash
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 curl -s "$GW/api/v1/ai/image/view/?filename=output.png" \
-  -H "Authorization: Bearer $API_KEY" -o /data/file/output.png
+  -H "Authorization: Bearer $API_KEY" -o "$OUT/output.png"
 ```
 
 ## 429 限流退避

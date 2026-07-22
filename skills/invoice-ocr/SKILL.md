@@ -47,9 +47,11 @@ python dify_invoice.py "发票目录路径"
 
 ## 输出
 
-- `result/md/*.md` - 各个发票的识别结果
-- `result/json/*.json` - JSON 格式结果
-- `result/invoices.csv` - 合并的 CSV 文件
+输出目录由 `user-initialization` 技能的 `get-output-dir.sh` 统一约定（环境变量 `OUT` 优先）：
+
+- `<输出目录>/md/*.md` - 各个发票的识别结果
+- `<输出目录>/json/*.json` - JSON 格式结果
+- `<输出目录>/invoices.csv` - 合并的 CSV 文件
 
 ## CSV 字段
 

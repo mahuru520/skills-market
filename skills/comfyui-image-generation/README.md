@@ -23,9 +23,10 @@ curl -s -H "Authorization: Bearer $API_KEY" -X POST "$GW/api/v1/ai/image/generat
 curl -s -H "Authorization: Bearer $API_KEY" "$GW/api/v1/ai/tasks/{prompt_id}"
 
 # 3. 下载输出图片
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=output_00001_.png&type=output&subfolder=" \
-  -o /data/file/output.png
+  -o "$OUT/output.png"
 ```
 
 ## Directory Structure
@@ -52,7 +53,7 @@ comfyui-image-generation/
 
 - `/api/v1/ai/image/generate` 提交成功，返回 `prompt_id`
 - `/api/v1/ai/tasks/{prompt_id}` 状态 `completed: true`
-- PNG 成功下载到 `/data/file/`（注意 `subfolder` 为空字符串）
+- PNG 成功下载到 `get-output-dir.sh` 返回的输出目录（注意 `subfolder` 为空字符串）
 
 ## References
 

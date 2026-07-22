@@ -215,10 +215,13 @@ See `references/queue-history-download.md` for details.
 下载前先从任务状态中获取输出文件信息（`filename`, `subfolder`, `type`），然后通过查看接口下载。
 
 ```bash
+# 先获取输出目录（由 user-initialization 技能统一约定）
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
+
 # 下载 PNG 图片（注意 subfolder 为空字符串）
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=output_00001_.png&type=output&subfolder=" \
-  -o output.png
+  -o "$OUT/output.png"
 ```
 
 **关键点：**
@@ -226,8 +229,7 @@ curl -s -H "Authorization: Bearer $API_KEY" \
 - 图片输出的 `subfolder` 为空字符串（视频是 `video`，注意区别）
 - 图片输出的 `type` 为 `output`
 - 下载的是 PNG 格式，可直接查看
-
-- 建议保存到用户目录：`/data/file/`
+- 保存路径通过 `get-output-dir.sh` 获取
 
 See `references/queue-history-download.md` for details.
 

@@ -408,12 +408,7 @@
 
 ### 24. user-initialization
 1. **技能名称**：user-initialization
-   **技能作用**：首次使用初始化目录与技能
-2. **运行方式**：本地运行
-
-### 25. workdir-initialization
-1. **技能名称**：workdir-initialization
-   **技能作用**：初始化用户与系统工作目录
+   **技能作用**：首次使用初始化（动态探测目录、技能安装、输出目录约定）
 2. **运行方式**：本地运行
 
 ---
@@ -424,8 +419,8 @@
 |------|------|------|
 | 内网API → 外网网关迁移 | 5 | comfyui-image-generation、comfyui-video-generation、contract-review、invoice-ocr、ragflow-knowledge-qa |
 | 外网API（不变） | 4 | list-models、mail、vision-ocr、whisper-transcribe |
-| 本地运行（不变） | 16 | md-to-pdf、minimax-docx、minimax-pdf、minimax-xlsx、model-price-updater、openclaw-dingtalk-channel、openclaw-feishu-plugin、openclaw-qq-channel、openclaw-ui-customization、openclaw-wecom-channel、pptx-generator、problem-solving-debug、self-improving-agent、skill-expansion、user-initialization、workdir-initialization |
-| 合计 | 25 | — |
+| 本地运行（不变） | 15 | md-to-pdf、minimax-docx、minimax-pdf、minimax-xlsx、model-price-updater、openclaw-dingtalk-channel、openclaw-feishu-plugin、openclaw-qq-channel、openclaw-ui-customization、openclaw-wecom-channel、pptx-generator、problem-solving-debug、self-improving-agent、skill-expansion、user-initialization |
+| 合计 | 24 | — |
 
 > 迁移可行性：ComfyUI 两个技能可近乎无损平移（接口对齐，先做验证）；RAGFlow 行为略变（检索→检索+生成，或改 embedding 自建）；Dify 两个技能需先确认网关是否透传 `/v1/workflows/run`，否则要把 Dify 应用从"工作流型"改为"对话型/chatflow"。
 
@@ -460,7 +455,7 @@
 | 6 | list-models | `GET /models` 元数据查询，不触发推理 |
 | 7 | mail | SMTP/IMAP 邮箱协议，包年包月不按次计费 |
 
-**本地运行类（16 个）**
+**本地运行类（15 个）**
 
 | 序号 | 技能 | 序号 | 技能 |
 |------|------|------|------|
@@ -471,12 +466,12 @@
 | 14 | model-price-updater | 22 | self-improving-agent |
 | 15 | openclaw-dingtalk-channel | 23 | skill-expansion |
 | 16 | openclaw-feishu-plugin | 24 | user-initialization |
-| 17 | openclaw-qq-channel | 25 | workdir-initialization |
+| 17 | openclaw-qq-channel | | |
 
 | 分类 | 数量 | 技能序号 |
 |------|------|----------|
 | 计费 | 7 | 1、2、3、4、5、8、9 |
-| 不计费 | 18 | 6、7、10–25 |
+| 不计费 | 17 | 6、7、10–24 |
 | 合计 | 25 | — |
 
 > 备注：

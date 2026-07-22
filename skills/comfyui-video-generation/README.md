@@ -24,9 +24,10 @@ curl -s -H "Authorization: Bearer $API_KEY" -X POST "$GW/api/v1/ai/video/generat
   -d '{"prompt":{...}}'
 
 # 3. 下载输出 mp4
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=output.mp4&subfolder=video&type=output" \
-  -o /data/file/output.mp4
+  -o "$OUT/output.mp4"
 ```
 
 ## Directory Structure
@@ -54,7 +55,7 @@ comfyui-video-generation/
 - `/api/v1/upload` 上传成功，返回 `name` 值
 - `/api/v1/ai/video/generate` 提交成功，`node_errors` 为空
 - `/api/v1/ai/tasks/{prompt_id}` 状态 `completed: true`
-- MP4 成功下载到 `/data/file/`（注意 `subfolder=video`）
+- MP4 成功下载到 `get-output-dir.sh` 返回的输出目录（注意 `subfolder=video`）
 
 ## References
 

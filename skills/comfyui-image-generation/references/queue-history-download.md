@@ -59,9 +59,12 @@ curl -s -H "Authorization: Bearer $API_KEY" "$GW/api/v1/ai/tasks/{prompt_id}"
 ## 下载图片
 
 ```bash
+# 先获取输出目录（由 user-initialization 技能统一约定）
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
+
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=output_00001_.png&type=output&subfolder=" \
-  -o /data/file/output.png
+  -o "$OUT/output.png"
 ```
 
 ## 下载约定
@@ -69,5 +72,5 @@ curl -s -H "Authorization: Bearer $API_KEY" \
 - 输出格式默认是 PNG
 - 图片输出的 `subfolder` 为空字符串（视频是 `video`，注意区别）
 - 图片输出的 `type` 为 `output`
-- 推荐下载到 `/data/file/`
+- 保存路径通过 `get-output-dir.sh` 获取
 - 下载前先通过 `/api/v1/ai/tasks/{prompt_id}` 确认输出文件名

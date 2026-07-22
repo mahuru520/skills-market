@@ -2,8 +2,8 @@
   "id": "official/user-initialization",
   "name": "user-initialization",
   "display_name": "用户初始化",
-  "description": "首次使用初始化目录与技能。当用户首次使用 OpenClaw、需要初始化用户目录与技能时触发。",
-  "version": "1.0.0",
+  "description": "首次使用初始化目录与技能。当用户首次使用 OpenClaw、需要初始化用户目录与技能时触发。动态探测用户/工作/输出三个目录;提供 get-output-dir.sh 供其他技能统一获取下载保存路径。",
+  "version": "2.0.0",
   "icon": "👤",
   "category": "initialization",
   "runtime_type": "local",
@@ -15,7 +15,11 @@
     "url": ""
   },
   "readme": "SKILL.md",
-  "files": [],
+  "files": [
+    {"path": "SKILL.md", "type": "file"},
+    {"path": "scripts/detect-dirs.sh", "type": "file"},
+    {"path": "scripts/get-output-dir.sh", "type": "file"}
+  ],
   "env_vars": [],
   "dependencies": [],
   "platform": {
@@ -27,6 +31,25 @@
   },
   "changelog": [
     {
+      "version": "2.0.0",
+      "date": "2026-07-22",
+      "changes": [
+        "合并 workdir-initialization:目录探测逻辑内置为本技能 scripts/detect-dirs.sh",
+        "新增输出目录(OUTPUT_DIR)探测,默认等于用户目录",
+        "新增 get-output-dir.sh 供其他技能统一获取下载保存路径",
+        "新增输出目录约定段,作为全库去硬编码规范"
+      ],
+      "type": "MAJOR"
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-07-21",
+      "changes": [
+        "目录约定改为动态探测,TOOLS.md 作为单一事实源,去除硬编码路径"
+      ],
+      "type": "MINOR"
+    },
+    {
       "version": "1.0.0",
       "date": "2026-01-01",
       "changes": [
@@ -36,16 +59,17 @@
     }
   ],
   "created_at": "2026-01-01T00:00:00Z",
-  "updated_at": "2026-01-01T00:00:00Z",
+  "updated_at": "2026-07-22T00:00:00Z",
   "quickstart": {
-    "overview": "引导新用户完成目录、技能安装与扩展配置",
+    "overview": "引导新用户完成目录动态探测(含输出目录)、技能安装与扩展配置,并提供统一输出目录读取器",
     "scenarios": [
-      "用户首次使用时初始化工作环境",
+      "用户首次使用时初始化工作环境(自动探测用户/工作/输出目录)",
       "安装默认必备技能并验证可用性",
       "理解技能扩展优先级并手动安装新技能",
-      "查看并刷新当前项目技能清单"
+      "查看并刷新当前项目技能清单",
+      "其他技能通过 get-output-dir.sh 统一获取下载保存路径"
     ],
-    "example": "请帮我执行用户初始化，设置目录并安装默认技能",
-    "notes": "必须先设置目录约定，缺失技能优先从GitLab仓库补齐"
+    "example": "请帮我执行用户初始化,探测目录并安装默认技能",
+    "notes": "必须先运行 detect-dirs.sh --write 探测目录写入 TOOLS.md;生成文件技能用 get-output-dir.sh 取输出目录"
   }
 }

@@ -6,9 +6,12 @@
 export GW="https://ai.ospreyai.cn"
 export API_KEY="sk-your-api-key"
 
+# 获取输出目录（由 user-initialization 技能统一约定）
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
+
 # 1. 上传输入图片
 curl -s -H "Authorization: Bearer $API_KEY" -X POST "$GW/api/v1/upload" \
-  -F "image=@/data/file/飞天小猪.png" \
+  -F "image=@$OUT/飞天小猪.png" \
   -F "overwrite=true"
 
 # 2. 提交图生视频工作流
@@ -39,11 +42,11 @@ done
 # 4. 下载视频（中文文件名用 Python 处理 URL 编码）
 python3 << EOF
 import os, urllib.request, urllib.parse
-gw = os.environ["GW"]; key = os.environ["API_KEY"]
+gw = os.environ["GW"]; key = os.environ["API_KEY"]; out = os.environ["OUT"]
 params = urllib.parse.urlencode({"filename": "飞天小猪_00001_.mp4", "subfolder": "video", "type": "output"})
 req = urllib.request.Request(f"{gw}/api/v1/ai/image/view/?{params}", headers={"Authorization": f"Bearer {key}"})
 data = urllib.request.urlopen(req).read()
-with open("/data/file/飞天小猪.mp4", "wb") as f:
+with open(f"{out}/飞天小猪.mp4", "wb") as f:
     f.write(data)
 print(f"下载完成，大小: {len(data)} bytes")
 EOF

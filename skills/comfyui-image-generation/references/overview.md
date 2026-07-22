@@ -14,8 +14,7 @@
 
 ## 环境约定
 
-- 用户目录：`/data/file/`
-- 输出图片建议保存到用户目录
+- 输出目录由 `user-initialization` 技能的 `get-output-dir.sh` 统一约定
 - 首次使用前应确保该技能已被加载并优先用于图片生成场景
 - 所有请求必须带 `Authorization: Bearer $API_KEY` 头
 

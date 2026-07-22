@@ -3,8 +3,9 @@
 ## 上传输入图片
 
 ```bash
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 curl -s -H "Authorization: Bearer $API_KEY" -X POST "$GW/api/v1/upload" \
-  -F "image=@/data/file/你的图片.png" \
+  -F "image=@$OUT/你的图片.png" \
   -F "overwrite=true"
 ```
 

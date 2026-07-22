@@ -48,9 +48,10 @@ curl -s -H "Authorization: Bearer $API_KEY" "$GW/api/v1/ai/tasks/{prompt_id}"
 ### 直接下载（英文文件名）
 
 ```bash
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=video/output.mp4&subfolder=video&type=output" \
-  -o /data/file/output.mp4
+  -o "$OUT/output.mp4"
 ```
 
 ### 中文文件名下载
@@ -60,11 +61,13 @@ curl -s -H "Authorization: Bearer $API_KEY" \
 ```bash
 export API_KEY="sk-your-api-key"
 export GW="https://ai.ospreyai.cn"
+export OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
 python3 << 'EOF'
 import os, urllib.request, urllib.parse
 
 gw = os.environ["GW"]
 key = os.environ["API_KEY"]
+out = os.environ["OUT"]
 headers = {"Authorization": f"Bearer {key}"}
 
 params = urllib.parse.urlencode({
@@ -77,7 +80,7 @@ url = f"{gw}/api/v1/ai/image/view/?{params}"
 req = urllib.request.Request(url, headers=headers)
 data = urllib.request.urlopen(req).read()
 
-with open("/data/file/你的视频.mp4", "wb") as f:
+with open(f"{out}/你的视频.mp4", "wb") as f:
     f.write(data)
 print(f"下载完成，大小: {len(data)} bytes")
 EOF
@@ -87,5 +90,5 @@ EOF
 
 - 输出格式默认是 MP4
 - 视频位于 `video` 子目录，需带 `subfolder=video&type=output` 参数
-- 推荐下载到 `/data/file/`
+- 保存路径通过 `get-output-dir.sh` 获取
 - 下载前先通过 `/api/v1/ai/tasks/{prompt_id}` 确认实际输出文件名

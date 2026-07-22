@@ -37,8 +37,11 @@ while true; do
   sleep 5
 done
 
+# 先获取输出目录（由 user-initialization 技能统一约定）
+OUT=$(bash skills/user-initialization/scripts/get-output-dir.sh --mkdir)
+
 # 3. 下载图片（subfolder 为空字符串）
 curl -s -H "Authorization: Bearer $API_KEY" \
   "$GW/api/v1/ai/image/view/?filename=puppy_00001_.png&type=output&subfolder=" \
-  -o /data/file/小狗.png
+  -o "$OUT/小狗.png"
 ```
