@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { fetchShowcase, fetchCategories } from "../api/skills";
 import { SkillCard } from "../components/SkillCard";
+import { InstallPromptBar } from "../components/InstallPromptBar";
 
 export function Home() {
   const navigate = useNavigate();
@@ -30,7 +31,8 @@ export function Home() {
             Osprey 技能市场
           </h1>
           <p className="text-lg text-ink-soft mt-4">浏览、搜索、了解全部 Osprey Skills</p>
-          <form onSubmit={onSearch} className="max-w-xl mx-auto mt-8 flex gap-2">
+          <InstallPromptBar />
+          <form onSubmit={onSearch} className="max-w-6xl mx-auto mt-10 flex gap-2">
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
