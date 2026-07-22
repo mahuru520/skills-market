@@ -125,7 +125,7 @@ export function SkillDetail() {
 
         {/* 右侧基础信息卡 */}
         <aside className="space-y-6">
-          <PromptCard displayName={s.displayName} />
+          <PromptCard slug={s.slug} />
           <DownloadCard slug={s.slug} onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })} />
 
           <div className="bg-surface rounded-card shadow-card p-5">
@@ -383,8 +383,8 @@ function FileList({ files }: { files?: SkillFile[] }) {
 
 /* ---------- 安装提示卡 ---------- */
 
-function PromptCard({ displayName }: { displayName: string }) {
-  const prompt = `请先检查是否已安装${displayName},若未安装,请根据https://skills.ospreyai.cn/api/install/osprey-skill-market.md，安装${displayName}技能。`;
+function PromptCard({ slug }: { slug: string }) {
+  const prompt = `请先检查是否已安装${slug},若未安装,请根据https://skills.ospreyai.cn/api/install/osprey-skill-market.md，安装${slug}技能。`;
   const [copied, setCopied] = useState(false);
 
   const onCopy = async () => {
