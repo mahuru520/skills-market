@@ -1,0 +1,88 @@
+{
+  "id": "official/happyhorse-image-to-video",
+  "name": "happyhorse-image-to-video",
+  "display_name": "HappyHorse 图生视频",
+  "description": "调用 HappyHorse 1.0 图生视频 API,以首帧图片为基础配合文字引导生成高清视频并下载 mp4。支持 720P/1080P、3-15 秒时长。当用户请求图生视频、图片生成视频、HappyHorse i2v 时触发。",
+  "version": "1.0.0",
+  "icon": "🖼️",
+  "category": "image_video",
+  "runtime_type": "gateway_async_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "scripts/generate.py", "type": "file"}
+  ],
+  "hot": false,
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "网关地址",
+      "required": true,
+      "source": "固定 https://open.ospreyai.cn",
+      "example": "https://open.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 API key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://open.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v1/video/generations",
+        "desc": "提交图生视频任务(异步,需 X-DashScope-Async: enable)"
+      },
+      {
+        "method": "GET",
+        "path": "/v1/video/generations/{task_id}",
+        "desc": "轮询任务状态"
+      }
+    ],
+    "rate_limit": "依网关配额",
+    "timeout_sec": 240
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-22",
+      "changes": [
+        "初始版本:HappyHorse 1.0 图生视频 (I2V)",
+        "异步任务模式(提交 → 轮询 → 下载)",
+        "首帧图片 + 文字引导,720P/1080P,3-15 秒",
+        "脚本参数化去硬编码,输出目录通过 user-initialization 的 get-output-dir.sh 统一约定"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-22T00:00:00Z",
+  "updated_at": "2026-07-22T00:00:00Z",
+  "quickstart": {
+    "overview": "通过 API 用首帧图片 + 文字生成高清视频",
+    "scenarios": [
+      "提交 HappyHorse 图生视频任务",
+      "轮询视频生成任务状态",
+      "下载生成的 MP4 视频文件"
+    ],
+    "example": "帮我把这张图片生成视频:猫咪在草地上奔跑,1080P 5 秒",
+    "notes": "需有 API 密钥;images 必填且仅有 1 张图片 URL;异步任务需轮询;输出目录用 get-output-dir.sh 获取"
+  }
+}

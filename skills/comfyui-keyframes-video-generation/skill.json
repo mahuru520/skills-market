@@ -1,0 +1,103 @@
+{
+  "id": "official/comfyui-keyframes-video-generation",
+  "name": "comfyui-keyframes-video-generation",
+  "display_name": "ComfyUI 6 关键帧视频",
+  "description": "调用 ComfyUI Wan 2.2 FLF2V 工作流,将 6 张关键帧图片串联生成过渡视频并下载 mp4。当用户请求关键帧视频、6 张图生视频、多关键帧串联时触发。",
+  "version": "1.0.0",
+  "icon": "🎞️",
+  "category": "image_video",
+  "runtime_type": "gateway_migrated_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "scripts/generate_keyframes_video.py", "type": "file"}
+  ],
+  "hot": false,
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传 6 张关键帧图片"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/video/generate",
+        "desc": "提交 FLF2V 首尾帧视频工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/tasks/{prompt_id}",
+        "desc": "按任务 ID 查询状态"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/queue",
+        "desc": "轮询队列"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载视频"
+      }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 600
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-22",
+      "changes": [
+        "初始版本:Wan 2.2 FLF2V 6 关键帧首尾帧视频生成",
+        "6 张关键帧拆 5 段首尾帧过渡,每段 25 帧,ImageBatch 合并",
+        "LightX2V 4 步加速,shift=5",
+        "脚本参数化去硬编码,输出目录通过 user-initialization 的 get-output-dir.sh 统一约定"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-22T00:00:00Z",
+  "updated_at": "2026-07-22T00:00:00Z",
+  "quickstart": {
+    "overview": "通过 API 用 6 张关键帧图片串联生成过渡视频",
+    "scenarios": [
+      "上传 6 张关键帧图片并提交 FLF2V 工作流",
+      "查询关键帧视频生成任务状态",
+      "下载生成的 MP4 视频文件"
+    ],
+    "example": "帮我把这 6 张关键帧图片生成一段连贯的过渡视频",
+    "notes": "需有 API 密钥;先上传 6 张图获取文件名,再提交工作流;生成约 3–8 分钟;输出目录用 get-output-dir.sh 获取"
+  }
+}
