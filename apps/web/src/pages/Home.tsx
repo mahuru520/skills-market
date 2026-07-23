@@ -31,8 +31,7 @@ export function Home() {
             Osprey 技能市场
           </h1>
           <p className="text-lg text-ink-soft mt-4">浏览、搜索、了解全部 Osprey Skills</p>
-          <InstallPromptBar />
-          <form onSubmit={onSearch} className="max-w-6xl mx-auto mt-10 flex gap-2">
+          <form onSubmit={onSearch} className="max-w-6xl mx-auto mt-8 flex gap-2">
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
@@ -46,6 +45,14 @@ export function Home() {
               搜索
             </button>
           </form>
+        </div>
+      </section>
+
+      {/* 一键安装 */}
+      <section className="max-w-6xl mx-auto px-6 py-16">
+        <SectionHeader eyebrow="QUICK START" title="一键安装" />
+        <div className="mt-6">
+          <InstallPromptBar />
         </div>
       </section>
 

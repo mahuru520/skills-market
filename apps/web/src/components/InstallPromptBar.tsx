@@ -1,4 +1,4 @@
-/* 首页安装提示词条:点击右侧图标复制提示词,供粘贴到 AI 助手安装本技能市场 */
+/* 首页「一键安装」板块:复制提示词发给 AI 助手,自动安装本技能市场 */
 import { useState } from "react";
 
 const PROMPT =
@@ -16,26 +16,30 @@ export function InstallPromptBar() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-5 flex items-center justify-center gap-3">
-      {/* 左:彩色标签 + 指向箭头 */}
-      <span className="text-sm font-semibold text-brand shrink-0 whitespace-nowrap">
-        复制给 AI 助手安装 “Osprey-Skill-Market”
-        <span className="text-ink-soft font-normal ml-2">›</span>
-      </span>
+    <div className="bg-surface rounded-card shadow-card border border-line p-8 md:p-10">
+      <div className="flex items-start gap-4">
+        <span className="text-3xl leading-none">🛒</span>
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-ink">把提示词发给 AI 助手</h3>
+          <p className="text-sm text-ink-mute mt-1.5 leading-relaxed">
+            复制下方提示词，粘贴到任意 AI 助手对话，它会通过 osprey-skill-market 协议自动安装本技能市场。
+          </p>
+        </div>
+      </div>
 
-      <div className="flex items-center gap-3 bg-surface rounded-2xl border border-line shadow-card px-4 py-3 flex-1 max-w-2xl">
-        {/* 提示词 */}
-        <code className="flex-1 min-w-0 text-sm text-ink-soft whitespace-nowrap overflow-x-auto font-mono">
+      {/* 命令栏 */}
+      <div className="mt-6 flex items-center gap-3 bg-canvas rounded-2xl border border-line pl-4 pr-1.5 py-1.5">
+        <span className="text-brand text-sm font-mono shrink-0 select-none">›</span>
+        <code className="flex-1 min-w-0 text-sm text-ink-soft whitespace-nowrap overflow-x-auto font-mono py-2">
           {PROMPT}
         </code>
-
-        {/* 右:复制图标 */}
         <button
           onClick={onCopy}
           aria-label="复制提示词"
-          className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-canvas border border-line text-ink-soft hover:border-brand/40 hover:text-brand transition-colors"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 h-9 rounded-xl text-xs font-medium text-ink-soft bg-surface border border-line hover:border-brand/40 hover:text-brand transition-colors"
         >
           {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied ? "已复制" : "复制"}
         </button>
       </div>
     </div>
@@ -44,7 +48,7 @@ export function InstallPromptBar() {
 
 function CopyIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
     </svg>
@@ -53,7 +57,7 @@ function CopyIcon() {
 
 function CheckIcon() {
   return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="20 6 9 17 4 12" />
     </svg>
   );
