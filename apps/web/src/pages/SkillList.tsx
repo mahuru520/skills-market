@@ -54,9 +54,9 @@ export function SkillList() {
   const total = data?.total ?? 0;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
+    <div className="max-w-market mx-auto px-6 py-10">
       <div className="flex items-center gap-3 mb-6">
-        <h1 className="text-3xl font-extrabold tracking-tight text-ink">全部技能</h1>
+        <h1 className="font-serif text-3xl font-medium tracking-tight text-ink">全部技能</h1>
         <div className="flex-1" />
         <div className="relative w-72 max-w-full">
           <input
@@ -67,7 +67,7 @@ export function SkillList() {
               if (e.key === "Enter") submitKeyword();
             }}
             placeholder="搜索技能名称或描述…"
-            className="w-full pl-9 pr-3 py-2 text-sm rounded-card border border-line bg-surface focus:outline-none focus:border-brand"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-card border border-line bg-canvas2 font-sans text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-mute text-sm">🔍</span>
           {keywordInput && (
@@ -86,14 +86,14 @@ export function SkillList() {
       </div>
 
       {/* 筛选区 */}
-      <div className="bg-surface rounded-card shadow-card p-4 mb-6 space-y-3">
+      <div className="bg-canvas2 rounded-card border border-line p-4 mb-6 space-y-3">
         {/* 排序 */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-ink-mute">排序：</span>
+          <span className="font-mono text-xs text-ink-mute">排序</span>
           <select
             value={sortBy}
             onChange={(e) => update("sortBy", e.target.value)}
-            className="text-sm border border-line rounded-lg px-2 py-1 bg-surface focus:outline-none focus:border-brand"
+            className="font-mono text-xs border border-line rounded-[4px] px-2 py-1 bg-canvas text-ink focus:outline-none focus:border-brand"
           >
             {SORT_OPTIONS.map((o) => (
               <option key={o.value} value={o.value}>
@@ -166,7 +166,7 @@ export function SkillList() {
       </div>
 
       {/* 结果统计 */}
-      <div className="text-sm text-ink-mute mb-4">
+      <div className="font-mono text-xs text-ink-mute mb-4 tracking-wide">
         {isLoading ? "加载中…" : `共 ${total} 个技能`}
       </div>
 
@@ -179,8 +179,8 @@ export function SkillList() {
 
       {/* 空状态 */}
       {!isLoading && skills.length === 0 && (
-        <div className="text-center py-16 text-ink-mute">
-          没有匹配的技能,试试调整筛选条件。
+        <div className="text-center py-16 text-ink-mute font-serif">
+          没有匹配的技能，试试调整筛选条件。
         </div>
       )}
     </div>
@@ -196,7 +196,7 @@ function FilterRow({
 }) {
   return (
     <div className="flex items-center gap-2 flex-wrap">
-      <span className="text-sm text-ink-mute w-16 shrink-0">{label}：</span>
+      <span className="font-mono text-xs text-ink-mute w-16 shrink-0">{label}</span>
       <div className="flex items-center gap-1.5 flex-wrap">{children}</div>
     </div>
   );
@@ -214,9 +214,9 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`text-xs px-3 py-1 rounded-full transition-colors ${
+      className={`font-mono text-xs px-3 py-1 rounded-full transition-colors ${
         active
-          ? "bg-brand text-white"
+          ? "bg-brand text-[#F4F2EA]"
           : "bg-canvas text-ink-soft border border-line hover:border-brand/40"
       }`}
     >

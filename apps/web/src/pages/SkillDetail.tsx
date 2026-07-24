@@ -39,13 +39,13 @@ export function SkillDetail() {
   });
 
   if (detailQ.isLoading) {
-    return <div className="max-w-6xl mx-auto px-6 py-10 text-ink-mute">加载中…</div>;
+    return <div className="max-w-market mx-auto px-6 py-10 text-ink-mute font-mono text-sm">加载中…</div>;
   }
   if (detailQ.isError || !detailQ.data) {
     return (
-      <div className="max-w-6xl mx-auto px-6 py-10">
-        <p className="text-ink-mute">技能不存在或加载失败。</p>
-        <Link to="/skills" className="text-brand hover:underline mt-2 inline-block">
+      <div className="max-w-market mx-auto px-6 py-10">
+        <p className="text-ink-mute font-serif">技能不存在或加载失败。</p>
+        <Link to="/skills" className="text-brand hover:underline mt-2 inline-block font-mono text-sm">
           ← 返回列表
         </Link>
       </div>
@@ -55,8 +55,8 @@ export function SkillDetail() {
   const s = detailQ.data;
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-8">
-      <Link to="/skills" className="text-sm text-ink-mute hover:text-ink">
+    <div className="max-w-market mx-auto px-6 py-8">
+      <Link to="/skills" className="font-mono text-sm text-ink-mute hover:text-ink">
         ← 全部技能
       </Link>
 
@@ -64,8 +64,8 @@ export function SkillDetail() {
       <div className="flex items-start gap-4 mt-4 mb-6">
         <span className="text-5xl leading-none">{s.icon || "📦"}</span>
         <div className="flex-1">
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink">{s.displayName}</h1>
-          <p className="text-ink-mute mt-1">{s.description}</p>
+          <h1 className="font-serif text-3xl font-medium tracking-tight text-ink">{s.displayName}</h1>
+          <p className="text-ink-mute mt-1 font-serif">{s.description}</p>
           <div className="flex flex-wrap items-center gap-1.5 mt-3">
             <Badge className={RUNTIME_COLOR[s.runtimeType]}>
               {RUNTIME_LABEL[s.runtimeType] ?? s.runtimeType}
@@ -73,7 +73,7 @@ export function SkillDetail() {
             <Badge className={BILLING_COLOR[s.billing]}>
               {BILLING_LABEL[s.billing] ?? s.billing}
             </Badge>
-            <Badge className="bg-canvas text-ink-soft border border-line">
+            <Badge className="bg-canvas text-ink-soft border-line">
               {CATEGORY_LABEL[s.category] ?? s.category}
             </Badge>
             {SOURCE_LABEL[s.source] && (
@@ -128,9 +128,9 @@ export function SkillDetail() {
           <PromptCard slug={s.slug} />
           <DownloadCard slug={s.slug} onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })} />
 
-          <div className="bg-surface rounded-card shadow-card p-5">
-            <h3 className="font-semibold text-ink mb-3">基础信息</h3>
-            <dl className="text-sm space-y-2">
+          <div className="bg-canvas2 rounded-card border border-line p-5">
+            <h3 className="font-serif font-semibold text-ink mb-3">基础信息</h3>
+            <dl className="text-sm space-y-2 font-mono">
               <InfoRow label="分类" value={CATEGORY_LABEL[s.category] ?? s.category} />
               <InfoRow label="运行方式" value={RUNTIME_LABEL[s.runtimeType] ?? s.runtimeType} />
               <InfoRow label="计费" value={BILLING_LABEL[s.billing] ?? s.billing} />
@@ -167,7 +167,7 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`pb-2 border-b-2 -mb-px transition-colors ${
+      className={`pb-2 border-b-2 -mb-px transition-colors font-serif ${
         active
           ? "border-brand text-brand font-medium"
           : "border-transparent text-ink-mute hover:text-ink"
@@ -190,11 +190,11 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 /* ---------- 排版样式 ---------- */
 
 const PROSE = `
-  max-w-none break-words text-[15px] leading-relaxed text-ink
-  [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-ink [&_h1]:mt-10 [&_h1]:mb-4 [&_h1]:pb-2 [&_h1]:border-b [&_h1]:border-line
-  [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-ink [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:pl-3 [&_h2]:border-l-[3px] [&_h2]:border-brand
-  [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:text-ink [&_h3]:mt-6 [&_h3]:mb-2
-  [&_h4]:text-base [&_h4]:font-semibold [&_h4]:text-ink-soft [&_h4]:mt-5 [&_h4]:mb-2
+  max-w-none break-words text-[15px] leading-relaxed text-ink font-serif
+  [&_h1]:text-2xl [&_h1]:font-medium [&_h1]:text-ink [&_h1]:mt-10 [&_h1]:mb-4 [&_h1]:pb-2 [&_h1]:border-b [&_h1]:border-line
+  [&_h2]:text-xl [&_h2]:font-medium [&_h2]:text-ink [&_h2]:mt-8 [&_h2]:mb-3 [&_h2]:pl-3 [&_h2]:border-l-[3px] [&_h2]:border-brand
+  [&_h3]:text-lg [&_h3]:font-medium [&_h3]:text-ink [&_h3]:mt-6 [&_h3]:mb-2
+  [&_h4]:text-base [&_h4]:font-medium [&_h4]:text-ink-soft [&_h4]:mt-5 [&_h4]:mb-2
   [&_p]:mb-4 [&_p]:text-ink
   [&_ul]:mb-4 [&_ul]:pl-5 [&_ul]:space-y-1.5
   [&_ol]:mb-4 [&_ol]:pl-5 [&_ol]:space-y-1.5
@@ -202,16 +202,16 @@ const PROSE = `
   [&_li::marker]:text-ink-mute
   [&_a]:text-brand [&_a]:underline [&_a]:decoration-brand/30 [&_a]:underline-offset-2 [&_a]:break-all hover:[&_a]:decoration-brand
   [&_strong]:text-ink [&_strong]:font-semibold
-  [&_blockquote]:border-l-[3px] [&_blockquote]:border-brand/30 [&_blockquote]:bg-canvas [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:rounded-r-md [&_blockquote]:mb-4 [&_blockquote]:text-ink-soft [&_blockquote]:italic
+  [&_blockquote]:border-l-[3px] [&_blockquote]:border-brand/30 [&_blockquote]:bg-canvas2 [&_blockquote]:px-4 [&_blockquote]:py-3 [&_blockquote]:rounded-r-md [&_blockquote]:mb-4 [&_blockquote]:text-ink-soft
   [&_hr]:my-8 [&_hr]:border-line
-  [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-line [&_pre]:bg-[#1e1e1e] [&_pre]:p-4 [&_pre]:mb-5 [&_pre]:text-sm
-  [&_pre_code]:text-[#d4d4d4] [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-sm
-  [&_code]:rounded [&_code]:bg-canvas [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sm [&_code]:text-brand [&_code]:font-normal [&_code]:break-all
+  [&_pre]:overflow-x-auto [&_pre]:whitespace-pre [&_pre]:rounded-lg [&_pre]:border [&_pre]:border-[#0A3A33] [&_pre]:bg-brand-dark [&_pre]:p-4 [&_pre]:mb-5 [&_pre]:text-sm
+  [&_pre_code]:text-[#D9D6CD] [&_pre_code]:bg-transparent [&_pre_code]:p-0 [&_pre_code]:text-sm [&_pre_code]:font-mono
+  [&_code]:rounded [&_code]:bg-canvas2 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-sm [&_code]:text-brand [&_code]:font-mono [&_code]:break-all
   [&_table]:w-full [&_table]:overflow-x-auto [&_table]:border-collapse [&_table]:text-sm [&_table]:mb-5
-  [&_thead]:border-b-2 [&_thead]:border-line
-  [&_th]:bg-canvas [&_th]:px-3 [&_th]:py-2.5 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-ink-soft
+  [&_thead]:border-b-2 [&_thead]:border-lineStrong
+  [&_th]:bg-canvas2 [&_th]:px-3 [&_th]:py-2.5 [&_th]:text-left [&_th]:text-xs [&_th]:font-semibold [&_th]:uppercase [&_th]:tracking-wide [&_th]:text-ink-soft [&_th]:font-mono
   [&_td]:px-3 [&_td]:py-2.5 [&_td]:text-ink [&_td]:border-b [&_td]:border-line
-  [&_tbody_tr]:hover:bg-canvas/60
+  [&_tbody_tr]:hover:bg-canvas2/60
   [&_img]:max-w-full [&_img]:rounded-lg [&_img]:my-4
 `.replace(/\s+/g, " ").trim();
 
@@ -240,8 +240,8 @@ function QuickStartTab({
 }) {
   if (!quickstart) {
     return (
-      <div className="bg-surface rounded-card border border-line p-8 text-center">
-        <p className="text-ink-mute text-sm">
+      <div className="bg-canvas2 rounded-card border border-line p-8 text-center">
+        <p className="text-ink-mute text-sm font-serif">
           该技能暂未生成快速开始摘要，
           <br />
           请切换到「概述」查看完整文档。
@@ -253,23 +253,23 @@ function QuickStartTab({
   return (
     <div className="space-y-5">
       {/* 概述 + 描述 */}
-      <div className="bg-surface rounded-card border border-line p-5">
-        <h2 className="text-xl font-bold text-ink mb-2">{displayName}</h2>
-        <p className="text-ink-soft text-sm leading-relaxed">{quickstart.overview}</p>
-        <p className="text-ink-mute text-xs mt-2">{description}</p>
+      <div className="bg-canvas2 rounded-card border border-line p-5">
+        <h2 className="font-serif text-xl font-medium text-ink mb-2">{displayName}</h2>
+        <p className="text-ink-soft text-sm leading-relaxed font-serif">{quickstart.overview}</p>
+        <p className="text-ink-mute text-xs mt-2 font-mono">{description}</p>
       </div>
 
       {/* 适用场景 */}
       {quickstart.scenarios.length > 0 && (
-        <div className="bg-surface rounded-card border border-line overflow-hidden">
+        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
           <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
             <span className="text-base">🎯</span>
-            <h3 className="font-semibold text-ink text-sm">适用场景</h3>
+            <h3 className="font-serif font-medium text-ink text-sm">适用场景</h3>
           </div>
           <div className="p-5">
             <ul className="space-y-1.5">
               {quickstart.scenarios.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed">
+                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-serif">
                   <span className="text-ink-mute mt-0.5 shrink-0">•</span>
                   <span>{s}</span>
                 </li>
@@ -280,25 +280,25 @@ function QuickStartTab({
       )}
 
       {/* 快速上手 */}
-      <div className="bg-surface rounded-card border border-line overflow-hidden">
+      <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
         <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
           <span className="text-base">🚀</span>
-          <h3 className="font-semibold text-ink text-sm">快速上手</h3>
+          <h3 className="font-serif font-medium text-ink text-sm">快速上手</h3>
         </div>
         <div className="p-5">
-          <p className="text-[15px] text-ink leading-relaxed">{quickstart.example}</p>
+          <p className="text-[15px] text-ink leading-relaxed font-serif">{quickstart.example}</p>
         </div>
       </div>
 
       {/* 注意事项 */}
       {quickstart.notes && quickstart.notes !== "无" && (
-        <div className="bg-surface rounded-card border border-line overflow-hidden">
+        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
           <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
             <span className="text-base">⚠️</span>
-            <h3 className="font-semibold text-ink text-sm">注意事项</h3>
+            <h3 className="font-serif font-medium text-ink text-sm">注意事项</h3>
           </div>
           <div className="p-5">
-            <p className="text-[15px] text-ink leading-relaxed">{quickstart.notes}</p>
+            <p className="text-[15px] text-ink leading-relaxed font-serif">{quickstart.notes}</p>
           </div>
         </div>
       )}
@@ -315,19 +315,19 @@ function VersionsTab({
   versions: ChangelogEntry[];
   isLoading: boolean;
 }) {
-  if (isLoading) return <p className="text-ink-mute">加载中…</p>;
+  if (isLoading) return <p className="text-ink-mute font-mono text-sm">加载中…</p>;
   if (!versions || versions.length === 0)
-    return <p className="text-ink-mute">暂无版本记录</p>;
+    return <p className="text-ink-mute font-serif">暂无版本记录</p>;
   return (
     <ol className="space-y-4">
       {versions.map((v) => (
         <li key={v.version} className="border-l-2 border-line pl-4">
           <div className="flex items-center gap-2">
-            <span className="font-medium text-ink">v{v.version}</span>
-            <span className="text-xs text-ink-mute">{v.date}</span>
-            <Badge className="bg-canvas text-ink-soft border border-line">{v.type}</Badge>
+            <span className="font-mono font-medium text-ink">v{v.version}</span>
+            <span className="font-mono text-xs text-ink-mute">{v.date}</span>
+            <Badge className="bg-canvas text-ink-soft border-line">{v.type}</Badge>
           </div>
-          <ul className="text-sm text-ink-mute mt-1 list-disc list-inside space-y-0.5">
+          <ul className="text-sm text-ink-mute mt-1 list-disc list-inside space-y-0.5 font-serif">
             {v.changes.map((c, i) => (
               <li key={i}>{c}</li>
             ))}
@@ -355,8 +355,8 @@ function ManualTab({ slug }: { slug: string }) {
 function FileList({ files }: { files?: SkillFile[] }) {
   if (!files || files.length === 0) return null;
   return (
-    <div className="bg-surface rounded-card shadow-card p-5">
-      <h3 className="font-semibold text-ink mb-3">文件清单</h3>
+    <div className="bg-canvas2 rounded-card border border-line p-5">
+      <h3 className="font-serif font-semibold text-ink mb-3">文件清单</h3>
       <ul className="text-sm space-y-1 font-mono">
         {files.map((f) => (
           <li
@@ -396,12 +396,12 @@ function PromptCard({ slug }: { slug: string }) {
   };
 
   return (
-    <div className="bg-surface rounded-card shadow-card p-5">
+    <div className="bg-canvas2 rounded-card border border-line p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-ink">发送给你的 AI 安装</h3>
+        <h3 className="font-serif font-semibold text-ink">发送给你的 AI 安装</h3>
         <button
           onClick={onCopy}
-          className="text-xs px-2.5 py-1 rounded-full bg-canvas border border-line text-ink-soft hover:border-brand/40 transition-colors"
+          className="font-mono text-xs px-2.5 py-1 rounded-full bg-canvas border border-line text-ink-soft hover:border-brand/40 transition-colors"
         >
           {copied ? "已复制" : "复制"}
         </button>
@@ -459,21 +459,21 @@ function DownloadCard({
   };
 
   return (
-    <div className="bg-surface rounded-card shadow-card p-5">
-      <h3 className="font-semibold text-ink mb-3">下载</h3>
+    <div className="bg-canvas2 rounded-card border border-line p-5">
+      <h3 className="font-serif font-semibold text-ink mb-3">下载</h3>
       <a
         href={downloadUrl}
         download={`${slug}.zip`}
         onClick={onClick}
-        className={`block text-center text-sm px-4 py-2.5 rounded-card transition-colors ${
+        className={`block text-center font-mono text-sm px-4 py-2.5 rounded-card transition-colors ${
           busy
             ? "bg-canvas border border-line text-ink-mute"
-            : "bg-brand text-white hover:bg-brand-dark"
+            : "bg-brand text-[#F4F2EA] hover:bg-brand-dark"
         }`}
       >
         {busy ? "下载中…" : "⬇ 下载技能(zip)"}
       </a>
-      <p className="text-xs text-ink-mute mt-2 text-center">
+      <p className="font-mono text-xs text-ink-mute mt-2 text-center">
         下载整个技能目录打包文件
       </p>
     </div>

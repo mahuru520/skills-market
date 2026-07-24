@@ -2,9 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body, #root {
+html,
+body,
+#root {
   height: 100%;
 }
+
 body {
-  @apply bg-canvas text-ink-soft font-sans antialiased;
+  @apply bg-canvas text-ink-soft font-serif antialiased;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+::selection {
+  background: theme("colors.brand.DEFAULT");
+  color: #f4f2ea;
+}
+
+/* mono 数字与代码块对齐 */
+.font-mono,
+code,
+kbd {
+  font-variant-ligatures: none;
+}
+
+/* 隐藏横向滚动条但保留可滚动(命令栏用) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

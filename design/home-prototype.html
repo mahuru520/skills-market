@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Osprey Skill Market — 首页设计稿</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,400italic&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EBEAE4;
+    --paper-2:#E3E1DA;
+    --paper-3:#D9D6CD;
+    --ink:#1B1D1C;
+    --ink-soft:#4A4D4B;
+    --ink-mute:#8A8C88;
+    --line:#D0CEC6;
+    --line-strong:#B6B3AA;
+    --accent:#0E4D44;
+    --accent-2:#0A3A33;
+    --accent-soft:#E1ECEA;
+    --accent-ink:#F4F2EA;
+    --serif:"Newsreader",Georgia,"Songti SC",serif;
+    --mono:"IBM Plex Mono",ui-monospace,"Sarasa Mono SC",monospace;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);
+    color:var(--ink-soft);
+    font-family:var(--serif);
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--accent);color:var(--accent-ink)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* ---------- Header ---------- */
+  .top{
+    position:sticky;top:0;z-index:20;
+    background:rgba(235,234,228,.86);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .top-row{display:flex;align-items:center;gap:32px;height:58px}
+  .brand{display:flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.01em;color:var(--ink)}
+  .brand .chev{color:var(--accent);font-weight:600}
+  .nav{display:flex;align-items:center;gap:26px;font-family:var(--mono);font-size:13px;margin-left:8px}
+  .nav a{color:var(--ink-mute);transition:color .15s}
+  .nav a:hover,.nav a.active{color:var(--ink)}
+  .nav a.active{position:relative}
+  .nav a.active::after{content:"";position:absolute;left:0;right:0;bottom:-21px;height:2px;background:var(--accent)}
+  .top-spacer{flex:1}
+  .top-stamp{font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.04em}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:72px 0 56px;border-bottom:1px solid var(--line)}
+  .hero-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:start}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:500;display:flex;align-items:center;gap:10px}
+  .eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--accent)}
+  .eyebrow .sep{color:var(--line-strong)}
+
+  h1.lede{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(2.5rem,5.4vw,4.3rem);
+    line-height:1.04;
+    letter-spacing:-.018em;
+    color:var(--ink);
+    margin:22px 0 0;
+  }
+  h1.lede em{font-style:normal;font-weight:500;color:var(--accent)}
+  .hero-sub{
+    font-family:var(--serif);
+    font-size:1.18rem;
+    line-height:1.55;
+    color:var(--ink-soft);
+    max-width:30em;
+    margin:22px 0 30px;
+  }
+
+  /* signature: install prompt chip */
+  .prompt{
+    margin-top:6px;
+    background:var(--accent);
+    color:var(--accent-ink);
+    border-radius:14px;
+    padding:16px 16px 16px 18px;
+    display:flex;align-items:center;gap:12px;
+    box-shadow:0 1px 0 var(--accent-2), 0 18px 30px -22px rgba(14,77,68,.55);
+  }
+  .prompt .chev{font-family:var(--mono);font-weight:600;font-size:15px;opacity:.85;flex-shrink:0}
+  .prompt .cmd{
+    flex:1;min-width:0;
+    font-family:var(--mono);font-size:13.5px;line-height:1.5;
+    color:var(--accent-ink);
+    white-space:nowrap;overflow-x:auto;
+    padding:2px 0;
+    scrollbar-width:none;
+  }
+  .prompt .cmd::-webkit-scrollbar{display:none}
+  .prompt .cmd .url{color:#9FD6CB}
+  .copy{
+    flex-shrink:0;
+    font-family:var(--mono);font-size:12px;font-weight:500;
+    letter-spacing:.03em;
+    color:var(--accent-ink);
+    background:rgba(244,242,234,.13);
+    border:1px solid rgba(244,242,234,.22);
+    padding:8px 13px;border-radius:9px;
+    cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+    transition:background .15s,border-color .15s;
+  }
+  .copy:hover{background:rgba(244,242,234,.22);border-color:rgba(244,242,234,.4)}
+  .copy:focus-visible{outline:2px solid var(--accent-ink);outline-offset:2px}
+  .prompt-meta{font-family:var(--mono);font-size:11px;color:var(--ink-mute);margin-top:12px;letter-spacing:.02em}
+
+  /* registry live panel */
+  .registry{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .registry-head{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:11px 14px;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);
+  }
+  .live{display:inline-flex;align-items:center;gap:7px}
+  .live .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(14,77,68,.5);animation:pulse 2.4s ease-out infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(14,77,68,.45)}70%{box-shadow:0 0 0 8px rgba(14,77,68,0)}100%{box-shadow:0 0 0 0 rgba(14,77,68,0)}}
+  .registry-body{padding:6px 0}
+  .reg-row{
+    display:grid;grid-template-columns:54px 1fr auto auto;gap:12px;align-items:center;
+    padding:7px 14px;
+    font-family:var(--mono);font-size:12.5px;
+    border-bottom:1px solid transparent;
+    opacity:0;transform:translateY(6px);
+    animation:rise .5s ease-out forwards;
+  }
+  .reg-row:last-child{border-bottom:none}
+  .reg-row .t{color:var(--ink-mute)}
+  .reg-row .slug{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .reg-row .slug .plus{color:var(--accent);margin-right:6px}
+  .reg-row .ver{color:var(--ink-mute)}
+  .reg-row .code{color:var(--ink-mute);font-size:11px;letter-spacing:.06em}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .registry-foot{
+    padding:10px 14px;border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:11px;color:var(--ink-mute);
+    display:flex;justify-content:space-between;
+  }
+  .registry-foot a{color:var(--accent)}
+
+  /* ---------- How it works ---------- */
+  .how{padding:54px 0;border-bottom:1px solid var(--line)}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:24px;margin-bottom:30px}
+  .section-head h2{font-family:var(--serif);font-weight:500;font-size:1.9rem;letter-spacing:-.01em;color:var(--ink);margin:10px 0 0}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  .step{padding:26px 26px 8px;border-right:1px solid var(--line);position:relative}
+  .step:last-child{border-right:none}
+  .step .n{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.1em;font-weight:500}
+  .step h3{font-family:var(--serif);font-weight:500;font-size:1.25rem;color:var(--ink);margin:14px 0 8px}
+  .step p{font-size:.98rem;color:var(--ink-soft);margin:0;max-width:24em}
+  .step .nail{position:absolute;top:26px;right:26px;font-family:var(--mono);font-size:11px;color:var(--ink-mute)}
+
+  /* ---------- Category index ---------- */
+  .cats{padding:64px 0;border-bottom:1px solid var(--line)}
+  .idx{border-top:1px solid var(--line-strong)}
+  .idx-row{
+    display:grid;grid-template-columns:64px 1.2fr 1fr 90px 28px;gap:18px;align-items:center;
+    padding:18px 6px;border-bottom:1px solid var(--line);
+    transition:background .15s,padding .15s;
+    cursor:pointer;
+  }
+  .idx-row:hover{background:var(--paper-2);padding-left:14px}
+  .idx-row:hover .go{color:var(--accent);transform:translateX(3px)}
+  .idx-code{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--accent);background:var(--accent-soft);border:1px solid var(--line);border-radius:4px;padding:5px 0;text-align:center}
+  .idx-cn{font-family:var(--serif);font-size:1.18rem;color:var(--ink);font-weight:500}
+  .idx-en{font-family:var(--mono);font-size:12.5px;color:var(--ink-mute);letter-spacing:.02em}
+  .idx-count{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);text-align:right}
+  .idx-count .num{color:var(--ink);font-weight:500}
+  .go{font-family:var(--mono);font-size:14px;color:var(--ink-mute);transition:color .15s,transform .15s;text-align:right}
+
+  /* ---------- Trending leaderboard ---------- */
+  .trend{padding:64px 0;border-bottom:1px solid var(--line)}
+  .board{border-top:1px solid var(--line-strong)}
+  .board-row{
+    display:grid;grid-template-columns:56px 42px 1fr auto 110px;gap:18px;align-items:center;
+    padding:18px 6px;border-bottom:1px solid var(--line);
+    transition:background .15s;
+  }
+  .board-row:hover{background:var(--paper-2)}
+  .rank{font-family:var(--mono);font-size:1.5rem;font-weight:500;color:var(--ink-mute);letter-spacing:-.02em}
+  .rank.r1{color:var(--accent)}
+  .rank.r1::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-left:6px;vertical-align:middle}
+  .b-icon{font-size:1.7rem;line-height:1}
+  .b-name{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .b-name .t1{font-family:var(--serif);font-size:1.12rem;color:var(--ink);font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .b-name .t2{font-family:var(--mono);font-size:11.5px;color:var(--ink-mute);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  .badge{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;padding:3px 8px;border-radius:3px;border:1px solid var(--line);color:var(--ink-soft);background:var(--paper);white-space:nowrap}
+  .badge.paid{background:var(--accent-soft);color:var(--accent);border-color:#BFD3CF}
+  .b-dl{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);text-align:right}
+  .b-dl .num{color:var(--ink);font-weight:500}
+  .b-dl .arr{color:var(--ink-mute)}
+
+  /* ---------- Featured ---------- */
+  .feat{padding:64px 0 80px}
+  .feat-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:22px;margin-top:8px}
+  .fcard{
+    background:var(--paper-2);border:1px solid var(--line);border-radius:8px;
+    padding:30px;display:flex;flex-direction:column;gap:14px;
+    transition:border-color .2s,transform .2s;
+    cursor:pointer;
+  }
+  .fcard:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+  .fcard .ftop{display:flex;align-items:center;gap:12px}
+  .fcard .ficon{font-size:1.9rem;line-height:1}
+  .fcard .fcode{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent);margin-left:auto;background:var(--accent-soft);border:1px solid #BFD3CF;border-radius:3px;padding:3px 8px}
+  .fcard h3{font-family:var(--serif);font-weight:500;font-size:1.5rem;color:var(--ink);margin:0;letter-spacing:-.01em}
+  .fcard .fslug{font-family:var(--mono);font-size:12px;color:var(--ink-mute)}
+  .fcard p{font-family:var(--serif);font-size:1.02rem;color:var(--ink-soft);margin:0;line-height:1.55}
+  .fcard .fmeta{margin-top:auto;display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--ink-mute)}
+  .fcard .fmeta .sep{color:var(--line-strong)}
+  .fcard.tall{grid-row:span 1}
+  .fcard .pick{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute)}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--line);background:var(--paper-2);padding:40px 0}
+  .foot-grid{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+  .foot-prompt{flex:1;min-width:280px;font-family:var(--mono);font-size:12px;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:10px 14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .foot-prompt .chev{color:var(--accent);margin-right:6px}
+  .foot-links{display:flex;gap:22px;font-family:var(--mono);font-size:12.5px;color:var(--ink-mute)}
+  .foot-links a:hover{color:var(--accent)}
+  .foot-stamp{font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.04em;width:100%;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:900px){
+    .hero{padding:48px 0 40px}
+    .hero-grid{grid-template-columns:1fr;gap:36px}
+    .registry{order:2}
+    .steps{grid-template-columns:1fr}
+    .step{border-right:none;border-bottom:1px solid var(--line);padding:22px 0}
+    .step:last-child{border-bottom:none}
+    .step .nail{display:none}
+    .idx-row{grid-template-columns:50px 1fr 60px 24px;gap:12px}
+    .idx-en{display:none}
+    .board-row{grid-template-columns:40px 34px 1fr 90px;gap:12px}
+    .badges{display:none}
+    .feat-grid{grid-template-columns:1fr}
+    .top-stamp{display:none}
+    h1.lede{font-size:2.4rem}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .nav{gap:18px}
+    .idx-row{grid-template-columns:46px 1fr 24px}
+    .idx-count{display:none}
+    .board-row{grid-template-columns:34px 30px 1fr}
+    .b-dl{display:none}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+    .reg-row{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#"><span class="chev">›</span> Osprey Skill Market</a>
+    <nav class="nav">
+      <a href="#" class="active">首页</a>
+      <a href="#">全部技能</a>
+      <a href="#">文档</a>
+      <a href="#">订阅</a>
+    </nav>
+    <div class="top-spacer"></div>
+    <div class="top-stamp">2026.07 · build 014</div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow">
+        <span class="dot"></span> MARKET <span class="sep">·</span> v1.0
+      </div>
+      <h1 class="lede">技能，用<em>一句话</em>装进<br/>你的 AI 助手。</h1>
+      <p class="hero-sub">
+        浏览与检索全部 Osprey Skills。粘贴一条提示词，AI 助手自动拉取并装载技能包 —— 无需命令行，无需手动配置。
+      </p>
+
+      <!-- signature: install prompt -->
+      <div class="prompt" id="prompt">
+        <span class="chev">›</span>
+        <code class="cmd">根据 <span class="url">https://skills.ospreyai.cn/api/install/osprey-skill-market.md</span> ，安装 Osprey Skill Market。</code>
+        <button class="copy" id="copy" aria-label="复制安装提示词">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copy-label">复制</span>
+        </button>
+      </div>
+      <div class="prompt-meta">粘贴到任意 AI 助手对话即可触发安装 · 协议 osprey-skill-market</div>
+    </div>
+
+    <!-- registry live panel -->
+    <aside class="registry">
+      <div class="registry-head">
+        <span class="live"><span class="pulse"></span> registry · live</span>
+        <span>recent installs</span>
+      </div>
+      <div class="registry-body">
+        <div class="reg-row" style="animation-delay:.05s"><span class="t">09:41</span><span class="slug"><span class="plus">+</span>comfyui-ltx2-text-to-video</span><span class="ver">1.0.0</span><span class="code">CFU</span></div>
+        <div class="reg-row" style="animation-delay:.13s"><span class="t">09:38</span><span class="slug"><span class="plus">+</span>comfyui-flux2-edit</span><span class="ver">1.0.0</span><span class="code">CFU</span></div>
+        <div class="reg-row" style="animation-delay:.21s"><span class="t">09:35</span><span class="slug"><span class="plus">+</span>comfyui-qwen-image-edit</span><span class="ver">1.0.0</span><span class="code">CFU</span></div>
+        <div class="reg-row" style="animation-delay:.29s"><span class="t">09:31</span><span class="slug"><span class="plus">+</span>contract-review</span><span class="ver">2.1.0</span><span class="code">DOC</span></div>
+        <div class="reg-row" style="animation-delay:.37s"><span class="t">09:28</span><span class="slug"><span class="plus">+</span>ragflow-knowledge-qa</span><span class="ver">1.2.0</span><span class="code">DOC</span></div>
+        <div class="reg-row" style="animation-delay:.45s"><span class="t">09:24</span><span class="slug"><span class="plus">+</span>osprey-skill-market</span><span class="ver">1.0.0</span><span class="code">SYS</span></div>
+      </div>
+      <div class="registry-foot">
+        <span>51 skills indexed</span>
+        <a href="#">查看全部 →</a>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> PROCESS <span class="sep">·</span> 安装流程</div>
+        <h2>三步装好一个技能</h2>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <span class="nail">copy</span>
+        <h3>复制提示词</h3>
+        <p>在技能详情页选「一键安装」，复制它对应的安装提示词。</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <span class="nail">paste</span>
+        <h3>粘贴给 AI</h3>
+        <p>在任意 AI 助手对话中粘贴，助手识别协议并发起拉取。</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <span class="nail">ready</span>
+        <h3>自动装载</h3>
+        <p>技能包下载、解压、登记到本地，下次遇到对应场景优先调用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATEGORY INDEX ============ -->
+<section class="cats">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> INDEX <span class="sep">·</span> 分类</div>
+        <h2>按类别检索</h2>
+      </div>
+      <a href="#" style="font-family:var(--mono);font-size:13px;color:var(--accent)">全部技能 →</a>
+    </div>
+    <div class="idx">
+      <a class="idx-row" href="#">
+        <span class="idx-code">IMG</span>
+        <span class="idx-cn">图像视频</span>
+        <span class="idx-en">Image &amp; Video</span>
+        <span class="idx-count"><span class="num">8</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">CFU</span>
+        <span class="idx-cn">ComfyUI</span>
+        <span class="idx-en">ComfyUI Pipelines</span>
+        <span class="idx-count"><span class="num">6</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">DOC</span>
+        <span class="idx-cn">文档处理</span>
+        <span class="idx-en">Document</span>
+        <span class="idx-count"><span class="num">12</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">COD</span>
+        <span class="idx-cn">代码调试</span>
+        <span class="idx-en">Code &amp; Debug</span>
+        <span class="idx-count"><span class="num">5</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">MAL</span>
+        <span class="idx-cn">邮件通信</span>
+        <span class="idx-en">Mail &amp; Comms</span>
+        <span class="idx-count"><span class="num">9</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">INI</span>
+        <span class="idx-cn">初始化</span>
+        <span class="idx-en">Initialization</span>
+        <span class="idx-count"><span class="num">4</span> skills</span>
+        <span class="go">→</span>
+      </a>
+      <a class="idx-row" href="#">
+        <span class="idx-code">SYS</span>
+        <span class="idx-cn">系统配置</span>
+        <span class="idx-en">System Config</span>
+        <span class="idx-count"><span class="num">7</span> skills</span>
+        <span class="go">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRENDING ============ -->
+<section class="trend">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> TRENDING <span class="sep">·</span> 本周</div>
+        <h2>热门 Top</h2>
+      </div>
+      <a href="#" style="font-family:var(--mono);font-size:13px;color:var(--accent)">查看全部 →</a>
+    </div>
+    <div class="board">
+      <a class="board-row" href="#">
+        <span class="rank r1">01</span>
+        <span class="b-icon">🎬</span>
+        <span class="b-name"><span class="t1">ComfyUI LTX-2 文生视频</span><span class="t2">comfyui-ltx2-text-to-video</span></span>
+        <span class="badges">
+          <span class="badge">网关迁移</span>
+          <span class="badge paid">计费</span>
+          <span class="badge">Osprey</span>
+        </span>
+        <span class="b-dl"><span class="num">1,284</span> <span class="arr">⬇</span></span>
+      </a>
+      <a class="board-row" href="#">
+        <span class="rank">02</span>
+        <span class="b-icon">🖼️</span>
+        <span class="b-name"><span class="t1">ComfyUI FLUX2 图片编辑</span><span class="t2">comfyui-flux2-edit</span></span>
+        <span class="badges">
+          <span class="badge">网关迁移</span>
+          <span class="badge paid">计费</span>
+          <span class="badge">Osprey</span>
+        </span>
+        <span class="b-dl"><span class="num">976</span> <span class="arr">⬇</span></span>
+      </a>
+      <a class="board-row" href="#">
+        <span class="rank">03</span>
+        <span class="b-icon">🎞️</span>
+        <span class="b-name"><span class="t1">ComfyUI 视频生成</span><span class="t2">comfyui-video-generation</span></span>
+        <span class="badges">
+          <span class="badge">网关迁移</span>
+          <span class="badge paid">计费</span>
+          <span class="badge">Osprey</span>
+        </span>
+        <span class="b-dl"><span class="num">812</span> <span class="arr">⬇</span></span>
+      </a>
+      <a class="board-row" href="#">
+        <span class="rank">04</span>
+        <span class="b-icon">🛒</span>
+        <span class="b-name"><span class="t1">Osprey Skill Market</span><span class="t2">osprey-skill-market</span></span>
+        <span class="badges">
+          <span class="badge">本地</span>
+          <span class="badge">免费</span>
+          <span class="badge">Osprey</span>
+        </span>
+        <span class="b-dl"><span class="num">2,041</span> <span class="arr">⬇</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURED ============ -->
+<section class="feat">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> FEATURED <span class="sep">·</span> 精选</div>
+        <h2>推荐精选</h2>
+      </div>
+    </div>
+    <div class="feat-grid">
+      <a class="fcard" href="#">
+        <div class="ftop">
+          <span class="ficon">🛒</span>
+          <span class="pick">Editor's Pick</span>
+          <span class="fcode">SYS</span>
+        </div>
+        <h3>Osprey Skill Market</h3>
+        <span class="fslug">osprey-skill-market · v1.0.0</span>
+        <p>自托管技能市场，加速合规安装。优先源配置仅首次询问，后续直接安装不重复打扰。</p>
+        <div class="fmeta">
+          <span>本地</span><span class="sep">·</span><span>免费</span><span class="sep">·</span><span>Osprey</span><span class="sep">·</span><span>⬇ 2,041</span>
+        </div>
+      </a>
+      <a class="fcard" href="#">
+        <div class="ftop">
+          <span class="ficon">🎬</span>
+          <span class="pick">New</span>
+          <span class="fcode">CFU</span>
+        </div>
+        <h3>ComfyUI LTX-2 文生视频</h3>
+        <span class="fslug">comfyui-ltx2-text-to-video · v1.0.0</span>
+        <p>英文提示词生成静音 mp4，两阶段采样，默认 1280×720 / 5 秒。</p>
+        <div class="fmeta">
+          <span>网关迁移</span><span class="sep">·</span><span>计费</span><span class="sep">·</span><span>⬇ 1,284</span>
+        </div>
+      </a>
+      <a class="fcard" href="#">
+        <div class="ftop">
+          <span class="ficon">📚</span>
+          <span class="pick">Featured</span>
+          <span class="fcode">DOC</span>
+        </div>
+        <h3>RAGFlow 知识库问答</h3>
+        <span class="fslug">ragflow-knowledge-qa · v1.2.0</span>
+        <p>上传文档自动解析向量化，提问时优先按知识库内容作答，匹配度过低再回退其他信息源。</p>
+        <div class="fmeta">
+          <span>网关迁移</span><span class="sep">·</span><span>计费</span><span class="sep">·</span><span>⬇ 643</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-prompt"><span class="chev">›</span>根据 https://skills.ospreyai.cn/api/install/osprey-skill-market.md ，安装 Osprey Skill Market。</div>
+      <nav class="foot-links">
+        <a href="#">文档</a>
+        <a href="#">订阅</a>
+        <a href="#">GitHub</a>
+      </nav>
+    </div>
+    <div class="foot-stamp">
+      <span>Osprey Skill Market · 自托管技能目录</span>
+      <span>build 014 · 2026.07.24</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // copy prompt
+  (function(){
+    var btn=document.getElementById('copy');
+    var label=document.getElementById('copy-label');
+    var cmd=document.querySelector('#prompt .cmd');
+    var text=cmd.innerText.replace(/^›\s*/,'').trim();
+    btn.addEventListener('click',function(){
+      var done=function(){
+        label.textContent='已复制';
+        setTimeout(function(){label.textContent='复制'},1500);
+      };
+      if(navigator.clipboard&&window.isSecureContext){
+        navigator.clipboard.writeText(text).then(done).catch(fallback);
+      }else{fallback();}
+      function fallback(){
+        var ta=document.createElement('textarea');ta.value=text;
+        ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+        ta.focus();ta.select();try{document.execCommand('copy');done();}catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+  })();
+</script>
+</body>
+</html>

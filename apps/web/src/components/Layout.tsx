@@ -3,17 +3,20 @@ import { Link, NavLink } from "react-router-dom";
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-full flex flex-col">
-      <header className="sticky top-0 z-20 bg-surface/80 backdrop-blur border-b border-line">
-        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center gap-8">
-          <Link to="/" className="font-bold text-xl text-ink tracking-tight">
-            Osprey Skill Market
+      <header className="sticky top-0 z-20 bg-canvas/85 backdrop-blur border-b border-line">
+        <div className="max-w-market mx-auto px-6 h-[58px] flex items-center gap-8">
+          <Link
+            to="/"
+            className="font-mono font-semibold text-sm text-ink tracking-tight inline-flex items-center gap-2"
+          >
+            <span className="text-brand">›</span> Osprey Skill Market
           </Link>
-          <nav className="flex items-center gap-6 text-sm">
+          <nav className="flex items-center gap-6 font-mono text-[13px]">
             <NavLink
               to="/"
               end
               className={({ isActive }) =>
-                isActive ? "text-brand font-medium" : "text-ink-mute hover:text-ink"
+                isActive ? "text-ink font-medium" : "text-ink-mute hover:text-ink"
               }
             >
               首页
@@ -21,7 +24,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
             <NavLink
               to="/skills"
               className={({ isActive }) =>
-                isActive ? "text-brand font-medium" : "text-ink-mute hover:text-ink"
+                isActive ? "text-ink font-medium" : "text-ink-mute hover:text-ink"
               }
             >
               全部技能

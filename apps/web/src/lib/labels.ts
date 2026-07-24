@@ -1,15 +1,15 @@
 export const RUNTIME_LABEL: Record<string, string> = {
-  local: "本地运行",
+  local: "本地",
   external_api: "外网API",
   gateway_migrated_api: "网关迁移",
   gateway_async_api: "网关异步",
 };
 
 export const RUNTIME_COLOR: Record<string, string> = {
-  local: "bg-canvas text-ink-soft border border-line",
-  external_api: "bg-orange-50 text-brand border border-orange-100",
-  gateway_migrated_api: "bg-rose-50 text-rose-700 border border-rose-100",
-  gateway_async_api: "bg-rose-50 text-rose-700 border border-rose-100",
+  local: "bg-canvas text-ink-soft border-line",
+  external_api: "bg-orange-50 text-amber-700 border-amber-100",
+  gateway_migrated_api: "bg-brand-soft text-brand border-[#BFD3CF]",
+  gateway_async_api: "bg-brand-soft text-brand border-[#BFD3CF]",
 };
 
 export const BILLING_LABEL: Record<string, string> = {
@@ -18,8 +18,8 @@ export const BILLING_LABEL: Record<string, string> = {
 };
 
 export const BILLING_COLOR: Record<string, string> = {
-  free: "bg-emerald-50 text-emerald-700 border border-emerald-100",
-  paid: "bg-amber-50 text-amber-700 border border-amber-100",
+  free: "bg-canvas text-ink-soft border-line",
+  paid: "bg-brand-soft text-brand border-[#BFD3CF]",
 };
 
 export const SOURCE_LABEL: Record<string, string> = {
@@ -40,6 +40,18 @@ export const CATEGORY_LABEL: Record<string, string> = {
   mail_communication: "邮件通信",
   initialization: "初始化",
   system_config: "系统配置",
+};
+
+// 分类三字母代号,用作紧凑的结构标签(registry 面板、分类索引色块等)
+export const CATEGORY_CODE: Record<string, string> = {
+  image_video: "IMG",
+  comfyui: "CFU",
+  document: "DOC",
+  code_debug: "COD",
+  mail_communication: "MAL",
+  initialization: "INI",
+  system_config: "SYS",
+  other: "SYS",
 };
 
 export const SORT_OPTIONS: Array<{ value: string; label: string }> = [
