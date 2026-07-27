@@ -13,12 +13,12 @@ export function SkillCard({ skill }: { skill: SkillListItem }) {
   return (
     <Link
       to={`/skills/${skill.slug}`}
-      className="block bg-canvas2 rounded-card border border-line p-6 shadow-[0_1px_2px_rgba(27,29,28,0.05)] hover:border-lineStrong hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-10px_rgba(14,77,68,0.22)] transition-all"
+      className="block bg-canvas2 rounded-card border border-line p-6 font-sans shadow-[0_1px_2px_rgba(27,29,28,0.05)] hover:border-lineStrong hover:-translate-y-0.5 hover:shadow-[0_8px_20px_-10px_rgba(14,77,68,0.22)] transition-all"
     >
       <div className="flex items-start gap-3">
         <span className="text-3xl leading-none">{skill.icon || "📦"}</span>
         <div className="min-w-0 flex-1">
-          <h3 className="font-serif font-medium text-lg text-ink truncate">
+          <h3 className="font-sans font-semibold text-lg text-ink truncate">
             {skill.displayName}
           </h3>
           <p className="text-sm text-ink-mute line-clamp-2 mt-1 font-sans">

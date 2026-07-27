@@ -91,7 +91,7 @@ export function Home() {
       </section>
 
       {/* ============ 搜索 ============ */}
-      <section className="border-b border-line bg-canvas2/60">
+      <section className="border-b border-line">
         <div className="max-w-market mx-auto px-6 py-12">
           <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5">
             <span className="w-[5px] h-[5px] rounded-full bg-brand" />
@@ -105,7 +105,7 @@ export function Home() {
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="搜索技能名称或描述…"
-              className="flex-1 px-4 py-3 rounded-card border border-line bg-canvas font-sans text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
+              className="flex-1 px-4 py-3 rounded-card border border-line bg-canvas2 font-sans text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
             />
             <button
               type="submit"
@@ -118,7 +118,7 @@ export function Home() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <section className="border-b border-line">
+      <section className="border-b border-line bg-canvas2/60">
         <div className="max-w-market mx-auto px-6 py-14">
           <SectionHead eyebrow="PROCESS · 安装流程">
             <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5">

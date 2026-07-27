@@ -6,10 +6,10 @@ export const RUNTIME_LABEL: Record<string, string> = {
 };
 
 export const RUNTIME_COLOR: Record<string, string> = {
-  local: "bg-canvas text-ink-soft border-line",
-  external_api: "bg-orange-50 text-amber-700 border-amber-100",
-  gateway_migrated_api: "bg-brand-soft text-brand border-[#BFD3CF]",
-  gateway_async_api: "bg-brand-soft text-brand border-[#BFD3CF]",
+  local: "bg-canvas text-ink-soft border border-line",
+  external_api: "bg-orange-50 text-orange-700 border border-orange-100",
+  gateway_migrated_api: "bg-rose-50 text-rose-700 border border-rose-100",
+  gateway_async_api: "bg-rose-50 text-rose-700 border border-rose-100",
 };
 
 export const BILLING_LABEL: Record<string, string> = {
