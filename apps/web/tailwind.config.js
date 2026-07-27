@@ -14,11 +14,11 @@ export default {
           soft: "#4A4D4B",
           mute: "#6E716C", // 加深,对 #F4F2EA 达 AA(4.9:1)
         },
-        canvas: "#EBEAE4", // 暖灰纸(页面底)
-        canvas2: "#F4F2EA", // 亮纸白(卡片/容器底)
-        line: "#D0CEC6",
-        lineStrong: "#B6B3AA",
-        surface: "#F4F2EA",
+        canvas: "#F4F3EE", // 暖白(页面底)
+        canvas2: "#FFFFFF", // 纯白(卡片/容器底)
+        line: "#E2E0D8", // 调淡
+        lineStrong: "#C9C6BC", // 同步调淡
+        surface: "#FFFFFF",
       },
       fontFamily: {
         serif: ['"Newsreader"', "Georgia", '"Songti SC"', "serif"],
