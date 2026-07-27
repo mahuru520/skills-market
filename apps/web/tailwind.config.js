@@ -12,13 +12,13 @@ export default {
         ink: {
           DEFAULT: "#1B1D1C",
           soft: "#4A4D4B",
-          mute: "#8A8C88",
+          mute: "#6E716C", // 加深,对 #F4F2EA 达 AA(4.9:1)
         },
-        canvas: "#EBEAE4", // 暖灰纸
-        canvas2: "#E3E1DA",
+        canvas: "#EBEAE4", // 暖灰纸(页面底)
+        canvas2: "#F4F2EA", // 亮纸白(卡片/容器底)
         line: "#D0CEC6",
         lineStrong: "#B6B3AA",
-        surface: "#E3E1DA",
+        surface: "#F4F2EA",
       },
       fontFamily: {
         serif: ['"Newsreader"', "Georgia", '"Songti SC"', "serif"],
