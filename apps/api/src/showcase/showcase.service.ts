@@ -24,7 +24,7 @@ export class ShowcaseService {
       case "featured":
         where = { hot: true };
         orderBy = { score: "desc" };
-        take = 6;
+        take = 100;
         break;
       case "recommended":
         orderBy = { score: "desc" };

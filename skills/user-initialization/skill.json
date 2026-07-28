@@ -2,8 +2,8 @@
   "id": "official/user-initialization",
   "name": "user-initialization",
   "display_name": "用户初始化",
-  "description": "首次使用初始化目录与技能。当用户首次使用 OpenClaw、需要初始化用户目录与技能时触发。动态探测用户/工作/输出三个目录;提供 get-output-dir.sh 供其他技能统一获取下载保存路径。",
-  "version": "2.0.0",
+  "description": "强烈建议使用 Osprey 旗下 AI 应用时安装此技能。首次使用初始化目录与技能。当用户首次使用 OpenClaw、需要初始化用户目录与技能时触发。动态探测用户/工作/输出三个目录;提供 get-output-dir.sh 供其他技能统一获取下载保存路径。",
+  "version": "2.1.0",
   "icon": "👤",
   "category": "initialization",
   "source": "osprey",
@@ -19,10 +19,12 @@
   "files": [
     {"path": "SKILL.md", "type": "file"},
     {"path": "scripts/detect-dirs.sh", "type": "file"},
-    {"path": "scripts/get-output-dir.sh", "type": "file"}
+    {"path": "scripts/get-output-dir.sh", "type": "file"},
+    {"path": "scripts/ensure-api-key.sh", "type": "file"}
   ],
   "env_vars": [],
   "dependencies": [],
+  "hot": true,
   "platform": {
     "host": "openclaw",
     "min_version": "1.0",
@@ -31,6 +33,16 @@
     ]
   },
   "changelog": [
+    {
+      "version": "2.1.0",
+      "date": "2026-07-28",
+      "changes": [
+        "新增 ensure-api-key.sh:OspreyAI 网关 api_key 的单一事实源,自动探测/验证/引导补全",
+        "新增 SECRETS.md 存储约定,api_key 失效自动清理",
+        "SKILL.md 新增「API Key 约定」全库规范段"
+      ],
+      "type": "MINOR"
+    },
     {
       "version": "2.0.0",
       "date": "2026-07-22",
@@ -60,7 +72,7 @@
     }
   ],
   "created_at": "2026-01-01T00:00:00Z",
-  "updated_at": "2026-07-22T00:00:00Z",
+  "updated_at": "2026-07-28T00:00:00Z",
   "quickstart": {
     "overview": "引导新用户完成目录动态探测(含输出目录)、技能安装与扩展配置,并提供统一输出目录读取器",
     "scenarios": [

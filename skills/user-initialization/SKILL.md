@@ -103,6 +103,43 @@ OUT="$OPENCLAW_OUTPUT_DIR"
 
 新增带下载/保存功能的技能时，应参照上述技能实现，调用 `get-output-dir.sh` 而非硬编码路径。
 
+## API Key 约定（全库规范）
+
+调用网关 `https://open.ospreyai.cn` 的技能，api_key 从 `ensure-api-key.sh` 获取，不要各自硬编码读取逻辑。
+
+### 获取 api_key
+
+```bash
+# 方式一：调用 helper（推荐，自动处理探测/验证/引导补全）
+KEY=$(bash skills/user-initialization/scripts/ensure-api-key.sh)
+
+# 方式二：直接读环境变量（仅当已临时设置）
+KEY="$OSPREY_API_KEY"
+```
+
+`ensure-api-key.sh` 的优先级：`OSPREY_API_KEY 环境变量 → 工作目录 SECRETS.md 的 osprey_api_key → 失败则引导用户到 https://open.ospreyai.cn 获取并保存`。
+
+脚本行为：
+- 探测到候选 key 后，调 `GET /v1/models` 验证；200 即可用，401/403 判定失效
+- key 失效时，自动删除 SECRETS.md 中的旧 key 段，并引导用户重新获取
+- 网络错误（超时、5xx）不判定 key 失效，避免误删
+- 用户粘贴新 key 后，验证通过则写入 SECRETS.md（权限 600）
+
+### 调用失败重新引导
+
+技能调用网关业务接口拿到 401 时，应再次调 `ensure-api-key.sh`，它会发现 key 失效（验证不通过），自动清旧 key 并引导用户重新获取。
+
+### 已遵循约定的技能
+
+| 技能 | 说明 |
+|------|------|
+| `happyhorse-text-to-video` | 调网关文生视频，api_key 从 ensure-api-key.sh 获取 |
+| `happyhorse-image-to-video` | 调网关图生视频，api_key 从 ensure-api-key.sh 获取 |
+| `happyhorse-reference-to-video` | 调网关参考视频生成，api_key 从 ensure-api-key.sh 获取 |
+| `happyhorse-video-edit` | 调网关视频编辑，api_key 从 ensure-api-key.sh 获取 |
+
+新增调网关的技能时，应调用 `ensure-api-key.sh` 而非各自实现探测逻辑。
+
 ## AI 行为准则配置（建议执行）
 
 在工作目录下的 `SOUL.md` 中追加以下行为准则（工作目录路径从 TOOLS.md 读取，下同）：
@@ -136,10 +173,11 @@ Before trying different approaches:
 
 当现有技能无法满足需求时，按以下优先级扩展：
 
-1. GitLab 仓库：`https://gitlab.ospreyai.cn/openclaw/xiaoyi_tools`
-2. 本仓库离线资源：`packages/` 与 `tools/`
-3. 本地自定义技能目录
-4. OpenClaw 官方 skill hub
+1. Osprey 技能市场：`https://skills.ospreyai.cn`
+2. GitLab 仓库：`https://gitlab.ospreyai.cn/openclaw/xiaoyi_tools`
+3. 本仓库离线资源：`packages/` 与 `tools/`
+4. 本地自定义技能目录
+5. OpenClaw 官方 skill hub
 
 扩展流程：
 
