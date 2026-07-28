@@ -1,0 +1,102 @@
+{
+  "id": "official/comfyui-qwen-tts",
+  "name": "comfyui-qwen-tts",
+  "display_name": "ComfyUI Qwen3-TTS 语音定制",
+  "description": "通过公网网关使用 Qwen3-TTS 做语音定制。支持两种模式：VoiceDesign 用文字描述直接生成自定义音色并朗读；VoiceClone 用参考音频克隆音色朗读新文本。当用户要求文字转语音、定制音色、声音设计、克隆声音、Qwen TTS 时使用。",
+  "version": "1.0.0",
+  "icon": "🔊",
+  "category": "comfyui",
+  "source": "osprey",
+  "runtime_type": "gateway_migrated_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "SKILL.md", "type": "file", "size": 0},
+    {"path": "scripts/tts_qwen.py", "type": "file", "size": 0},
+    {"path": "scripts/workflow.json", "type": "file", "size": 0}
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传参考音频（clone 模式）"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/image/generate",
+        "desc": "提交 TTS 工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/tasks/{prompt_id}",
+        "desc": "轮询任务状态"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载音频（type=temp）"
+      }
+    ],
+    "timeout_sec": 300
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 Qwen3-TTS 1.7B 模型。VoiceDesign 凭文字描述生成音色，VoiceClone 凭参考音频克隆音色，输出 FLAC（temp 目录）。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-28",
+      "changes": [
+        "新增 Qwen3-TTS 语音定制技能，支持 VoiceDesign 与 VoiceClone 两种模式"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-28T00:00:00Z",
+  "updated_at": "2026-07-28T00:00:00Z",
+  "quickstart": {
+    "overview": "用 Qwen3-TTS 定制音色并朗读文本，支持描述造音色与参考音频克隆两种模式",
+    "scenarios": [
+      "用文字描述生成自定义音色并朗读",
+      "用参考音频克隆音色朗读新文本",
+      "定制御姐/少年/萝莉等特定音色"
+    ],
+    "example": "python scripts/tts_qwen.py --mode design --text \"今晚和一个危险又迷人的姐姐喝了一杯。\" --instruct \"成熟性感的御姐音色，磁性且慵懒。\"",
+    "notes": "输出为 FLAC 且落在 ComfyUI temp 目录，需及时下载；clone 模式需先上传参考音频"
+  }
+}

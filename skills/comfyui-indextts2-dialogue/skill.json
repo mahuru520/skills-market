@@ -1,0 +1,102 @@
+{
+  "id": "official/comfyui-indextts2-dialogue",
+  "name": "comfyui-indextts2-dialogue",
+  "display_name": "ComfyUI IndexTTS2 双人会话合成",
+  "description": "通过公网网关使用 IndexTTS2 做双人会话语音合成。用两段参考音频分别克隆 S1/S2 音色，按对话脚本交替合成两人的对话音频。当用户要求双人对话配音、两个角色对话、交替说话合成时使用。",
+  "version": "1.0.0",
+  "icon": "🗣️",
+  "category": "comfyui",
+  "source": "osprey",
+  "runtime_type": "gateway_migrated_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "SKILL.md", "type": "file", "size": 0},
+    {"path": "scripts/tts_dialogue.py", "type": "file", "size": 0},
+    {"path": "scripts/workflow.json", "type": "file", "size": 0}
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传两个说话人的参考音频"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/image/generate",
+        "desc": "提交双人对话工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/tasks/{prompt_id}",
+        "desc": "轮询任务状态"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载对话音频（type=output）"
+      }
+    ],
+    "timeout_sec": 300
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 IndexTTS2 双说话人模式，用两段参考音频分别克隆 S1/S2 音色，按对话脚本交替合成，输出单个 MP3（output 目录）。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-28",
+      "changes": [
+        "新增 IndexTTS2 双人会话语音合成技能，支持两段参考音频克隆双音色交替对话"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-28T00:00:00Z",
+  "updated_at": "2026-07-28T00:00:00Z",
+  "quickstart": {
+    "overview": "用两段参考音频分别克隆两个说话人音色，按对话脚本交替合成双人对话",
+    "scenarios": [
+      "双人对话配音",
+      "两个角色交替说话的语音合成",
+      "为 S1/S2 分别设置不同情绪"
+    ],
+    "example": "python scripts/tts_dialogue.py --script \"[S1] 你好呀，今天过得怎么样？\n[S2] 还不错，刚忙完手头的事。\" --ref1 speaker1.wav --ref2 speaker2.wav",
+    "notes": "两段参考音频应为不同人；对话脚本每行以 [S1] 或 [S2] 开头；输出单个 MP3 在 output 目录"
+  }
+}

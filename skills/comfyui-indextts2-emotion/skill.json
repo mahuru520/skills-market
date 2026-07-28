@@ -1,0 +1,102 @@
+{
+  "id": "official/comfyui-indextts2-emotion",
+  "name": "comfyui-indextts2-emotion",
+  "display_name": "ComfyUI IndexTTS2 情绪语音合成",
+  "description": "通过公网网关使用 IndexTTS2 做音色克隆语音合成并控制情绪。用一段参考音频克隆音色，把文本念出来，可指定 8 种情绪（开心/生气/悲伤等）及强度。当用户要求语音合成、文字转语音、TTS、克隆声音、带情绪说话时使用。",
+  "version": "1.0.0",
+  "icon": "🎙️",
+  "category": "comfyui",
+  "source": "osprey",
+  "runtime_type": "gateway_migrated_api",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "SKILL.md", "type": "file", "size": 0},
+    {"path": "scripts/tts_emotion.py", "type": "file", "size": 0},
+    {"path": "scripts/workflow.json", "type": "file", "size": 0}
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传参考音频"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/image/generate",
+        "desc": "提交 TTS 工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/tasks/{prompt_id}",
+        "desc": "轮询任务状态"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载音频（type=output）"
+      }
+    ],
+    "timeout_sec": 300
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 IndexTTS2，用参考音频克隆音色并合成语音，支持 8 种情绪及强度控制，输出 MP3（output 目录）。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-07-28",
+      "changes": [
+        "新增 IndexTTS2 情绪控制语音合成技能，支持 8 种情绪与强度调节"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-07-28T00:00:00Z",
+  "updated_at": "2026-07-28T00:00:00Z",
+  "quickstart": {
+    "overview": "用参考音频克隆音色合成语音，可控制 8 种情绪及强度",
+    "scenarios": [
+      "克隆参考音色朗读文本",
+      "为语音添加开心/悲伤/生气等情绪",
+      "调节情绪强度产生不同效果"
+    ],
+    "example": "python scripts/tts_emotion.py --prompt \"太棒了！我们赢了！\" --ref ref.wav --emotion happy --intensity 2",
+    "notes": "参考音频建议清晰人声 5~15 秒；情绪强度建议 0.5~2.0，过大可能失真；输出 MP3 在 output 目录"
+  }
+}
