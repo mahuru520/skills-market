@@ -1,0 +1,90 @@
+{
+  "11": {
+    "inputs": {
+      "top_k": 30,
+      "top_p": 0.8,
+      "temperature": 0.8,
+      "num_beams": 3,
+      "max_mel_tokens": 1500,
+      "max_text_tokens_per_sentence": 120,
+      "custom_cuda_kernel": false,
+      "deepspeed": true,
+      "unload_model": false,
+      "emo_alpha": 1,
+      "emo_vector": [
+        "16",
+        0
+      ],
+      "use_emo_text": false,
+      "emo_text": "",
+      "use_random": false,
+      "emo_alpha_s2": 1,
+      "emo_vector_s2": "",
+      "use_emo_text_s2": false,
+      "emo_text_s2": "",
+      "use_random_s2": false,
+      "audio": [
+        "14",
+        0
+      ],
+      "text": [
+        "13",
+        0
+      ]
+    },
+    "class_type": "IndexTTS2Run",
+    "_meta": {
+      "title": "IndexTTS2 Run"
+    }
+  },
+  "13": {
+    "inputs": {
+      "multi_line_prompt": "尔康，你告诉我，这一切是不是一场梦？我从济南千里迢迢来京城，怀揣着娘的念想，揣着那把写满心事的折扇，只盼着能认回我的阿玛。我以为只要凭着一片赤诚，总能换来一丝眷顾，可到头来，却是这样的颠沛流离。\n"
+    },
+    "class_type": "MultiLinePromptIndex",
+    "_meta": {
+      "title": "Multi Line Text"
+    }
+  },
+  "14": {
+    "inputs": {
+      "audio": "big_niao.wav",
+      "audioUI": "/api/view?filename=big_niao.wav&type=input&subfolder=&rand=0.9524995720078872"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "加载音频"
+    }
+  },
+  "16": {
+    "inputs": {
+      "happy": 0,
+      "angry": 0,
+      "sad": 1.69,
+      "fear": 0,
+      "hate": 0,
+      "low": 0,
+      "surprise": 0,
+      "neutral": 0
+    },
+    "class_type": "Emotional Control",
+    "_meta": {
+      "title": "Emotional Control"
+    }
+  },
+  "20": {
+    "inputs": {
+      "filename_prefix": "IN会话",
+      "quality": "V0",
+      "audioUI": "",
+      "audio": [
+        "11",
+        0
+      ]
+    },
+    "class_type": "SaveAudioMP3",
+    "_meta": {
+      "title": "保存音频 (MP3)"
+    }
+  }
+}

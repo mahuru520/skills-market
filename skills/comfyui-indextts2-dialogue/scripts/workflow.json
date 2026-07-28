@@ -1,0 +1,123 @@
+{
+  "11": {
+    "inputs": {
+      "multi_line_prompt": "[S1]  一天春雨红梅笑，\n[S2] 万里东风翠竹摇。\n[S1] 千山雪化风光美，\n[S2] 万壑冰消气象新。\n[S1] 指尖在我锁骨上游移，\n[S2] 仿佛试探一扇未曾开启的门。\n"
+    },
+    "class_type": "MultiLinePromptIndex",
+    "_meta": {
+      "title": "Multi Line Text"
+    }
+  },
+  "46": {
+    "inputs": {
+      "audio": "big_niao.wav",
+      "audioUI": "/api/view?filename=big_niao.wav&type=input&subfolder=&rand=0.599425879587133"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "加载音频"
+    }
+  },
+  "55": {
+    "inputs": {
+      "audio": "prompt_audio_4.wav",
+      "audioUI": "/api/view?filename=prompt_audio_4.wav&type=input&subfolder=&rand=0.8572727311114888"
+    },
+    "class_type": "LoadAudio",
+    "_meta": {
+      "title": "加载音频"
+    }
+  },
+  "57": {
+    "inputs": {
+      "filename_prefix": "IN会话",
+      "quality": "V0",
+      "audioUI": "",
+      "audio": [
+        "58",
+        0
+      ]
+    },
+    "class_type": "SaveAudioMP3",
+    "_meta": {
+      "title": "保存音频 (MP3)"
+    }
+  },
+  "58": {
+    "inputs": {
+      "top_k": 30,
+      "top_p": 0.8,
+      "temperature": 0.8,
+      "num_beams": 3,
+      "max_mel_tokens": 1500,
+      "max_text_tokens_per_sentence": 120,
+      "custom_cuda_kernel": false,
+      "deepspeed": true,
+      "unload_model": true,
+      "emo_alpha": 1,
+      "emo_vector": [
+        "60",
+        0
+      ],
+      "use_emo_text": false,
+      "emo_text": "",
+      "use_random": false,
+      "emo_alpha_s2": 1,
+      "emo_vector_s2": [
+        "61",
+        0
+      ],
+      "use_emo_text_s2": false,
+      "emo_text_s2": "",
+      "use_random_s2": false,
+      "audio": [
+        "46",
+        0
+      ],
+      "text": [
+        "11",
+        0
+      ],
+      "dialogue_audio_s2": [
+        "55",
+        0
+      ]
+    },
+    "class_type": "IndexTTS2Run",
+    "_meta": {
+      "title": "IndexTTS2 Run"
+    }
+  },
+  "60": {
+    "inputs": {
+      "happy": 0,
+      "angry": 0,
+      "sad": 0,
+      "fear": 0,
+      "hate": 0,
+      "low": 0,
+      "surprise": 0,
+      "neutral": 0
+    },
+    "class_type": "Emotional Control",
+    "_meta": {
+      "title": "Emotional Control"
+    }
+  },
+  "61": {
+    "inputs": {
+      "happy": 0,
+      "angry": 0,
+      "sad": 0,
+      "fear": 0,
+      "hate": 0,
+      "low": 0,
+      "surprise": 0,
+      "neutral": 0.86
+    },
+    "class_type": "Emotional Control",
+    "_meta": {
+      "title": "Emotional Control"
+    }
+  }
+}

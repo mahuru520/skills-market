@@ -1,0 +1,94 @@
+{
+  "1": {
+    "inputs": {
+      "text": [
+        "6",
+        0
+      ],
+      "instruct": "模拟成熟性感的御姐音色，声音略带磁性且慵懒，语速不快不慢，语调充满自信和一丝挑逗，尾音可以稍微拖长并上扬，给人一种游刃有余的掌控感。",
+      "model_choice": "1.7B",
+      "device": "auto",
+      "precision": "bf16",
+      "language": "Auto",
+      "seed": 716872460966603,
+      "max_new_tokens": 2048,
+      "top_p": 0.8,
+      "top_k": 20,
+      "temperature": 1,
+      "repetition_penalty": 1.05,
+      "attention": "auto",
+      "unload_model_after_generate": false
+    },
+    "class_type": "FB_Qwen3TTSVoiceDesign",
+    "_meta": {
+      "title": "🎨 Qwen3-TTS VoiceDesign"
+    }
+  },
+  "2": {
+    "inputs": {
+      "audioUI": "",
+      "audio": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "PreviewAudio",
+    "_meta": {
+      "title": "预览音频"
+    }
+  },
+  "5": {
+    "inputs": {
+      "target_text": "紧张什么？你连坐姿都在发抖……",
+      "model_choice": "1.7B",
+      "device": "auto",
+      "precision": "bf16",
+      "language": "Auto",
+      "ref_text": [
+        "6",
+        0
+      ],
+      "seed": 1055049848124745,
+      "max_new_tokens": 2048,
+      "top_p": 0.8,
+      "top_k": 20,
+      "temperature": 1,
+      "repetition_penalty": 1.05,
+      "x_vector_only": false,
+      "attention": "auto",
+      "unload_model_after_generate": false,
+      "custom_model_path": "",
+      "ref_audio": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "FB_Qwen3TTSVoiceClone",
+    "_meta": {
+      "title": "🎭 Qwen3-TTS VoiceClone"
+    }
+  },
+  "6": {
+    "inputs": {
+      "string": "那现在呢？敢不敢发一条——'今晚，和一个危险又迷人的姐姐喝了一杯'？",
+      "strip_newlines": true
+    },
+    "class_type": "StringConstantMultiline",
+    "_meta": {
+      "title": "String Constant Multiline"
+    }
+  },
+  "7": {
+    "inputs": {
+      "audioUI": "",
+      "audio": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "PreviewAudio",
+    "_meta": {
+      "title": "预览音频"
+    }
+  }
+}
