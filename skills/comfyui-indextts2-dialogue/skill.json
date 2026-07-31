@@ -48,7 +48,7 @@
       },
       {
         "method": "POST",
-        "path": "/api/v1/ai/image/generate",
+        "path": "/api/v1/ai/audio/generate",
         "desc": "提交双人对话工作流"
       },
       {

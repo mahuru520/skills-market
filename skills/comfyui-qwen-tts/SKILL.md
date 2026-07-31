@@ -106,7 +106,7 @@ python scripts/tts_qwen.py --mode clone \
 2. 按 `--mode` 选取对应链路节点：
    - design：保留节点 1（VoiceDesign）、2（PreviewAudio）、6（String），替换文本/指令/seed
    - clone：保留节点 5（VoiceClone）、7（PreviewAudio）、6（String），注入节点 100（LoadAudio）接参考音频，替换目标文本/ref_text/seed
-3. `POST /api/v1/ai/image/generate` 提交，拿 `prompt_id`
+3. `POST /api/v1/ai/audio/generate` 提交，拿 `prompt_id`
 4. 每 4 秒轮询 `GET /api/v1/ai/tasks/{prompt_id}` 直到 `completed=true`
 5. 从 `outputs[].audio` 取音频下载
 

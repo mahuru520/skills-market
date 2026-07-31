@@ -97,7 +97,7 @@ python scripts/tts_dialogue.py \
 ### 脚本内部流程
 
 1. 读取 `scripts/workflow.json`，替换脚本、两个参考音频文件名、两套情绪向量、输出前缀
-2. `POST /api/v1/ai/image/generate` 提交，拿 `prompt_id`
+2. `POST /api/v1/ai/audio/generate` 提交，拿 `prompt_id`
 3. 每 4 秒轮询 `GET /api/v1/ai/tasks/{prompt_id}` 直到 `completed=true`
 4. 从 `outputs[].audio` 取 mp3 下载
 

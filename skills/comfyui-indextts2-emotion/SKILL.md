@@ -79,7 +79,7 @@ python scripts/tts_emotion.py --prompt "..." --ref ref.wav --output out.mp3
 ### 脚本内部流程
 
 1. 读取 `scripts/workflow.json`，替换文本、参考音频文件名、情绪向量、输出前缀
-2. `POST /api/v1/ai/image/generate` 提交工作流，拿 `prompt_id`
+2. `POST /api/v1/ai/audio/generate` 提交工作流，拿 `prompt_id`
 3. 每 4 秒轮询 `GET /api/v1/ai/tasks/{prompt_id}` 直到 `completed=true`
 4. 从 `outputs[].audio` 取 mp3，通过 `/api/v1/ai/image/view/` 下载
 

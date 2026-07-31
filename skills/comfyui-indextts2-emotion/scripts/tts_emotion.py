@@ -70,7 +70,7 @@ def build_prompt(text, ref_audio, emotion, intensity, output_prefix):
 def submit_prompt(prompt_data):
     payload = json.dumps({"prompt": prompt_data, "extra_data": {}}).encode("utf-8")
     req = urllib.request.Request(
-        f"{GW}/api/v1/ai/image/generate",
+        f"{GW}/api/v1/ai/audio/generate",
         data=payload, headers=AUTH_HEADER, method="POST",
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
