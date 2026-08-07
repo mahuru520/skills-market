@@ -1,0 +1,79 @@
+{
+  "id": "official/h3-prompt-writing",
+  "name": "h3-prompt-writing",
+  "display_name": "H3 提示词撰写",
+  "description": "为 MiniMax H3 的 T2VA/I2VA/FL2VA/L2VA/Ref2VA 模式撰写视频生成提示词：重写多模态请求为 H3 提示结构，编写 integrated_multimodal_description、overall_soundscape、non_diegetic_music，对齐关键帧并为图像/视频/音频定义参考标签。",
+  "version": "1.0.0",
+  "icon": "✍️",
+  "category": "instruction_skill",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "MiniMax Hub",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 1912
+    },
+    {
+      "path": "agents/openai.yaml",
+      "type": "file",
+      "size": 240
+    },
+    {
+      "path": "references/base-en.txt",
+      "type": "file",
+      "size": 15773
+    },
+    {
+      "path": "references/ref-en.txt",
+      "type": "file",
+      "size": 23553
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "migration": {
+    "migrated_from": "MiniMax Hub 指令型技能",
+    "migrated_to": "skills-market",
+    "behavior_change": "为 MiniMax H3 的 T2VA/I2VA/FL2VA/L2VA/Ref2VA 模式撰写视频生成提示词：重写多模态请求为 H3 提示结构，编写 integrated_multimodal_description、overall_soundscape、non_diegetic_music，对齐关键帧并为图像/视频/音频定义参考标签。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-07",
+      "changes": [
+        "接入指令型技能：H3 提示词撰写"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-07T00:00:00Z",
+  "updated_at": "2026-08-07T00:00:00Z",
+  "quickstart": {
+    "overview": "为 MiniMax H3 的 T2VA/I2VA/FL2VA/L2VA/Ref2VA 模式撰写视频生成提示词：重写多模态请求为 H3 提示结构，编写 integrated_multimodal_description、overall_soundscape、non_diegetic_music，对齐关键帧并为图像/视频/音频定义参考标签。",
+    "scenarios": [
+      "为 T2VA/I2VA/FL2VA/L2VA/Ref2VA 撰写 H3 提示词",
+      "编写音景与非叙事音乐字段",
+      "为参考图/视频/音频定义标签"
+    ],
+    "example": "按 references/base-en.txt 的字段与顺序，把用户的多模态请求重写成 H3 提示词结构",
+    "notes": "指令型技能：无独立脚本/API，引导代理完成创意提示词与分镜流程，最终推荐使用 MiniMax H3 生成。"
+  }
+}

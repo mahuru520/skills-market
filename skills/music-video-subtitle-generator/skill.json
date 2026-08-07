@@ -1,0 +1,74 @@
+{
+  "id": "official/music-video-subtitle-generator",
+  "name": "music-video-subtitle-generator",
+  "display_name": "音乐MV动态字幕生成器",
+  "description": "基于音乐和歌词，完成节奏拆解、镜头设计与动态字幕方案，适用于AI MV创作。",
+  "version": "0.6.6",
+  "icon": "🎤",
+  "category": "instruction_skill",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "MiniMax Hub",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.cn.md",
+      "type": "file",
+      "size": 14930
+    },
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 14283
+    },
+    {
+      "path": "meta.yaml",
+      "type": "file",
+      "size": 2001
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "migration": {
+    "migrated_from": "MiniMax Hub 指令型技能",
+    "migrated_to": "skills-market",
+    "behavior_change": "基于音乐和歌词，完成节奏拆解、镜头设计与动态字幕方案，适用于AI MV创作。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "0.6.6",
+      "date": "2026-08-07",
+      "changes": [
+        "接入指令型技能：音乐MV动态字幕生成器"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-07T00:00:00Z",
+  "updated_at": "2026-08-07T00:00:00Z",
+  "quickstart": {
+    "overview": "基于音乐和歌词，完成节奏拆解、镜头设计与动态字幕方案，适用于AI MV创作。",
+    "scenarios": [
+      "风格化AI MV",
+      "歌词贴字音乐视觉",
+      "情绪短片"
+    ],
+    "example": "提供音乐与歌词，完成节奏拆解、镜头设计与动态字幕方案",
+    "notes": "指令型技能：无独立脚本/API，引导代理完成创意提示词与分镜流程，最终推荐使用 MiniMax H3 生成。"
+  }
+}

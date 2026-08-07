@@ -40,6 +40,7 @@ export const CATEGORY_LABEL: Record<string, string> = {
   mail_communication: "邮件通信",
   initialization: "初始化",
   system_config: "系统配置",
+  instruction_skill: "指令型技能",
 };
 
 // 分类三字母代号,用作紧凑的结构标签(registry 面板、分类索引色块等)
@@ -51,6 +52,7 @@ export const CATEGORY_CODE: Record<string, string> = {
   mail_communication: "MAL",
   initialization: "INI",
   system_config: "SYS",
+  instruction_skill: "INS",
   other: "SYS",
 };
 

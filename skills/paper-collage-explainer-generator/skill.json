@@ -1,0 +1,74 @@
+{
+  "id": "official/paper-collage-explainer-generator",
+  "name": "paper-collage-explainer-generator",
+  "display_name": "纸拼贴讲解动画生成器",
+  "description": "基于文案或抽象概念，完成隐喻设计、拼贴分镜和动画生成，适用于讲解类内容。",
+  "version": "0.3.9",
+  "icon": "🧻",
+  "category": "instruction_skill",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "MiniMax Hub",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.cn.md",
+      "type": "file",
+      "size": 17427
+    },
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 20806
+    },
+    {
+      "path": "meta.yaml",
+      "type": "file",
+      "size": 1992
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "migration": {
+    "migrated_from": "MiniMax Hub 指令型技能",
+    "migrated_to": "skills-market",
+    "behavior_change": "基于文案或抽象概念，完成隐喻设计、拼贴分镜和动画生成，适用于讲解类内容。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "0.3.9",
+      "date": "2026-08-07",
+      "changes": [
+        "接入指令型技能：纸拼贴讲解动画生成器"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-07T00:00:00Z",
+  "updated_at": "2026-08-07T00:00:00Z",
+  "quickstart": {
+    "overview": "基于文案或抽象概念，完成隐喻设计、拼贴分镜和动画生成，适用于讲解类内容。",
+    "scenarios": [
+      "知识讲解动画",
+      "观点/故事视觉化",
+      "社交B-roll"
+    ],
+    "example": "提供短文案/故事节点/核心概念，产出纸拼贴讲解动画",
+    "notes": "指令型技能：无独立脚本/API，引导代理完成创意提示词与分镜流程，最终推荐使用 MiniMax H3 生成。"
+  }
+}

@@ -16,6 +16,7 @@ const SEED: SeedCategory[] = [
   { key: "mail_communication", name: "邮件通信", nameEn: "Mail & Communication", sortOrder: 40 },
   { key: "initialization", name: "初始化", nameEn: "Initialization", sortOrder: 50 },
   { key: "system_config", name: "系统配置", nameEn: "System Config", sortOrder: 60 },
+  { key: "instruction_skill", name: "指令型技能", nameEn: "Instruction", sortOrder: 65 },
 ];
 
 @Injectable()

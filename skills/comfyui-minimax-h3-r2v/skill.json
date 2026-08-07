@@ -1,0 +1,104 @@
+{
+  "id": "official/comfyui-minimax-h3-r2v",
+  "name": "comfyui-minimax-h3-r2v",
+  "display_name": "ComfyUI MiniMax H3 参考生视频",
+  "description": "通过公网网关使用 MiniMax H3 模型参考生视频（ref2va，上传 2 张参考图作视觉参考生成全新视频，输出带同步音频的 mp4）。当用户要求参考生视频、参考图生成视频、MiniMax H3 参考生成、用参考图生成视频时使用。",
+  "version": "1.0.0",
+  "icon": "🎞️",
+  "category": "comfyui",
+  "source": "osprey",
+  "runtime_type": "gateway_migrated_api",
+  "billing": "token",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {"path": "SKILL.md", "type": "file", "size": 0},
+    {"path": "scripts/reference_to_video.py", "type": "file", "size": 0},
+    {"path": "scripts/workflow.json", "type": "file", "size": 0}
+  ],
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://ai.ospreyai.cn",
+      "example": "https://ai.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://ai.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/api/v1/upload",
+        "desc": "上传参考图片（multipart 字段 image，需传 2 次）"
+      },
+      {
+        "method": "POST",
+        "path": "/api/v1/ai/video/generate",
+        "desc": "提交参考生视频工作流"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/tasks/{prompt_id}",
+        "desc": "轮询任务状态"
+      },
+      {
+        "method": "GET",
+        "path": "/api/v1/ai/image/view/",
+        "desc": "下载视频 mp4（subfolder=video）"
+      }
+    ],
+    "rate_limit": "10/min/IP burst 5",
+    "timeout_sec": 600
+  },
+  "migration": {
+    "migrated_from": "内网 ComfyUI",
+    "migrated_to": "https://ai.ospreyai.cn",
+    "behavior_change": "通过公网网关调用 MiniMax H3 ref2va 模型参考生视频，上传 2 张参考图作视觉参考，音视频联合生成，输出带同步音频的 mp4。默认 16:9 / 5 秒 / 24fps，总耗时 1–3 分钟。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-07",
+      "changes": [
+        "新增 MiniMax H3 参考生视频技能，ref2va 模型，2 张参考图，输出带音频 mp4"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-07T00:00:00Z",
+  "updated_at": "2026-08-07T00:00:00Z",
+  "quickstart": {
+    "overview": "用 MiniMax H3 参考生视频，上传 2 张参考图，输出带同步音频的全新 mp4",
+    "scenarios": [
+      "用参考图的角色/风格/场景生成全新视频",
+      "漫画分镜驱动的故事片段生成",
+      "自定义时长/比例/种子的视频生产"
+    ],
+    "example": "python scripts/reference_to_video.py --ref0 ref0.png --ref1 ref1.png --prompt \"Use <Picture 1> and <Picture 2> as reference. CUT 1: ...\"",
+    "notes": "提示词英文效果最佳；必须用 <Picture 1>/<Picture 2> 引用参考图；ref2va 权重（非 fl2va）；脚本自动上传 2 张参考图；输出带音频 mp4 在 video/ 子目录，下载需带 subfolder=video；脚本默认随机 seed 避免缓存命中"
+  }
+}

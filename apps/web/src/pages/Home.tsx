@@ -349,6 +349,7 @@ function categoryLabel(key: string): string {
     mail_communication: "邮件通信",
     initialization: "初始化",
     system_config: "系统配置",
+    instruction_skill: "指令型技能",
   };
   return map[key] ?? key;
 }

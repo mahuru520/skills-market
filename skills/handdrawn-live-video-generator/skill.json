@@ -1,0 +1,74 @@
+{
+  "id": "official/handdrawn-live-video-generator",
+  "name": "handdrawn-live-video-generator",
+  "display_name": "手绘实拍融合视频生成器",
+  "description": "基于场景创意，生成手绘动画与实拍接触变形的15秒视频，适用于创意短片制作。",
+  "version": "1.0.2",
+  "icon": "🖍️",
+  "category": "instruction_skill",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "MiniMax Hub",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.cn.md",
+      "type": "file",
+      "size": 6978
+    },
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 7778
+    },
+    {
+      "path": "meta.yaml",
+      "type": "file",
+      "size": 1773
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "migration": {
+    "migrated_from": "MiniMax Hub 指令型技能",
+    "migrated_to": "skills-market",
+    "behavior_change": "基于场景创意，生成手绘动画与实拍接触变形的15秒视频，适用于创意短片制作。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.2",
+      "date": "2026-08-07",
+      "changes": [
+        "接入指令型技能：手绘实拍融合视频生成器"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-07T00:00:00Z",
+  "updated_at": "2026-08-07T00:00:00Z",
+  "quickstart": {
+    "overview": "基于场景创意，生成手绘动画与实拍接触变形的15秒视频，适用于创意短片制作。",
+    "scenarios": [
+      "单场景创意短片",
+      "手绘与实拍融合",
+      "变形追逐创意"
+    ],
+    "example": "提供场景创意+接触对象+情绪氛围，生成15秒手绘实拍融合视频",
+    "notes": "指令型技能：无独立脚本/API，引导代理完成创意提示词与分镜流程，最终推荐使用 MiniMax H3 生成。"
+  }
+}
