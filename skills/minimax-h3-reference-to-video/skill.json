@@ -1,0 +1,107 @@
+{
+  "id": "official/minimax-h3-reference-to-video",
+  "name": "minimax-h3-reference-to-video",
+  "display_name": "MiniMax H3 多模态参考生视频",
+  "description": "通过 Osprey 官方 MiniMax H3 V2 多模态参考接口，使用参考图片、视频、音频生成视频并下载 mp4（输出带同步音频）。当用户要求参考生视频、参考图生成视频、用参考素材生成视频、多模态参考生成时使用。",
+  "version": "1.0.0",
+  "icon": "🎞️",
+  "category": "image_video",
+  "source": "osprey",
+  "runtime_type": "gateway_async_api",
+  "billing": "token",
+  "owner": {
+    "name": "official",
+    "type": "official",
+    "verified": true,
+    "avatar": "🏢",
+    "url": ""
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 0
+    },
+    {
+      "path": "scripts/reference_to_video.py",
+      "type": "file",
+      "size": 0
+    },
+    {
+      "path": "scripts/h3_client.py",
+      "type": "file",
+      "size": 0
+    }
+  ],
+  "hot": false,
+  "env_vars": [
+    {
+      "key": "GW",
+      "description": "外网网关地址",
+      "required": true,
+      "source": "固定 https://open.ospreyai.cn",
+      "example": "https://open.ospreyai.cn"
+    },
+    {
+      "key": "API_KEY",
+      "description": "网关 new-api key",
+      "required": true,
+      "source": "网关控制台申请",
+      "example": "sk-xxx"
+    }
+  ],
+  "api": {
+    "base_url": "https://open.ospreyai.cn",
+    "auth_type": "gateway",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/v2/video_generation",
+        "desc": "提交多模态参考生视频任务"
+      },
+      {
+        "method": "GET",
+        "path": "/v2/query/video_generation/{task_id}",
+        "desc": "轮询任务状态"
+      },
+      {
+        "method": "GET",
+        "path": "/v1/videos/{task_id}/content",
+        "desc": "下载结果视频（需带 API Key 鉴权）"
+      }
+    ],
+    "rate_limit": "依网关配额",
+    "timeout_sec": 600
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-08-26",
+      "changes": [
+        "新增 MiniMax H3 V2 视频生成技能",
+        "支持提交任务、查询任务并下载生成视频"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-08-26T00:00:00Z",
+  "updated_at": "2026-08-26T00:00:00Z",
+  "quickstart": {
+    "overview": "用多模态参考素材生成带同步音频的 MiniMax H3 视频",
+    "scenarios": [
+      "用参考图的角色/风格/场景生成全新视频",
+      "结合参考视频/音频驱动画面与配音",
+      "自定义分辨率/比例/时长的视频生产"
+    ],
+    "example": "python scripts/reference_to_video.py --ref0 ref0.png --ref1 ref1.png --prompt \"Create a cinematic scene using the references\"",
+    "notes": "输出带音频 mp4；至少 2 张参考图，混合参考素材总数最多 12 个；提示词英文效果最佳；异步任务通常 1–3 分钟；task.content.url 有时效，需及时下载"
+  }
+}

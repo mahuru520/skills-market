@@ -28,4 +28,8 @@ coverage
 # TypeScript 增量编译缓存
 *.tsbuildinfo
 
+# Python 字节码缓存
+__pycache__/
+*.py[cod]
+
 skill-market-guide.md
