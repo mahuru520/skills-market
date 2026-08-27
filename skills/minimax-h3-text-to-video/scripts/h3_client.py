@@ -77,7 +77,11 @@ def poll_task(gw, api_key, task_id, timeout):
         elapsed = int(time.monotonic() - started)
         print(f"  [{elapsed}s] status={status}", flush=True)
         if status == "succeeded":
-            return task
+            content = task.get("content") or {}
+            video_url = content.get("url")
+            if not video_url:
+                raise RuntimeError(f"任务成功但未返回 task.content.url: {task}")
+            return video_url, task
         if status in {"failed", "cancelled"}:
             raise RuntimeError(f"任务{status}: {task.get('error') or task}")
         if time.monotonic() - started >= timeout:
@@ -85,12 +89,11 @@ def poll_task(gw, api_key, task_id, timeout):
         time.sleep(POLL_INTERVAL)
 
 
-def download_video(gw, api_key, task_id, output):
-    """通过带鉴权的下载接口取视频：GET /v1/videos/{task_id}/content"""
+def download_video(video_url, output):
+    """通过 task.content.url（OSS 预签名直链，无需 token）下载视频"""
     target = pathlib.Path(output).expanduser().resolve()
     target.parent.mkdir(parents=True, exist_ok=True)
-    url = f"{gw.rstrip('/')}/v1/videos/{urllib.parse.quote(task_id, safe='')}/content"
-    request = urllib.request.Request(url, headers={"Authorization": f"Bearer {api_key}"})
+    request = urllib.request.Request(video_url)
     temp_name = None
     try:
         with urllib.request.urlopen(request, timeout=180) as response:
@@ -119,6 +122,8 @@ def require_api_key(cli_value):
 def validate_common(resolution, duration, ratio, allow_adaptive=False):
     if resolution not in {"768P", "2K"}:
         raise SystemExit("ERROR: resolution 必须是 768P 或 2K")
+    if resolution == "2K":
+        raise SystemExit("ERROR: 2K 当前网关暂不支持，仅 768P 可用")
     if not 4 <= duration <= 15:
         raise SystemExit("ERROR: duration 必须是 4-15 秒的整数")
     allowed = {"21:9", "16:9", "4:3", "1:1", "3:4", "9:16"}

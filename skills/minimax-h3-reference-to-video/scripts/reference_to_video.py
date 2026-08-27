@@ -21,7 +21,7 @@ def main():
     parser.add_argument("--ref-video-url", action="append", default=[], help="参考视频公网 URL，可重复传入")
     parser.add_argument("--ref-audio-url", action="append", default=[], help="参考音频公网 URL，可重复传入")
     parser.add_argument("--prompt", required=True, help="视频描述及参考素材使用方式")
-    parser.add_argument("--resolution", default="768P", choices=["768P", "2K"], help="分辨率")
+    parser.add_argument("--resolution", default="768P", choices=["768P", "2K"], help="分辨率（当前网关仅支持 768P，2K 暂不可用）")
     parser.add_argument("--ratio", "--aspect-ratio", dest="ratio", default="adaptive", help="画面比例")
     parser.add_argument("--duration", type=int, default=5, help="视频时长（4-15 秒）")
     parser.add_argument("--output", default=None, help="输出 mp4 路径（默认当前目录/minimax_h3_r2v.mp4）")
@@ -57,9 +57,9 @@ def main():
     task_id, _ = submit_generation(args.gw, api_key, content, args.resolution, args.duration, args.ratio)
     print(f"  Task ID: {task_id}")
     print("等待生成...", flush=True)
-    poll_task(args.gw, api_key, task_id, args.timeout)
+    video_url, _ = poll_task(args.gw, api_key, task_id, args.timeout)
     print("下载视频...", flush=True)
-    target = download_video(args.gw, api_key, task_id, output)
+    target = download_video(video_url, output)
     print(f"已保存: {target}")
 
 

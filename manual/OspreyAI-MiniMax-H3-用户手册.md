@@ -1,6 +1,6 @@
 # OspreyAI·OpenClaw MiniMax H3 视频生成用户手册
 
-> 本手册介绍如何在 OspreyAI·OpenClaw 中使用 MiniMax H3 生成视频，涵盖文生视频、首帧/首尾帧图生视频和多模态参考生视频。
+> 本手册介绍如何在 OspreyAI·OpenClaw 中使用 MiniMax H3 生成视频，涵盖文生视频、首帧/尾帧/首尾帧图生视频和多模态参考生视频。
 >
 > MiniMax H3 通过 Osprey 官方 MiniMax H3 V2 接口提供异步视频生成能力。生成任务提交后，需要等待任务完成，系统会自动获取并保存 MP4 视频。
 
@@ -13,7 +13,7 @@
 | 生成方式 | 输入内容 | 适用场景 |
 | --- | --- | --- |
 | 文生视频 | 文本 Prompt | 根据文字描述从零生成视频 |
-| 首帧/首尾帧图生视频 | Prompt + 首帧图片和/或尾帧图片 | 让静态图片动起来，控制视频开始或结束画面 |
+| 首帧/尾帧/首尾帧图生视频 | Prompt + 首帧图片和/或尾帧图片 | 让静态图片动起来，控制视频开始或结束画面 |
 | 多模态参考生视频 | Prompt + 参考图片、视频或音频 | 参考角色、场景、动作、风格、声音或节奏生成新视频 |
 
 ### 2. 三个可用技能
@@ -51,14 +51,14 @@ export API_KEY="sk-your-api-key"
 首次使用时，可以输入：
 
 ```text
-学习并启用 Osprey MiniMax H3 视频生成能力。根据任务类型使用文生视频、首帧/首尾帧图生视频或多模态参考生视频技能。
+学习并启用 Osprey MiniMax H3 视频生成能力。根据任务类型使用文生视频、首帧/尾帧/首尾帧图生视频或多模态参考生视频技能。
 ```
 
 如果需要指定技能，也可以输入：
 
 ```text
 加载 minimax-h3-text-to-video，用于 MiniMax H3 文生视频。
-加载 minimax-h3-first-last-frame-video，用于 MiniMax H3 首帧或首尾帧图生视频。
+加载 minimax-h3-first-last-frame-video，用于 MiniMax H3 首帧、尾帧或首尾帧图生视频。
 加载 minimax-h3-reference-to-video，用于 MiniMax H3 多模态参考生视频。
 ```
 
@@ -71,7 +71,7 @@ export API_KEY="sk-your-api-key"
 | 项目 | MiniMax H3 |
 | --- | --- |
 | 模型名称 | `MiniMax-H3` |
-| 输出分辨率 | `768P` / `2K`（默认 `768P`） |
+| 输出分辨率 | `768P` / `2K`（默认 `768P`，当前网关仅支持 768P，2K 暂不可用） |
 | 输出时长 | 4～15 秒，仅支持整数 |
 | 支持比例 | `21:9`、`16:9`、`4:3`、`1:1`、`3:4`、`9:16`、`adaptive` |
 | 提示词长度 | 不超过 7000 个字符 |
@@ -84,10 +84,12 @@ export API_KEY="sk-your-api-key"
 - `ratio` 必须明确指定，不能使用 `adaptive`。
 - 推荐使用 `16:9`、`9:16` 或 `1:1` 等常用比例。
 
-#### 首帧/首尾帧图生视频
+#### 首帧/尾帧/首尾帧图生视频
 
-- 可以使用首帧图片。
+- 可以只使用首帧图片。
+- 可以只使用尾帧图片。
 - 可以同时使用首帧和尾帧图片。
+- 首帧和尾帧至少给一张。
 - 图片支持 JPG、JPEG、PNG、WEBP、HEIC、HEIF。
 - 单张图片不超过 30 MB。
 - 图片宽高范围为 256～5760 像素。
@@ -134,7 +136,7 @@ MiniMax H3 视频生成是异步过程，包含以下步骤：
 1. 根据输入内容选择对应技能。
 2. 提交视频生成任务。
 3. 系统取得任务 ID，并自动查询任务状态。
-4. 任务完成后通过下载接口（`GET /v1/videos/{task_id}/content`，需带 API Key 鉴权）下载并保存 MP4 视频。
+4. 任务完成后从 `task.content.url` 获取成片地址，下载并保存 MP4 视频。成片地址为公网直链（OSS 预签名，下载无需 Bearer token），有时效，任务完成后应及时下载。
 
 生成时间取决于视频时长、分辨率、参考素材和服务负载，通常 3～8 分钟，请等待任务完成，不要重复提交相同任务。
 
@@ -191,15 +193,16 @@ A girl in a red cloak walks slowly along a snow-covered forest path. Faint warm 
 
 ---
 
-## 六、首帧/首尾帧图生视频
+## 六、首帧/尾帧/首尾帧图生视频
 
 ### 1. 使用方式
 
 适合以下场景：
 
 - 让一张静态图片自然动起来。
-- 控制视频的起始画面。
-- 指定开始和结束画面，并生成中间过渡过程。
+- 控制视频的起始画面（首帧）。
+- 控制视频的结束画面（尾帧），由模型生成通向尾帧的过程。
+- 指定开始和结束画面，并生成中间过渡过程（首尾帧）。
 - 根据产品图、人物图或场景图生成动态展示视频。
 
 ### 2. 只使用首帧
@@ -241,7 +244,26 @@ python scripts/image_to_video.py \
   --output ./transition.mp4
 ```
 
-### 4. 使用图片公网 URL
+### 4. 只使用尾帧
+
+自然语言示例：
+
+```text
+使用这张图片作为尾帧，生成 5 秒视频。画面从模糊逐渐清晰，镜头缓缓稳定下来，最终定格在这张图上。配上轻柔的环境音。
+```
+
+命令行示例：
+
+```bash
+python scripts/image_to_video.py \
+  --last-image ending.png \
+  --prompt "The scene slowly resolves into this final frame, camera settling gently into the ending composition" \
+  --resolution 768P \
+  --duration 5 \
+  --output ./ending.mp4
+```
+
+### 5. 使用图片公网 URL
 
 如果图片已经上传到 `pic.ospreyai.cn`，可以直接使用 URL：
 
@@ -336,7 +358,7 @@ python scripts/reference_to_video.py \
 
 | 技能 | 参数 |
 | --- | --- |
-| 首帧/首尾帧图生视频 | `--image`、`--last-image` |
+| 首帧/尾帧/首尾帧图生视频 | `--image`、`--last-image` |
 | 多模态参考生视频 | `--ref0`、`--ref1`、`--ref-image`、`--ref-video-url`、`--ref-audio-url` |
 
 ---
@@ -408,19 +430,18 @@ python scripts/reference_to_video.py \
 | 参考生视频提交失败 | 参考素材过多或 URL 不可访问 | 检查素材数量、URL 和单文件限制 |
 | 任务长时间没有完成 | 服务繁忙或素材较复杂 | 等待任务完成，必要时提高 `--timeout` |
 | 任务失败 | Prompt 或素材不符合服务要求 | 根据返回的错误信息调整内容后重新提交 |
-| 视频下载失败 | 下载接口未带 API Key 或网络中断 | 确认 `/v1/videos/{task_id}/content` 带 `Authorization`；检查网络 |
+| 视频下载失败 | 成片地址已过期或网络中断 | 重新查询任务获取新的 `task.content.url` 并及时下载 |
 | 输出文件找不到 | `--output` 路径不正确 | 使用绝对路径或确认当前工作目录 |
 
 ---
 
 ## 十一、接口流程说明
 
-Osprey MiniMax H3 技能使用以下三个接口：
+Osprey MiniMax H3 技能使用以下两个接口：
 
 ```text
 POST https://open.ospreyai.cn/v2/video_generation          # 创建任务
-GET  https://open.ospreyai.cn/v2/query/video_generation/{task_id}  # 查询任务
-GET  https://open.ospreyai.cn/v1/videos/{task_id}/content  # 下载视频（需带 API Key）
+GET  https://open.ospreyai.cn/v2/query/video_generation/{task_id}  # 查询任务并获取 task.content.url
 ```
 
 创建任务时使用 MiniMax H3 模型：
@@ -440,9 +461,9 @@ GET  https://open.ospreyai.cn/v1/videos/{task_id}/content  # 下载视频（需�
 }
 ```
 
-任务完成后，用 `task_id` 调用下载接口（`GET /v1/videos/{task_id}/content`，需带 `Authorization: Bearer sk-xxx`）获取视频二进制流。查询接口返回的 `task.content.url` 为 OSS 预签名直链，可能失效，**推荐使用下载接口**。
+任务成功后，从查询结果的 `task.content.url` 字段获取成片地址（OSS 预签名直链，无需 Bearer token，有时效，过期可重新查询获取），用 `curl -L` 或脚本下载保存。
 
-当前 Osprey MiniMax H3 能力范围仅包含上述三个接口：创建视频生成任务、查询视频生成任务、下载结果视频。官方文档中的 `callback_url` 回调、`aigc_watermark` 水印、任务列表、任务取消/删除、H3-Context-IR 和视频再生成等能力，当前网关部署不支持，不在本手册覆盖范围内。
+当前 Osprey MiniMax H3 能力范围仅包含上述两个接口：创建视频生成任务、查询视频生成任务。官方文档中的 `callback_url` 回调、`aigc_watermark` 水印、任务列表、任务取消/删除、H3-Context-IR 和视频再生成等能力，当前网关部署不支持，不在本手册覆盖范围内。
 
 ---
 
@@ -450,5 +471,6 @@ GET  https://open.ospreyai.cn/v1/videos/{task_id}/content  # 下载视频（需�
 
 | 版本 | 日期 | 更新内容 |
 | --- | --- | --- |
-| v1.1.0 | 2026-08-26 | 下载改走带鉴权接口 `GET /v1/videos/{task_id}/content`；明确网关不支持 callback_url/aigc_watermark 等官方扩展能力 |
+| v1.2.0 | 2026-08-27 | 下载改回 `task.content.url`（OSS 预签名直链，无需 token）；注明 2K 当前网关暂不支持，仅 768P 可用；新增仅尾帧图生视频说明 |
+| v1.1.0 | 2026-08-26 | 明确网关不支持 callback_url/aigc_watermark 等官方扩展能力 |
 | v1.0.0 | 2026-08-26 | 新增 Osprey MiniMax H3 用户手册：文生视频、首帧/首尾帧图生视频、多模态参考生视频说明，图片输入方式、常用参数、Prompt 模板和常见问题 |

@@ -33,7 +33,7 @@ python scripts/text_to_video.py \
 - **接口**：官方 MiniMax H3 V2 —— `POST /v2/video_generation`（提交）+ `GET /v2/query/video_generation/{task_id}`（查询）
 - **请求体**：`model=MiniMax-H3`，提示词放进 `content` 数组（`{"type":"text","text":...}`）
 - **音视频联合**：MiniMax H3 原生生成，输出 mp4 自带同步音频轨
-- **异步任务**：提交返回 `task_id`，轮询直到 `task.status=succeeded`，通过带鉴权下载接口 `GET /v1/videos/{task_id}/content` 取视频
+- **异步任务**：提交返回 `task_id`，轮询直到 `task.status=succeeded`，从 `task.content.url` 取视频地址下载（OSS 预签名直链，无需 token，有时效）
 
 > 视频生成较慢，通常 3–8 分钟（视排队与负载）。
 
@@ -44,7 +44,7 @@ python scripts/text_to_video.py \
 | 参数 | 说明 | 默认 |
 |------|------|------|
 | `--prompt` | 视频描述提示词（最多 7000 字符，必须） | — |
-| `--resolution` | 分辨率：`768P` / `2K` | `768P` |
+| `--resolution` | 分辨率：`768P` / `2K`（当前网关仅支持 768P，2K 暂不可用） | `768P` |
 | `--ratio` | 画面比例：`21:9` `16:9` `4:3` `1:1` `3:4` `9:16` | `16:9` |
 | `--duration` | 视频时长（4–15 秒整数） | `5` |
 | `--output` | 本地 mp4 保存路径 | 当前目录 `minimax_h3_t2v.mp4` |
@@ -61,7 +61,7 @@ python scripts/text_to_video.py --prompt "A bird spreading its wings and flying 
 # 竖屏 10 秒
 python scripts/text_to_video.py --prompt "..." --ratio 9:16 --duration 10
 
-# 2K 高清
+# 2K 高清（当前网关暂不支持，仅 768P 可用）
 python scripts/text_to_video.py --prompt "..." --resolution 2K
 ```
 
@@ -69,7 +69,7 @@ python scripts/text_to_video.py --prompt "..." --resolution 2K
 
 1. `POST /v2/video_generation` 提交任务，拿 `task_id`
 2. 每 10 秒轮询 `GET /v2/query/video_generation/{task_id}`，读 `task.status`
-3. `status=succeeded` 后通过 `GET /v1/videos/{task_id}/content`（带 API Key）下载 mp4 到 `--output`
+3. `status=succeeded` 后从 `task.content.url` 下载 mp4 到 `--output`
 
 ## 提示词技巧
 
@@ -91,11 +91,10 @@ Audio: wind, rapid footsteps, city ambience, low score underneath...
 
 ## 下载结果
 
-任务成功后，脚本通过带鉴权接口 `GET /v1/videos/{task_id}/content`（需 `Authorization: Bearer sk-xxx`）下载视频到 `--output`。也可手动 curl：
+任务成功后，视频地址在 `task.content.url`（OSS 预签名直链，无需 token，有时效），脚本自动下载到 `--output`。也可手动 curl：
 
 ```bash
-curl -H "Authorization: Bearer $API_KEY" \
-  "$GW/v1/videos/$TASK_ID/content" -o result.mp4
+curl -L "$VIDEO_URL" -o result.mp4
 ```
 
 **输出：** MP4 视频（**带音频**），默认 768P / 16:9 / 约 5 秒。
@@ -108,12 +107,12 @@ curl -H "Authorization: Bearer $API_KEY" \
 | 创建任务未返回 task_id | 网关异常 | 检查 `GW` 地址、网络，看返回体 |
 | 任务 failed | 内容审核 / 参数非法 | 看 `task.error`，调整 prompt |
 | 轮询超时 | 生成排队久 | 调大 `--timeout` |
-| 下载 401 | 下载接口未带 API Key | `/v1/videos/{task_id}/content` 必须带 `Authorization` |
+| 下载 404 / 链接失效 | `task.content.url` 有时效 | 任务完成后及时下载；URL 失效可重新查询任务获取新链接 |
 
 ## 限制
 
 - 输出 mp4（**带音频**），默认 768P / 16:9 / 5 秒
-- 时长 4–15 秒，分辨率 768P / 2K
+- 时长 4–15 秒，分辨率 768P / 2K（当前网关仅支持 768P）
 - 英文提示词效果最佳，支持长篇分镜脚本
 - 异步任务总耗时通常 3–8 分钟（视排队与负载）
-- 下载接口需带 API Key，仅支持查询最近 7 天内的任务
+- 下载地址 `task.content.url` 为 OSS 预签名直链，有时效，需及时下载；仅支持查询最近 7 天内的任务
