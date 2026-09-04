@@ -1,0 +1,78 @@
+{
+  "id": "community/ecommerce-visual-copywriting",
+  "name": "ecommerce-visual-copywriting",
+  "display_name": "电商视觉策划文案",
+  "description": "电商主图与详情页视觉策划 SOP：根据产品资料、资质边界、目标平台和视觉参考，先判断转化驱动力并锁定 Campaign Style Lock，输出主图/详情页 Storyboard，用户确认后交付画面描述、图内文案、设计说明和生图 Prompt，含分品类广告法合规边界与五维独立自审。淘宝/天猫/京东/拼多多/抖音小店主图、详情页、卖点提炼、合规改写时触发。",
+  "version": "2.0.0",
+  "icon": "🛒",
+  "category": "instruction_skill",
+  "source": "github",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "feichanggege",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/feichanggege/ecommerce-visual-copywriting-skill"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "type": "file",
+      "size": 11154
+    },
+    {
+      "path": "SKILL.en.md",
+      "type": "file",
+      "size": 11033
+    },
+    {
+      "path": "references/compliance-rules.md",
+      "type": "file",
+      "size": 6176
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "migration": {
+    "migrated_from": "GitHub feichanggege/ecommerce-visual-copywriting-skill v2.0.0",
+    "migrated_to": "skills-market",
+    "behavior_change": "剔除 showcase 展示图（约 17MB）、多语言 README、ROADMAP、CONTRIBUTING、打磨报告、test-prompts、verify 脚本等仓库资产，仅保留运行所需的 SKILL.md/SKILL.en.md/references/compliance-rules.md。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "changelog": [
+    {
+      "version": "2.0.0",
+      "date": "2026-09-04",
+      "changes": [
+        "从 GitHub 导入并修缮为技能",
+        "保留中英双语 SKILL 与合规规则库",
+        "剔除 showcase 图片、README、ROADMAP、测试提示词等仓库资产"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-09-04T00:00:00Z",
+  "updated_at": "2026-09-04T00:00:00Z",
+  "quickstart": {
+    "overview": "电商主图与详情页视觉策划 SOP：策划案 → Storyboard 确认 → 画面/文案/设计说明/生图 Prompt → 五维自审",
+    "scenarios": [
+      "为新品输出淘宝/抖音小店主图 5 张 + 详情页 9 模块策划",
+      "卖点提炼与 Feature→Benefit 利益翻译",
+      "广告法/平台合规自查（绝对化用语、功效宣称红线）",
+      "设计师执行稿（画面+图内文案+设计说明）",
+      "生成生图 Prompt"
+    ],
+    "example": "帮我给一款厨房伸缩收纳架做淘宝主图和详情页，先出视觉策划案",
+    "notes": "纯指令型技能，无脚本无 API；默认中文输出，要求英文时切换 SKILL.en.md 流程；两道确认门（策划案、Storyboard）不可跳过"
+  }
+}

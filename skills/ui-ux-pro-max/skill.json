@@ -1,0 +1,72 @@
+{
+  "id": "community/ui-ux-pro-max",
+  "name": "ui-ux-pro-max",
+  "display_name": "UI/UX Pro Max",
+  "description": "UI/UX 设计智能技能包：本地可搜索数据库含 84 种 UI 风格、192 套配色、74 组字体搭配、119 条 UX 准则、105 个图标、17 个 GSAP 动画预设、25 种图表类型与 22 个技术栈规范，支持一键生成完整设计系统（Design System Generator）。内含 7 个子技能：设计系统生成器、UI 样式（shadcn/Tailwind）、综合设计（logo/CIP/横幅/图标）、design-system 令牌、品牌、幻灯片、横幅设计。设计、构建、评审界面时触发。",
+  "version": "2.13.0",
+  "icon": "🎨",
+  "category": "instruction_skill",
+  "source": "github",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "nextlevelbuilder",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill"
+  },
+  "readme": "SKILL.md",
+  "files": [],
+  "env_vars": [],
+  "dependencies": [
+    {
+      "name": "python",
+      "version": ">=3.8",
+      "desc": "运行 BM25 搜索脚本（仅标准库，无第三方依赖）"
+    }
+  ],
+  "api": null,
+  "migration": {
+    "migrated_from": "GitHub nextlevelbuilder/ui-ux-pro-max-skill v2.13.0",
+    "migrated_to": "skills-market",
+    "behavior_change": "剔除 CLI/gallery/stack 示例工程、多语言 README、CI 工作流、src 副本与测试目录，保留 7 个子技能与插件清单；包根新增 SKILL.md 说明多平台安装方式。",
+    "status": "verified"
+  },
+  "platform": {
+    "host": "openclaw",
+    "min_version": "1.0",
+    "capabilities": [
+      "skill-install"
+    ]
+  },
+  "install_count": 0,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "2.13.0",
+      "date": "2026-09-04",
+      "changes": [
+        "从 GitHub 导入并修缮为技能包",
+        "保留 7 个子技能：ui-ux-pro-max 主技能、ui-styling、design、design-system、brand、slides、banner-design",
+        "剔除 CLI/gallery/stack/docs、多语言 README、CI、tests、__pycache__",
+        "包根新增 SKILL.md 说明多平台安装方式"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-09-04T00:00:00Z",
+  "updated_at": "2026-09-04T00:00:00Z",
+  "quickstart": {
+    "overview": "本地数据库驱动的 UI/UX 设计智能，覆盖风格/配色/字体/UX 准则/图表/技术栈，可一键生成完整设计系统",
+    "scenarios": [
+      "新页面/新项目生成整套设计系统（风格+配色+字体+反模式）",
+      "组件级 UX 问题检索（无障碍、表单、导航、动效）",
+      "指定技术栈（React/Next/Vue/Flutter/SwiftUI 等 22 种）拿实现规范",
+      "logo/CIP/横幅/图标/幻灯片等设计产出",
+      "交付前跑 Pre-Delivery Checklist"
+    ],
+    "example": "帮我给一个美容 SPA 品牌生成完整设计系统",
+    "notes": "Python 3.8+，仅标准库；search.py 路径相对技能包根目录，任意 cwd 可调用"
+  }
+}
