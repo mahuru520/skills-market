@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { fetchShowcase, fetchCategories } from "../api/skills";
+import { fetchSkills, fetchShowcase, fetchCategories } from "../api/skills";
 import { SkillCard } from "../components/SkillCard";
 import { InstallPromptBar } from "../components/InstallPromptBar";
 import { CATEGORY_CODE } from "../lib/labels";
@@ -21,8 +21,17 @@ export function Home() {
   };
 
   const cats = catQ.data?.items ?? [];
-  const totalSkills = cats.reduce((sum, c) => sum, 0); // 分类计数暂无,用占位
   const recent = (topQ.data ?? []).slice(0, 6);
+
+  // 分类计数:分类接口不含 count,从已返回技能列表统计(与列表页一致)
+  const countsQ = useQuery({
+    queryKey: ["home-skills"],
+    queryFn: () => fetchSkills({ page: 1, pageSize: 200, sortBy: "score" }),
+  });
+  const catCounts: Record<string, number> = {};
+  (countsQ.data?.skills ?? []).forEach((s) => {
+    catCounts[s.category] = (catCounts[s.category] ?? 0) + 1;
+  });
 
   return (
     <div>
@@ -155,24 +164,24 @@ export function Home() {
               全部技能 →
             </Link>
           </div>
-          <div className="border-t border-lineStrong">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
             {cats.map((c) => (
               <Link
                 key={c.key}
                 to={`/skills?category=${c.key}`}
-                className="grid grid-cols-[64px_1.2fr_1fr_90px_28px] md:grid-cols-[64px_1.2fr_1fr_90px_28px] gap-[18px] items-center py-[18px] px-1.5 border-b border-line hover:bg-canvas2 hover:pl-3.5 transition-all"
+                className="group block bg-canvas2 border border-line rounded-card p-5 hover:border-lineStrong hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-14px_rgba(14,77,68,0.25)] transition-all"
               >
-                <span className="font-mono text-xs font-semibold tracking-[0.1em] text-brand bg-brand-soft border border-line rounded-[4px] py-[5px] text-center">
-                  {CATEGORY_CODE[c.key] ?? c.key.slice(0, 3).toUpperCase()}
-                </span>
-                <span className="font-serif text-[1.18rem] text-ink font-medium">{c.name}</span>
-                <span className="hidden md:block font-mono text-[12.5px] text-ink-mute tracking-wide">
-                  {c.nameEn}
-                </span>
-                <span className="hidden md:block font-mono text-[12.5px] text-ink-soft text-right">
-                  {/* 分类计数由后端决定,暂不展示数字 */}
-                </span>
-                <span className="font-mono text-sm text-ink-mute text-right">→</span>
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] font-semibold tracking-[0.1em] text-brand bg-brand-soft border border-line rounded-[4px] px-2 py-[3px]">
+                    {CATEGORY_CODE[c.key] ?? c.key.slice(0, 3).toUpperCase()}
+                  </span>
+                  <span className="font-mono text-sm text-ink-mute group-hover:text-brand transition-colors">→</span>
+                </div>
+                <h3 className="font-serif text-[1.2rem] text-ink font-medium mt-4">{c.name}</h3>
+                <p className="font-mono text-[11.5px] text-ink-mute mt-0.5 tracking-wide">{c.nameEn}</p>
+                <p className="font-mono text-[12px] text-ink-soft mt-3">
+                  {catCounts[c.key] ?? 0} 个技能
+                </p>
               </Link>
             ))}
           </div>

@@ -64,6 +64,10 @@ export function SkillDetail() {
       <div className="flex items-start gap-4 mt-4 mb-6">
         <span className="text-5xl leading-none">{s.icon || "📦"}</span>
         <div className="flex-1">
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-brand font-medium inline-flex items-center gap-2.5 mb-2.5">
+            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
+            {CATEGORY_LABEL[s.category] ?? s.category}
+          </p>
           <h1 className="font-serif text-3xl font-medium tracking-tight text-ink">{s.displayName}</h1>
           <p className="text-ink-mute mt-1 font-serif">{s.description}</p>
           <div className="flex flex-wrap items-center gap-1.5 mt-3">
