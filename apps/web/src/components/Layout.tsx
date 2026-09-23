@@ -29,6 +29,22 @@ export function Layout({ children }: { children: React.ReactNode }) {
             >
               全部技能
             </NavLink>
+            <NavLink
+              to="/experts"
+              className={({ isActive }) =>
+                isActive ? "text-ink font-medium" : "text-ink-mute hover:text-ink"
+              }
+            >
+              专家
+            </NavLink>
+            <NavLink
+              to="/connectors"
+              className={({ isActive }) =>
+                isActive ? "text-ink font-medium" : "text-ink-mute hover:text-ink"
+              }
+            >
+              连接器
+            </NavLink>
             <a
               href="https://ai.ospreyai.cn/docs/"
               target="_blank"

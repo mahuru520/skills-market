@@ -15,3 +15,23 @@ export async function apiGet<T>(path: string): Promise<T> {
   }
   return body.data;
 }
+
+export async function apiPost<T>(path: string, body?: unknown): Promise<T> {
+  const url = `${BASE}${path}`;
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+    },
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  if (!res.ok) {
+    throw new Error(`HTTP ${res.status} for ${path}`);
+  }
+  const data = (await res.json()) as ApiResponse<T>;
+  if (data.code !== 0) {
+    throw new Error(data.message || `API code ${data.code}`);
+  }
+  return data.data;
+}
