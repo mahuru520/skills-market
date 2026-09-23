@@ -19,18 +19,18 @@ export function InstallPromptBar() {
 
   return (
     <div>
-      {/* 命令栏 */}
-      <div className="flex items-start gap-2 bg-brand text-[#F4F2EA] rounded-[14px] pl-[18px] pr-2 py-2 shadow-[0_1px_0_#0A3A33,0_18px_30px_-22px_rgba(14,77,68,0.55)] min-w-0">
-        <span className="font-mono text-[15px] font-semibold opacity-85 shrink-0 select-none pt-[7px]">›</span>
-        <code className="flex-1 min-w-0 font-mono text-[13.5px] py-[7px] leading-[1.5] break-all">
+      {/* 命令栏(浅灰玻璃,与详情页代码块同材质) */}
+      <div className="flex items-start gap-2 rounded-[20px] pl-[18px] pr-2 py-2 min-w-0 bg-[#f2f2f7]/80 backdrop-blur-xl border border-line shadow-[inset_0_1px_#ffffff,0_2px_8px_rgba(0,0,0,0.04)]">
+        <span className="font-mono text-[15px] font-semibold text-brand shrink-0 select-none pt-[7px]">›</span>
+        <code className="flex-1 min-w-0 font-mono text-[13.5px] py-[7px] leading-[1.5] break-all text-ink">
           <span>根据 </span>
-          <span className="text-[#9FD6CB]">{PROMPT_URL}</span>
+          <span className="text-brand">{PROMPT_URL}</span>
           <span> ，安装 Osprey Skill Market。</span>
         </code>
         <button
           onClick={onCopy}
           aria-label="复制安装提示词"
-          className="shrink-0 inline-flex items-center gap-1.5 px-3 h-9 mt-[3px] rounded-[9px] text-xs font-mono font-medium text-[#F4F2EA] bg-white/10 border border-white/20 hover:bg-white/[0.22] hover:border-white/40 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F4F2EA]"
+          className="shrink-0 inline-flex items-center gap-1.5 px-3 h-9 mt-[3px] rounded-full text-xs font-mono font-medium text-brand bg-white/70 border border-brand/20 hover:bg-white hover:border-brand/40 transition-colors focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           {copied ? <CheckIcon /> : <CopyIcon />}
           {copied ? "已复制" : "复制"}

@@ -56,21 +56,21 @@ export function ExpertList() {
 
   return (
     <div>
-      {/* ============ HERO ============ */}
-      <section className="border-b border-line bg-canvas2/40">
-        <div className="max-w-market mx-auto px-6 pt-[58px] pb-12">
-          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5 mb-5">
-            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
-            EXPERT REGISTRY
-          </p>
-          <h1 className="font-serif font-medium text-ink text-[2.85rem] md:text-[3.6rem] leading-[1.04] tracking-[-0.02em]">
+      {/* ============ HERO(光晕舞台) ============ */}
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#f6f0ff_0%,#e8eeff_50%,#e6fbf3_100%)]">
+        <div className="hero-glow animate-sun-breath w-[400px] h-[400px] -top-[150px] right-[10%] bg-[#af52de]/20" />
+        <div className="hero-glow animate-sun-drift w-[320px] h-[320px] -bottom-[130px] left-[4%] bg-[#007aff]/20" />
+
+        <div className="relative max-w-market mx-auto px-6 pt-[64px] pb-12 animate-fadeUp">
+          <p className="eyebrow-pill inline-block mb-5">EXPERT REGISTRY</p>
+          <h1 className="font-heading font-semibold text-ink text-[2.85rem] md:text-[3.6rem] leading-[1.08] tracking-[-0.025em]">
             全部专家
           </h1>
-          <p className="font-serif text-ink-soft text-[1.1rem] leading-[1.6] mt-4 max-w-[34em]">
+          <p className="font-sans text-ink-soft text-[1.1rem] leading-[1.6] mt-4 max-w-[34em]">
             为你的 Agent 配备领域专家 —— 共 {total} 个可安装专家,覆盖开发工程、内容营销、金融投研、法律合规等方向。
           </p>
 
-          {/* 搜索 */}
+          {/* 搜索(玻璃胶囊) */}
           <div className="relative mt-7 max-w-[560px]">
             <input
               value={keywordInput}
@@ -80,7 +80,7 @@ export function ExpertList() {
                 if (e.key === "Enter") submitKeyword();
               }}
               placeholder="搜索专家名称或描述…"
-              className="w-full pl-9 pr-10 py-3 text-sm rounded-card border border-line bg-canvas2 font-sans text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
+              className="glass-pill w-full pl-9 pr-10 py-3 text-sm font-sans text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand/40"
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-mute text-sm">🔍</span>
             {keywordInput && (
@@ -107,9 +107,9 @@ export function ExpertList() {
         </div>
       </section>
 
-      {/* ============ 筛选区 ============ */}
+      {/* ============ 筛选区(玻璃面板) ============ */}
       <section className="max-w-market mx-auto px-6 py-6">
-        <div className="bg-canvas2 rounded-card border border-line p-5 space-y-4">
+        <div className="glass-panel p-5 space-y-4 animate-glassReveal">
           <FilterRow label="分类">
             <Chip active={!category} onClick={() => update("category", "")}>
               全部
@@ -148,7 +148,7 @@ export function ExpertList() {
         </div>
 
         {!isLoading && experts.length === 0 && (
-          <div className="text-center py-16 text-ink-mute font-serif">
+          <div className="text-center py-16 text-ink-mute font-sans">
             没有匹配的专家,试试调整筛选条件。
           </div>
         )}
@@ -169,17 +169,17 @@ function ExpertCard({
   return (
     <Link
       to={`/experts/${expert.slug}`}
-      className="group block h-full bg-canvas2 rounded-card border border-line p-6 font-sans shadow-[0_1px_2px_rgba(27,29,28,0.05)] hover:border-lineStrong hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-12px_rgba(14,77,68,0.25)] transition-all"
+      className="glass-card glass-card-hover group block h-full p-6 font-sans"
     >
       <div className="flex items-start gap-3">
         <span className="text-3xl leading-none shrink-0">{expert.icon || "🧠"}</span>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="font-sans font-semibold text-[19px] text-ink truncate">
+            <h3 className="font-heading font-semibold text-[19px] text-ink tracking-tight truncate">
               {expert.displayName}
             </h3>
             {expert.type === "expert_team" && (
-              <span className="font-mono text-[9.5px] tracking-[0.1em] bg-[#C4552F] text-[#F4F2EA] px-1.5 py-0.5 rounded-[3px] shrink-0">
+              <span className="font-mono text-[9.5px] tracking-[0.1em] bg-[#ff9500] text-white px-1.5 py-0.5 rounded-[4px] shrink-0">
                 TEAM
               </span>
             )}
@@ -195,7 +195,7 @@ function ExpertCard({
       </p>
 
       <div className="flex flex-wrap items-center gap-1.5 mt-4">
-        <span className="font-mono text-[10.5px] px-2 py-0.5 rounded-[3px] border bg-brand-soft text-brand border-[#BFD3CF]">
+        <span className="font-mono text-[10.5px] px-2 py-0.5 rounded-[6px] border bg-brand-soft text-brand border-[#b3d4ff]">
           EXPERT
         </span>
         <span className="font-mono text-xs text-ink-mute ml-auto">
@@ -211,7 +211,7 @@ function ExpertCard({
 function Stat({ n, l }: { n: number; l: string }) {
   return (
     <div>
-      <div className="font-serif font-medium text-[1.9rem] leading-none text-brand tabular-nums">
+      <div className="font-heading font-semibold text-[1.9rem] leading-none text-brand tabular-nums tracking-tight">
         {n}
       </div>
       <div className="font-mono text-[10.5px] tracking-[0.14em] text-ink-mute mt-2">{l}</div>
@@ -240,10 +240,10 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`font-mono text-xs px-3 py-1 rounded-full transition-colors ${
+      className={`font-sans text-[13px] font-medium px-3.5 py-1.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
         active
-          ? "bg-brand text-[#F4F2EA]"
-          : "bg-canvas text-ink-soft border border-line hover:border-brand/40"
+          ? "bg-brand text-white shadow-[0_2px_8px_rgba(0,122,255,0.4)]"
+          : "bg-white/60 text-ink-soft border border-line hover:border-brand/40 hover:bg-white"
       }`}
     >
       {children}

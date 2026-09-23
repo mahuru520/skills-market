@@ -5,31 +5,54 @@ export default {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#0E4D44", // 深松绿
-          dark: "#0A3A33",
-          soft: "#E1ECEA",
+          DEFAULT: "#007aff", // iOS systemBlue
+          dark: "#0071e3", // 苹果官网蓝(hover)
+          soft: "rgba(0, 122, 255, 0.08)", // 蓝 8%
         },
         ink: {
-          DEFAULT: "#1B1D1C",
-          soft: "#4A4D4B",
-          mute: "#6E716C", // 加深,对 #F4F2EA 达 AA(4.9:1)
+          DEFAULT: "#000000f0", // focus 档
+          soft: "#000000b8", // secondary 档
+          mute: "#8e8e93", // iOS systemGray
         },
-        canvas: "#F4F3EE", // 暖白(页面底)
-        canvas2: "#FFFFFF", // 纯白(卡片/容器底)
-        line: "#E2E0D8", // 调淡
-        lineStrong: "#C9C6BC", // 同步调淡
-        surface: "#FFFFFF",
+        canvas: "#fff", // 纯白页面底
+        canvas2: "#ffffffb8", // 72% 白(玻璃卡片底)
+        line: "#3c3c4321", // 13% 深灰发丝线
+        lineStrong: "#3c3c4342",
+        surface: "#ffffffeb", // 92% 白
       },
       fontFamily: {
-        serif: ['"Newsreader"', "Georgia", '"Songti SC"', "serif"],
-        mono: ['"IBM Plex Mono"', "ui-monospace", '"Sarasa Mono SC"', "monospace"],
-        sans: ['"Plus Jakarta Sans"', '"PingFang SC"', "system-ui", "sans-serif"],
+        sans: [
+          '"Plus Jakarta Sans"',
+          '"PingFang SC"',
+          '"HarmonyOS Sans SC"',
+          '"Microsoft YaHei"',
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+        heading: [
+          '"Outfit"',
+          '"PingFang SC"',
+          '"HarmonyOS Sans SC"',
+          '"Source Han Sans SC"',
+          '"Noto Sans SC"',
+          '"Microsoft YaHei"',
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "sans-serif",
+        ],
+        mono: ['"JetBrains Mono"', '"SF Mono"', "ui-monospace", "monospace"],
       },
       borderRadius: {
-        card: "8px",
+        card: "20px", // 玻璃卡片
+        pill: "980px", // 胶囊
       },
       maxWidth: {
         market: "1180px",
+      },
+      boxShadow: {
+        glass: "0 8px 32px #00000014, 0 1px 2px #0000000a",
+        "glass-hover": "0 16px 48px #0000001f, 0 2px 4px #0000000f",
       },
     },
   },

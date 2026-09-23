@@ -55,7 +55,7 @@ export function SkillList() {
   const freeCount = skills.filter((s) => s.billing === "free").length;
   const paidCount = total - freeCount;
   const catCount = catQ.data?.items.length ?? 0;
-  // 分类计数来自已返回的技能列表(分类接口本身不含 count)
+  // 分类计数来自已返回的列表(分类接口本身不含 count)
   const catCounts: Record<string, number> = {};
   skills.forEach((s) => {
     catCounts[s.category] = (catCounts[s.category] ?? 0) + 1;
@@ -78,21 +78,21 @@ export function SkillList() {
 
   return (
     <div>
-      {/* ============ HERO ============ */}
-      <section className="border-b border-line bg-canvas2/40">
-        <div className="max-w-market mx-auto px-6 pt-[58px] pb-12">
-          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5 mb-5">
-            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
-            SKILL REGISTRY
-          </p>
-          <h1 className="font-serif font-medium text-ink text-[2.85rem] md:text-[3.6rem] leading-[1.04] tracking-[-0.02em]">
+      {/* ============ HERO(光晕舞台) ============ */}
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#e8eeff_0%,#f6f0ff_45%,#e6fbf3_100%)]">
+        <div className="hero-glow animate-sun-breath w-[420px] h-[420px] -top-[160px] -left-[100px] bg-[#007aff]/25" />
+        <div className="hero-glow animate-sun-drift w-[320px] h-[320px] -bottom-[120px] right-[6%] bg-[#af52de]/15" />
+
+        <div className="relative max-w-market mx-auto px-6 pt-[64px] pb-12 animate-fadeUp">
+          <p className="eyebrow-pill inline-block mb-5">SKILL REGISTRY</p>
+          <h1 className="font-heading font-semibold text-ink text-[2.85rem] md:text-[3.6rem] leading-[1.08] tracking-[-0.025em]">
             全部技能
           </h1>
-          <p className="font-serif text-ink-soft text-[1.1rem] leading-[1.6] mt-4 max-w-[34em]">
+          <p className="font-sans text-ink-soft text-[1.1rem] leading-[1.6] mt-4 max-w-[34em]">
             为你的 Agent 装配能力 —— 共 {total} 个可安装技能，覆盖图像视频、文档处理、代码调试与系统配置。
           </p>
 
-          {/* 搜索 */}
+          {/* 搜索(玻璃胶囊) */}
           <div className="relative mt-7 max-w-[560px]">
             <input
               value={keywordInput}
@@ -102,7 +102,7 @@ export function SkillList() {
                 if (e.key === "Enter") submitKeyword();
               }}
               placeholder="搜索技能名称或描述…"
-              className="w-full pl-9 pr-10 py-3 text-sm rounded-card border border-line bg-canvas2 font-sans text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
+              className="glass-pill w-full pl-9 pr-10 py-3 text-sm font-sans text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand/40"
             />
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-mute text-sm">🔍</span>
             {keywordInput && (
@@ -129,16 +129,16 @@ export function SkillList() {
         </div>
       </section>
 
-      {/* ============ 筛选区 ============ */}
+      {/* ============ 筛选区(玻璃面板) ============ */}
       <section className="max-w-market mx-auto px-6 py-6">
-        <div className="bg-canvas2 rounded-card border border-line p-5 space-y-4">
+        <div className="glass-panel p-5 space-y-4 animate-glassReveal">
           {/* 排序 + 已选筛选汇总 */}
           <div className="flex items-center gap-2 flex-wrap">
             <span className="font-mono text-xs text-ink-mute">排序</span>
             <select
               value={sortBy}
               onChange={(e) => update("sortBy", e.target.value)}
-              className="font-mono text-xs border border-line rounded-[4px] px-2 py-1 bg-canvas text-ink focus:outline-none focus:border-brand"
+              className="font-mono text-xs border border-line rounded-full px-3 py-1.5 bg-white/70 text-ink focus:outline-none focus:border-brand/40"
             >
               {SORT_OPTIONS.map((o) => (
                 <option key={o.value} value={o.value}>
@@ -154,7 +154,7 @@ export function SkillList() {
                   <button
                     key={f.key}
                     onClick={() => update(f.key, "")}
-                    className="font-mono text-xs px-2.5 py-1 rounded-full bg-brand-soft text-brand border border-[#BFD3CF] hover:border-brand transition-colors"
+                    className="font-mono text-xs px-2.5 py-1 rounded-full bg-brand-soft text-brand border border-[#b3d4ff] hover:border-brand transition-colors"
                   >
                     {f.label} · {f.name} ✕
                   </button>
@@ -230,7 +230,7 @@ export function SkillList() {
         </div>
 
         {!isLoading && skills.length === 0 && (
-          <div className="text-center py-16 text-ink-mute font-serif">
+          <div className="text-center py-16 text-ink-mute font-sans">
             没有匹配的技能，试试调整筛选条件。
           </div>
         )}
@@ -244,7 +244,7 @@ export function SkillList() {
 function Stat({ n, l }: { n: number; l: string }) {
   return (
     <div>
-      <div className="font-serif font-medium text-[1.9rem] leading-none text-brand tabular-nums">
+      <div className="font-heading font-semibold text-[1.9rem] leading-none text-brand tabular-nums tracking-tight">
         {n}
       </div>
       <div className="font-mono text-[10.5px] tracking-[0.14em] text-ink-mute mt-2">{l}</div>
@@ -273,10 +273,10 @@ function Chip({
   return (
     <button
       onClick={onClick}
-      className={`font-mono text-xs px-3 py-1 rounded-full transition-colors ${
+      className={`font-sans text-[13px] font-medium px-3.5 py-1.5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
         active
-          ? "bg-brand text-[#F4F2EA]"
-          : "bg-canvas text-ink-soft border border-line hover:border-brand/40"
+          ? "bg-brand text-white shadow-[0_2px_8px_rgba(0,122,255,0.4)]"
+          : "bg-white/60 text-ink-soft border border-line hover:border-brand/40 hover:bg-white"
       }`}
     >
       {children}

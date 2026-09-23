@@ -39,7 +39,7 @@ export function ConnectorDetail() {
   if (detailQ.isError || !detailQ.data) {
     return (
       <div className="max-w-market mx-auto px-6 py-10">
-        <p className="text-ink-mute font-serif">连接器不存在或加载失败。</p>
+        <p className="text-ink-mute font-sans">连接器不存在或加载失败。</p>
         <Link to="/connectors" className="text-brand hover:underline mt-2 inline-block font-mono text-sm">
           ← 返回列表
         </Link>
@@ -50,8 +50,8 @@ export function ConnectorDetail() {
   const c = detailQ.data;
 
   return (
-    <div className="max-w-market mx-auto px-6 py-8">
-      <Link to="/connectors" className="font-mono text-sm text-ink-mute hover:text-ink">
+    <div className="max-w-market mx-auto px-6 py-8 animate-fadeUp">
+      <Link to="/connectors" className="font-mono text-sm text-ink-mute hover:text-ink transition-colors">
         ← 全部连接器
       </Link>
 
@@ -59,19 +59,18 @@ export function ConnectorDetail() {
       <div className="flex items-start gap-4 mt-4 mb-6">
         <span className="text-5xl leading-none">{c.icon || "🔌"}</span>
         <div className="flex-1">
-          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-brand font-medium inline-flex items-center gap-2.5 mb-2.5">
-            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
+          <p className="eyebrow-pill inline-block mb-2.5">
             CONNECTOR · {c.kind.toUpperCase()}
           </p>
-          <h1 className="font-serif text-3xl font-medium tracking-tight text-ink">{c.displayName}</h1>
-          <p className="text-ink-mute mt-1 font-serif">{c.description}</p>
+          <h1 className="font-heading text-3xl font-semibold tracking-tight text-ink">{c.displayName}</h1>
+          <p className="text-ink-mute mt-1 font-sans">{c.description}</p>
           <div className="flex flex-wrap items-center gap-1.5 mt-3">
-            <Badge className="bg-sky-50 text-sky-700 border-sky-100">MCP</Badge>
-            <Badge className="bg-canvas text-ink-soft border-line">
+            <Badge className="bg-sky-50/80 text-sky-700 border-sky-200/60">MCP</Badge>
+            <Badge className="bg-white/60 text-ink-soft border-line">
               {AUTH_LABEL[c.authMethod] ?? c.authMethod}
             </Badge>
             {c.tags?.slice(0, 3).map((t) => (
-              <Badge key={t} className="bg-canvas text-ink-mute border-line">
+              <Badge key={t} className="bg-white/60 text-ink-mute border-line">
                 {t}
               </Badge>
             ))}
@@ -90,10 +89,10 @@ export function ConnectorDetail() {
 
           {/* 能力摘要 */}
           {c.capabilitiesSummary && (
-            <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-              <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+            <div className="glass-panel overflow-hidden">
+              <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
                 <span className="text-base">🧰</span>
-                <h3 className="font-serif font-medium text-ink text-sm">提供的能力</h3>
+                <h3 className="font-heading font-semibold text-ink text-sm">提供的能力</h3>
               </div>
               <div className="p-5">
                 <p className="text-[15px] text-ink leading-relaxed font-mono">
@@ -114,8 +113,8 @@ export function ConnectorDetail() {
             onInstalled={() => queryClient.invalidateQueries({ queryKey: ["connector", slug] })}
           />
 
-          <div className="bg-canvas2 rounded-card border border-line p-5">
-            <h3 className="font-serif font-semibold text-ink mb-3">基础信息</h3>
+          <div className="glass-panel p-5">
+            <h3 className="font-heading font-semibold text-ink mb-3">基础信息</h3>
             <dl className="text-sm space-y-2 font-mono">
               <InfoRow label="类型" value={`MCP · ${c.installTemplate.transport}`} />
               <InfoRow label="鉴权" value={AUTH_LABEL[c.authMethod] ?? c.authMethod} />
@@ -170,26 +169,26 @@ function InstallTemplateCard({
   };
 
   return (
-    <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-3 bg-canvas border-b border-line">
+    <div className="glass-panel overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-3 bg-white/50 border-b border-line">
         <div className="flex items-center gap-2">
           <span className="text-base">⚙️</span>
-          <h3 className="font-serif font-medium text-ink text-sm">安装配置模板</h3>
+          <h3 className="font-heading font-semibold text-ink text-sm">安装配置模板</h3>
         </div>
         <button
           onClick={onCopy}
-          className="font-mono text-xs px-2.5 py-1 rounded-full bg-canvas border border-line text-ink-soft hover:border-brand/40 transition-colors"
+          className="btn-glass text-xs px-3 py-1"
         >
           {copied ? "已复制" : "复制安装指令"}
         </button>
       </div>
       <div className="p-5">
-        <p className="text-sm text-ink-soft leading-relaxed font-serif mb-3">
+        <p className="text-sm text-ink-soft leading-relaxed font-sans mb-3">
           按此模板写入你的 Agent MCP 配置即可接入。
           {VAR_HINT(template)}
         </p>
-        <pre className="overflow-x-auto rounded-lg border border-[#0A3A33] bg-brand-dark p-4 text-sm">
-          <code className="text-[#D9D6CD] font-mono">
+        <pre className="overflow-x-auto rounded-[14px] bg-[#f2f2f7]/80 backdrop-blur-xl border border-line p-4 text-sm shadow-[inset_0_1px_#ffffff,0_2px_8px_rgba(0,0,0,0.04)]">
+          <code className="text-ink font-mono">
             {JSON.stringify(template, null, 2)}
           </code>
         </pre>
@@ -224,8 +223,8 @@ function EnvVarsCard({
 }) {
   if (!envVars || envVars.length === 0) {
     return (
-      <div className="bg-canvas2 rounded-card border border-line p-5">
-        <h3 className="font-serif font-semibold text-ink mb-2">环境变量</h3>
+      <div className="glass-panel p-5">
+        <h3 className="font-heading font-semibold text-ink mb-2">环境变量</h3>
         <p className="text-sm text-ink-mute font-mono">
           {authMethod === "none" ? "免鉴权,无需配置" : "无额外环境变量"}
         </p>
@@ -234,30 +233,30 @@ function EnvVarsCard({
   }
 
   return (
-    <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-      <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+    <div className="glass-panel overflow-hidden">
+      <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
         <span className="text-base">🔐</span>
-        <h3 className="font-serif font-medium text-ink text-sm">环境变量</h3>
+        <h3 className="font-heading font-semibold text-ink text-sm">环境变量</h3>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="border-b-2 border-lineStrong">
-              <th className="bg-canvas px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">变量</th>
-              <th className="bg-canvas px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">说明</th>
-              <th className="bg-canvas px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">示例</th>
+              <th className="bg-white/50 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">变量</th>
+              <th className="bg-white/50 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">说明</th>
+              <th className="bg-white/50 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wide text-ink-soft font-mono">示例</th>
             </tr>
           </thead>
           <tbody>
             {envVars.map((v) => (
-              <tr key={v.key} className="border-b border-line last:border-none hover:bg-canvas2/60">
+              <tr key={v.key} className="border-b border-line last:border-none hover:bg-white/60">
                 <td className="px-3 py-2.5 font-mono text-ink align-top">
                   {v.key}
                   {v.required && (
-                    <span className="ml-1.5 text-[10px] text-[#C4552F]">必需</span>
+                    <span className="ml-1.5 text-[10px] text-[#ff3b30]">必需</span>
                   )}
                 </td>
-                <td className="px-3 py-2.5 text-ink-soft font-serif align-top">
+                <td className="px-3 py-2.5 text-ink-soft font-sans align-top">
                   {v.description}
                   {v.source && (
                     <span className="block text-xs text-ink-mute mt-0.5 font-mono">来源:{v.source}</span>
@@ -281,15 +280,15 @@ function QuickStartCard({ quickstart }: { quickstart: QuickstartData }) {
   return (
     <div className="space-y-5">
       {quickstart.scenarios.length > 0 && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">🎯</span>
-            <h3 className="font-serif font-medium text-ink text-sm">适用场景</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">适用场景</h3>
           </div>
           <div className="p-5">
             <ul className="space-y-1.5">
               {quickstart.scenarios.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-serif">
+                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-sans">
                   <span className="text-ink-mute mt-0.5 shrink-0">•</span>
                   <span>{s}</span>
                 </li>
@@ -299,13 +298,13 @@ function QuickStartCard({ quickstart }: { quickstart: QuickstartData }) {
         </div>
       )}
       {quickstart.notes && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">⚠️</span>
-            <h3 className="font-serif font-medium text-ink text-sm">注意事项</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">注意事项</h3>
           </div>
           <div className="p-5">
-            <p className="text-[15px] text-ink leading-relaxed font-serif">{quickstart.notes}</p>
+            <p className="text-[15px] text-ink leading-relaxed font-sans">{quickstart.notes}</p>
           </div>
         </div>
       )}
@@ -339,15 +338,15 @@ function InstallReportCard({
   };
 
   return (
-    <div className="bg-canvas2 rounded-card border border-line p-5">
-      <h3 className="font-serif font-semibold text-ink mb-3">已安装?</h3>
+    <div className="glass-panel p-5">
+      <h3 className="font-heading font-semibold text-ink mb-3">已安装?</h3>
       <button
         onClick={onReport}
         disabled={busy || done}
-        className={`w-full text-center font-mono text-sm px-4 py-2.5 rounded-card transition-colors ${
+        className={`w-full text-center text-sm px-4 py-2.5 rounded-pill transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           done
-            ? "bg-canvas border border-line text-ink-mute"
-            : "bg-brand text-[#F4F2EA] hover:bg-brand-dark"
+            ? "bg-[#e9e9eb] text-ink-mute cursor-default"
+            : "btn-apple"
         }`}
       >
         {done ? "已上报安装" : busy ? "上报中…" : "✓ 我已安装(计数)"}

@@ -26,7 +26,7 @@ export function ExpertDetail() {
   if (detailQ.isError || !detailQ.data) {
     return (
       <div className="max-w-market mx-auto px-6 py-10">
-        <p className="text-ink-mute font-serif">专家不存在或加载失败。</p>
+        <p className="text-ink-mute font-sans">专家不存在或加载失败。</p>
         <Link to="/experts" className="text-brand hover:underline mt-2 inline-block font-mono text-sm">
           ← 返回列表
         </Link>
@@ -37,8 +37,8 @@ export function ExpertDetail() {
   const e = detailQ.data;
 
   return (
-    <div className="max-w-market mx-auto px-6 py-8">
-      <Link to="/experts" className="font-mono text-sm text-ink-mute hover:text-ink">
+    <div className="max-w-market mx-auto px-6 py-8 animate-fadeUp">
+      <Link to="/experts" className="font-mono text-sm text-ink-mute hover:text-ink transition-colors">
         ← 全部专家
       </Link>
 
@@ -46,16 +46,15 @@ export function ExpertDetail() {
       <div className="flex items-start gap-4 mt-4 mb-6">
         <span className="text-5xl leading-none">{e.icon || "🧠"}</span>
         <div className="flex-1">
-          <p className="font-mono text-[11px] tracking-[0.2em] uppercase text-brand font-medium inline-flex items-center gap-2.5 mb-2.5">
-            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
+          <p className="eyebrow-pill inline-block mb-2.5">
             EXPERT · {e.type === "expert_team" ? "专家团队" : "单专家"}
           </p>
-          <h1 className="font-serif text-3xl font-medium tracking-tight text-ink">{e.displayName}</h1>
-          <p className="text-ink-mute mt-1 font-serif">{e.description}</p>
+          <h1 className="font-heading text-3xl font-semibold tracking-tight text-ink">{e.displayName}</h1>
+          <p className="text-ink-mute mt-1 font-sans">{e.description}</p>
           <div className="flex flex-wrap items-center gap-1.5 mt-3">
-            <Badge className="bg-brand-soft text-brand border-[#BFD3CF]">EXPERT</Badge>
+            <Badge className="bg-brand-soft text-brand border-[#b3d4ff]">EXPERT</Badge>
             {e.invocationMode && (
-              <Badge className="bg-canvas text-ink-soft border-line">{e.invocationMode}</Badge>
+              <Badge className="bg-white/60 text-ink-soft border-line">{e.invocationMode}</Badge>
             )}
           </div>
         </div>
@@ -92,8 +91,8 @@ export function ExpertDetail() {
             onInstalled={() => queryClient.invalidateQueries({ queryKey: ["expert", slug] })}
           />
 
-          <div className="bg-canvas2 rounded-card border border-line p-5">
-            <h3 className="font-serif font-semibold text-ink mb-3">基础信息</h3>
+          <div className="glass-panel p-5">
+            <h3 className="font-heading font-semibold text-ink mb-3">基础信息</h3>
             <dl className="text-sm space-y-2 font-mono">
               <InfoRow label="类型" value={e.type === "expert_team" ? "专家团队" : "单专家"} />
               <InfoRow label="推荐权重" value={String(e.priority)} />
@@ -131,9 +130,9 @@ function TabButton({
   return (
     <button
       onClick={onClick}
-      className={`pb-2 border-b-2 -mb-px transition-colors font-serif ${
+      className={`pb-2 border-b-2 -mb-px transition-colors font-sans font-medium ${
         active
-          ? "border-brand text-brand font-medium"
+          ? "border-brand text-brand"
           : "border-transparent text-ink-mute hover:text-ink"
       }`}
     >
@@ -156,21 +155,21 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 function OverviewTab({ detail }: { detail: ExpertDetail }) {
   return (
     <div className="space-y-5">
-      <div className="bg-canvas2 rounded-card border border-line p-5">
-        <h2 className="font-serif text-xl font-medium text-ink mb-2">{detail.displayName}</h2>
-        <p className="text-ink-soft text-sm leading-relaxed font-serif">{detail.description}</p>
+      <div className="glass-panel p-5">
+        <h2 className="font-heading text-xl font-semibold text-ink mb-2 tracking-tight">{detail.displayName}</h2>
+        <p className="text-ink-soft text-sm leading-relaxed font-sans">{detail.description}</p>
       </div>
 
       {detail.quickstart && detail.quickstart.scenarios.length > 0 && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">🎯</span>
-            <h3 className="font-serif font-medium text-ink text-sm">适用场景</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">适用场景</h3>
           </div>
           <div className="p-5">
             <ul className="space-y-1.5">
               {detail.quickstart.scenarios.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-serif">
+                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-sans">
                   <span className="text-ink-mute mt-0.5 shrink-0">•</span>
                   <span>{s}</span>
                 </li>
@@ -180,9 +179,9 @@ function OverviewTab({ detail }: { detail: ExpertDetail }) {
         </div>
       )}
 
-      <div className="bg-canvas2 rounded-card border border-line p-5">
-        <h3 className="font-serif font-medium text-ink text-sm mb-2">专家提示词结构</h3>
-        <p className="text-sm text-ink-soft leading-relaxed font-serif">
+      <div className="glass-panel p-5">
+        <h3 className="font-heading font-semibold text-ink text-sm mb-2">专家提示词结构</h3>
+        <p className="text-sm text-ink-soft leading-relaxed font-sans">
           本专家的提示词由 expert_identity / expert_method / tool_policy / delivery 四块构成,
           切换到「专家提示词」页签可查看与复制全文。安装后提示词随专家落地为本地 subagent,
           离线可用。
@@ -205,8 +204,8 @@ function QuickStartTab({
 }) {
   if (!quickstart) {
     return (
-      <div className="bg-canvas2 rounded-card border border-line p-8 text-center">
-        <p className="text-ink-mute text-sm font-serif">
+      <div className="glass-panel p-8 text-center">
+        <p className="text-ink-mute text-sm font-sans">
           该专家暂未生成快速开始摘要,
           <br />
           请切换到「概述」查看。
@@ -217,22 +216,22 @@ function QuickStartTab({
 
   return (
     <div className="space-y-5">
-      <div className="bg-canvas2 rounded-card border border-line p-5">
-        <h2 className="font-serif text-xl font-medium text-ink mb-2">{displayName}</h2>
-        <p className="text-ink-soft text-sm leading-relaxed font-serif">{quickstart.overview}</p>
+      <div className="glass-panel p-5">
+        <h2 className="font-heading text-xl font-semibold text-ink mb-2 tracking-tight">{displayName}</h2>
+        <p className="text-ink-soft text-sm leading-relaxed font-sans">{quickstart.overview}</p>
         <p className="text-ink-mute text-xs mt-2 font-mono">{description}</p>
       </div>
 
       {quickstart.scenarios.length > 0 && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">🎯</span>
-            <h3 className="font-serif font-medium text-ink text-sm">适用场景</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">适用场景</h3>
           </div>
           <div className="p-5">
             <ul className="space-y-1.5">
               {quickstart.scenarios.map((s, i) => (
-                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-serif">
+                <li key={i} className="flex items-start gap-2 text-[15px] text-ink leading-relaxed font-sans">
                   <span className="text-ink-mute mt-0.5 shrink-0">•</span>
                   <span>{s}</span>
                 </li>
@@ -243,25 +242,25 @@ function QuickStartTab({
       )}
 
       {quickstart.example && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">🚀</span>
-            <h3 className="font-serif font-medium text-ink text-sm">示例任务</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">示例任务</h3>
           </div>
           <div className="p-5">
-            <p className="text-[15px] text-ink leading-relaxed font-serif">{quickstart.example}</p>
+            <p className="text-[15px] text-ink leading-relaxed font-sans">{quickstart.example}</p>
           </div>
         </div>
       )}
 
       {quickstart.notes && (
-        <div className="bg-canvas2 rounded-card border border-line overflow-hidden">
-          <div className="flex items-center gap-2 px-5 py-3 bg-canvas border-b border-line">
+        <div className="glass-panel overflow-hidden">
+          <div className="flex items-center gap-2 px-5 py-3 bg-white/50 border-b border-line">
             <span className="text-base">⚠️</span>
-            <h3 className="font-serif font-medium text-ink text-sm">注意事项</h3>
+            <h3 className="font-heading font-semibold text-ink text-sm">注意事项</h3>
           </div>
           <div className="p-5">
-            <p className="text-[15px] text-ink leading-relaxed font-serif">{quickstart.notes}</p>
+            <p className="text-[15px] text-ink leading-relaxed font-sans">{quickstart.notes}</p>
           </div>
         </div>
       )}
@@ -295,8 +294,8 @@ function PromptTab({ prompt, slug }: { prompt: string; slug: string }) {
           {copied ? "已复制" : "复制全文"}
         </button>
       </div>
-      <pre className="overflow-x-auto whitespace-pre rounded-lg border border-[#0A3A33] bg-brand-dark p-4 mb-5 text-sm">
-        <code className="text-[#D9D6CD] font-mono">{prompt}</code>
+      <pre className="overflow-x-auto whitespace-pre rounded-[14px] bg-[#f2f2f7]/80 backdrop-blur-xl border border-line p-4 mb-5 text-sm shadow-[inset_0_1px_#ffffff,0_2px_8px_rgba(0,0,0,0.04)]">
+        <code className="text-ink font-mono">{prompt}</code>
       </pre>
     </div>
   );
@@ -316,8 +315,8 @@ function DependencyCard({
   emptyText: string;
 }) {
   return (
-    <div className="bg-canvas2 rounded-card border border-line p-5">
-      <h3 className="font-serif font-semibold text-ink mb-3">{title}</h3>
+    <div className="glass-panel p-5">
+      <h3 className="font-heading font-semibold text-ink mb-3">{title}</h3>
       {!deps || deps.length === 0 ? (
         <p className="text-sm text-ink-mute font-mono">{emptyText}</p>
       ) : (
@@ -331,7 +330,7 @@ function DependencyCard({
                 {d.name}
               </Link>
               {d.required && (
-                <span className="text-[10px] text-[#C4552F] border border-[#C4552F]/30 bg-[#C4552F]/5 px-1.5 py-0.5 rounded-[3px] shrink-0">
+                <span className="text-[10px] text-[#ff3b30] border border-[#ff3b30]/30 bg-[#ff3b30]/5 px-1.5 py-0.5 rounded-[4px] shrink-0">
                   必需
                 </span>
               )}
@@ -382,12 +381,12 @@ function InstallCard({
   };
 
   return (
-    <div className="bg-canvas2 rounded-card border border-line p-5">
+    <div className="glass-panel p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-serif font-semibold text-ink">发送给你的 AI 安装</h3>
+        <h3 className="font-heading font-semibold text-ink">发送给你的 AI 安装</h3>
         <button
           onClick={onCopy}
-          className="font-mono text-xs px-2.5 py-1 rounded-full bg-canvas border border-line text-ink-soft hover:border-brand/40 transition-colors"
+          className="btn-glass text-xs px-3 py-1"
         >
           {copied ? "已复制" : "复制"}
         </button>
@@ -398,10 +397,10 @@ function InstallCard({
       <button
         onClick={onReport}
         disabled={busy || done}
-        className={`w-full mt-3 text-center font-mono text-sm px-4 py-2.5 rounded-card transition-colors ${
+        className={`w-full mt-3 text-center text-sm px-4 py-2.5 rounded-pill transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           done
-            ? "bg-canvas border border-line text-ink-mute"
-            : "bg-brand text-[#F4F2EA] hover:bg-brand-dark"
+            ? "bg-[#e9e9eb] text-ink-mute cursor-default"
+            : "btn-apple"
         }`}
       >
         {done ? "已上报安装" : busy ? "上报中…" : "✓ 我已安装(计数)"}

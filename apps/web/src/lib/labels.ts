@@ -6,10 +6,10 @@ export const RUNTIME_LABEL: Record<string, string> = {
 };
 
 export const RUNTIME_COLOR: Record<string, string> = {
-  local: "bg-canvas text-ink-soft border border-line",
-  external_api: "bg-orange-50 text-orange-700 border border-orange-100",
-  gateway_migrated_api: "bg-rose-50 text-rose-700 border border-rose-100",
-  gateway_async_api: "bg-rose-50 text-rose-700 border border-rose-100",
+  local: "bg-white/60 text-ink-soft border border-line",
+  external_api: "bg-orange-50/80 text-orange-700 border border-orange-200/60",
+  gateway_migrated_api: "bg-rose-50/80 text-rose-600 border border-rose-200/60",
+  gateway_async_api: "bg-rose-50/80 text-rose-600 border border-rose-200/60",
 };
 
 export const BILLING_LABEL: Record<string, string> = {
@@ -18,8 +18,8 @@ export const BILLING_LABEL: Record<string, string> = {
 };
 
 export const BILLING_COLOR: Record<string, string> = {
-  free: "bg-canvas text-ink-soft border-line",
-  paid: "bg-brand-soft text-brand border-[#BFD3CF]",
+  free: "bg-white/60 text-ink-soft border-line",
+  paid: "bg-brand-soft text-brand border-[#b3d4ff]",
 };
 
 export const SOURCE_LABEL: Record<string, string> = {
@@ -28,8 +28,8 @@ export const SOURCE_LABEL: Record<string, string> = {
 };
 
 export const SOURCE_COLOR: Record<string, string> = {
-  clawhub: "bg-sky-50 text-sky-700 border border-sky-100",
-  osprey: "bg-violet-50 text-violet-700 border border-violet-100",
+  clawhub: "bg-sky-50/80 text-sky-700 border border-sky-200/60",
+  osprey: "bg-violet-50/80 text-violet-700 border border-violet-200/60",
 };
 
 export const CATEGORY_LABEL: Record<string, string> = {

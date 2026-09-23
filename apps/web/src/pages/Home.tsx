@@ -35,17 +35,22 @@ export function Home() {
 
   return (
     <div>
-      {/* ============ HERO ============ */}
-      <section className="border-b border-line">
-        <div className="max-w-market mx-auto px-6 pt-[72px] pb-14 grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-14 items-start">
-          <div className="min-w-0">
-            <Eyebrow>MARKET <span className="text-lineStrong">·</span> v1.0</Eyebrow>
-            <h1 className="font-serif font-medium text-ink mt-[22px] text-[2.5rem] md:text-[4.3rem] leading-[1.04] tracking-[-0.018em]">
+      {/* ============ HERO(渐变舞台 + 三层光晕 + 玻璃面板) ============ */}
+      <section className="relative overflow-hidden bg-[linear-gradient(135deg,#e8eeff_0%,#f6f0ff_45%,#e6fbf3_100%)]">
+        {/* 光晕背景层 */}
+        <div className="hero-glow animate-sun-breath w-[480px] h-[480px] -top-[180px] -left-[120px] bg-[#007aff]/25" />
+        <div className="hero-glow animate-sun-drift w-[380px] h-[380px] top-[60px] right-[8%] bg-[#af52de]/15" />
+        <div className="hero-glow animate-sun-drift-slow w-[300px] h-[300px] -bottom-[140px] left-[38%] bg-[#34c759]/15" />
+
+        <div className="relative max-w-market mx-auto px-6 pt-[84px] pb-16 grid grid-cols-1 lg:grid-cols-[1.35fr_1fr] gap-14 items-start">
+          <div className="min-w-0 animate-fadeUp" style={{ animationDelay: "0.05s" }}>
+            <p className="eyebrow-pill inline-block">MARKET · v1.0</p>
+            <h1 className="font-heading font-semibold text-ink mt-[22px] text-[2.5rem] md:text-[4.2rem] leading-[1.06] tracking-[-0.025em]">
               Osprey Skills，
               <br />
-              用<span className="text-brand font-medium">一句话</span>装进你的 AI 助手。
+              用<span className="text-brand">一句话</span>装进你的 AI 助手。
             </h1>
-            <p className="font-serif text-ink-soft text-[1.18rem] leading-[1.55] mt-[22px] mb-[30px] max-w-[30em]">
+            <p className="font-sans text-ink-soft text-[1.15rem] leading-[1.6] mt-[22px] mb-[30px] max-w-[30em]">
               浏览与检索全部 Osprey Skills。粘贴一条提示词，AI 助手自动拉取并装载技能包 ——
               无需命令行，无需手动配置。
             </p>
@@ -54,8 +59,11 @@ export function Home() {
             <InstallPromptBar />
           </div>
 
-          {/* registry live 面板 */}
-          <aside className="bg-canvas2 border border-line rounded-[6px] overflow-hidden order-first lg:order-none min-w-0">
+          {/* registry live 面板(玻璃) */}
+          <aside
+            className="glass-panel overflow-hidden order-first lg:order-none min-w-0 animate-glassReveal"
+            style={{ animationDelay: "0.15s" }}
+          >
             <div className="flex items-center justify-between px-[14px] py-[11px] border-b border-line font-mono text-[11px] uppercase tracking-[0.14em] text-ink-mute">
               <span className="inline-flex items-center gap-2">
                 <span className="relative flex h-[7px] w-[7px]">
@@ -74,7 +82,7 @@ export function Home() {
                 <Link
                   key={s.slug}
                   to={`/skills/${s.slug}`}
-                  className="grid grid-cols-[54px_1fr_auto_auto] gap-3 items-center px-[14px] py-[7px] font-mono text-[12.5px] border-b border-transparent last:border-none hover:bg-canvas"
+                  className="grid grid-cols-[54px_1fr_auto_auto] gap-3 items-center px-[14px] py-[7px] font-mono text-[12.5px] border-b border-transparent last:border-none hover:bg-white/60 transition-colors"
                   style={{ animation: `regRise .5s ease-out ${0.05 + i * 0.06}s both` }}
                 >
                   <span className="text-ink-mute">{timeLabel(i)}</span>
@@ -100,26 +108,20 @@ export function Home() {
       </section>
 
       {/* ============ 搜索 ============ */}
-      <section className="border-b border-line">
+      <section className="border-t border-line">
         <div className="max-w-market mx-auto px-6 py-12">
-          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5">
-            <span className="w-[5px] h-[5px] rounded-full bg-brand" />
-            SEARCH <span className="text-lineStrong">·</span> 检索
-          </p>
-          <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5 mb-6">
+          <p className="eyebrow-pill inline-block mb-3">SEARCH · 检索</p>
+          <h2 className="font-heading font-semibold text-[1.9rem] tracking-[-0.025em] text-ink">
             搜一个技能
           </h2>
-          <form onSubmit={onSearch} className="flex items-center gap-2">
+          <form onSubmit={onSearch} className="flex items-center gap-2 mt-6">
             <input
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               placeholder="搜索技能名称或描述…"
-              className="flex-1 px-4 py-3 rounded-card border border-line bg-canvas2 font-sans text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand"
+              className="glass-pill flex-1 px-4 py-3 font-sans text-sm text-ink placeholder:text-ink-mute focus:outline-none focus:border-brand/40"
             />
-            <button
-              type="submit"
-              className="font-mono text-sm px-7 py-3 rounded-card bg-brand text-[#F4F2EA] hover:bg-brand-dark transition-colors"
-            >
+            <button type="submit" className="btn-apple px-7 py-3 text-[15px]">
               搜索
             </button>
           </form>
@@ -127,14 +129,14 @@ export function Home() {
       </section>
 
       {/* ============ HOW IT WORKS ============ */}
-      <section className="border-b border-line bg-canvas2/60">
+      <section className="border-t border-line bg-[#f2f2f7]/60">
         <div className="max-w-market mx-auto px-6 py-14">
           <SectionHead eyebrow="PROCESS · 安装流程">
-            <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5">
+            <h2 className="font-heading font-semibold text-[1.9rem] tracking-[-0.025em] text-ink mt-3">
               三步装好一个技能
             </h2>
           </SectionHead>
-          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-line">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
             <Step n="01" nail="copy" title="复制提示词">
               在技能详情页选「一键安装」，复制它对应的安装提示词。
             </Step>
@@ -149,35 +151,36 @@ export function Home() {
       </section>
 
       {/* ============ CATEGORY INDEX ============ */}
-      <section className="border-b border-line">
+      <section className="border-t border-line">
         <div className="max-w-market mx-auto px-6 py-16">
           <div className="flex items-baseline justify-between gap-6 mb-7">
             <SectionHead eyebrow="INDEX · 分类">
-              <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5">
+              <h2 className="font-heading font-semibold text-[1.9rem] tracking-[-0.025em] text-ink mt-3">
                 按类别检索
               </h2>
             </SectionHead>
             <Link
               to="/skills"
-              className="font-mono text-[13px] text-brand hover:underline shrink-0"
+              className="btn-glass px-5 py-2 text-[13px] shrink-0"
             >
               全部技能 →
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-2">
-            {cats.map((c) => (
+            {cats.map((c, i) => (
               <Link
                 key={c.key}
                 to={`/skills?category=${c.key}`}
-                className="group block bg-canvas2 border border-line rounded-card p-5 hover:border-lineStrong hover:-translate-y-0.5 hover:shadow-[0_10px_26px_-14px_rgba(14,77,68,0.25)] transition-all"
+                className="glass-card glass-card-hover group block p-5 animate-scaleIn"
+                style={{ animationDelay: `${0.05 + i * 0.04}s` }}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] font-semibold tracking-[0.1em] text-brand bg-brand-soft border border-line rounded-[4px] px-2 py-[3px]">
+                  <span className="font-mono text-[11px] font-semibold tracking-[0.1em] text-brand bg-brand-soft border border-[#b3d4ff] rounded-[6px] px-2 py-[3px]">
                     {CATEGORY_CODE[c.key] ?? c.key.slice(0, 3).toUpperCase()}
                   </span>
                   <span className="font-mono text-sm text-ink-mute group-hover:text-brand transition-colors">→</span>
                 </div>
-                <h3 className="font-serif text-[1.2rem] text-ink font-medium mt-4">{c.name}</h3>
+                <h3 className="font-heading text-[1.15rem] text-ink font-semibold mt-4 tracking-tight">{c.name}</h3>
                 <p className="font-mono text-[11.5px] text-ink-mute mt-0.5 tracking-wide">{c.nameEn}</p>
                 <p className="font-mono text-[12px] text-ink-soft mt-3">
                   {catCounts[c.key] ?? 0} 个技能
@@ -189,24 +192,24 @@ export function Home() {
       </section>
 
       {/* ============ TRENDING ============ */}
-      <section className="border-b border-line">
+      <section className="border-t border-line bg-[#f2f2f7]/60">
         <div className="max-w-market mx-auto px-6 py-16">
           <div className="flex items-baseline justify-between gap-6 mb-7">
             <SectionHead eyebrow="TRENDING · 本周">
-              <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5">
+              <h2 className="font-heading font-semibold text-[1.9rem] tracking-[-0.025em] text-ink mt-3">
                 热门 Top
               </h2>
             </SectionHead>
-            <Link to="/skills" className="font-mono text-[13px] text-brand hover:underline shrink-0">
+            <Link to="/skills" className="btn-glass px-5 py-2 text-[13px] shrink-0">
               查看全部 →
             </Link>
           </div>
-          <div className="border-t border-lineStrong">
+          <div className="glass-panel divide-y divide-line overflow-hidden">
             {(topQ.data ?? []).slice(0, 6).map((s, i) => (
               <Link
                 key={s.slug}
                 to={`/skills/${s.slug}`}
-                className="grid grid-cols-[56px_42px_1fr_auto] md:grid-cols-[56px_42px_1fr_auto_110px] gap-[18px] items-center py-[18px] px-1.5 border-b border-line hover:bg-canvas2 transition-colors"
+                className="grid grid-cols-[56px_42px_1fr_auto] md:grid-cols-[56px_42px_1fr_auto_110px] gap-[18px] items-center py-[18px] px-4 hover:bg-white/70 transition-colors"
               >
                 <span
                   className={`font-mono text-2xl font-medium tracking-[-0.02em] ${
@@ -217,7 +220,7 @@ export function Home() {
                 </span>
                 <span className="text-[1.7rem] leading-none">{s.icon || "📦"}</span>
                 <span className="flex flex-col gap-[3px] min-w-0">
-                  <span className="font-serif text-[1.12rem] text-ink font-medium truncate">
+                  <span className="font-heading text-[1.12rem] text-ink font-semibold truncate tracking-tight">
                     {s.displayName}
                   </span>
                   <span className="font-mono text-[11.5px] text-ink-mute truncate">{s.slug}</span>
@@ -238,10 +241,10 @@ export function Home() {
       </section>
 
       {/* ============ FEATURED ============ */}
-      <section>
+      <section className="border-t border-line">
         <div className="max-w-market mx-auto px-6 py-16 pb-20">
           <SectionHead eyebrow="FEATURED · 精选">
-            <h2 className="font-serif font-medium text-[1.9rem] tracking-[-0.01em] text-ink mt-2.5">
+            <h2 className="font-heading font-semibold text-[1.9rem] tracking-[-0.025em] text-ink mt-3">
               推荐精选
             </h2>
           </SectionHead>
@@ -268,15 +271,6 @@ export function Home() {
 
 /* ---------- 子组件 ---------- */
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5">
-      <span className="w-[5px] h-[5px] rounded-full bg-brand shrink-0" />
-      <span>{children}</span>
-    </p>
-  );
-}
-
 function SectionHead({
   eyebrow,
   children,
@@ -286,10 +280,7 @@ function SectionHead({
 }) {
   return (
     <div>
-      <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-brand font-medium inline-flex items-center gap-2.5">
-        <span className="w-[5px] h-[5px] rounded-full bg-brand" />
-        {eyebrow}
-      </p>
+      <p className="eyebrow-pill inline-block">{eyebrow}</p>
       {children}
     </div>
   );
@@ -307,13 +298,15 @@ function Step({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative py-[26px] md:px-[26px] md:pt-[26px] md:pb-2 border-b md:border-b-0 md:border-r border-line last:border-r-0 last:border-b-0">
-      <span className="font-mono text-xs text-brand tracking-[0.1em] font-medium">{n}</span>
-      <span className="hidden md:block absolute top-[26px] right-[26px] font-mono text-[11px] text-ink-mute">
-        {nail}
-      </span>
-      <h3 className="font-serif font-medium text-[1.25rem] text-ink mt-3.5 mb-2">{title}</h3>
-      <p className="font-serif text-[0.98rem] text-ink-soft m-0 max-w-[24em]">{children}</p>
+    <div className="glass-card p-6">
+      <div className="flex items-start justify-between">
+        <span className="w-8 h-8 rounded-full bg-brand-soft text-brand font-mono text-[13px] font-semibold inline-flex items-center justify-center border border-[#b3d4ff]">
+          {n}
+        </span>
+        <span className="font-mono text-[11px] text-ink-mute">{nail}</span>
+      </div>
+      <h3 className="font-heading font-semibold text-[1.2rem] text-ink mt-4 mb-2 tracking-tight">{title}</h3>
+      <p className="font-sans text-[0.95rem] text-ink-soft m-0 leading-relaxed max-w-[24em]">{children}</p>
     </div>
   );
 }
@@ -327,10 +320,10 @@ function SmallBadge({
 }) {
   return (
     <span
-      className={`font-mono text-[10.5px] tracking-[0.02em] px-2 py-[3px] rounded-[3px] border whitespace-nowrap ${
+      className={`font-mono text-[10.5px] tracking-[0.02em] px-2 py-[3px] rounded-[6px] border whitespace-nowrap ${
         paid
-          ? "bg-brand-soft text-brand border-[#BFD3CF]"
-          : "bg-canvas text-ink-soft border-line"
+          ? "bg-brand-soft text-brand border-[#b3d4ff]"
+          : "bg-white/60 text-ink-soft border-line"
       }`}
     >
       {children}
