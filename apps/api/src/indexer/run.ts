@@ -10,8 +10,10 @@ async function main() {
   await prisma.$connect();
   const svc = new IndexerService(prisma as unknown as never);
   const res = await svc.importAll();
+  const expertRes = await svc.importExperts();
+  const connectorRes = await svc.importConnectors();
   // eslint-disable-next-line no-console
-  console.log("sync result:", res);
+  console.log("sync result:", { skills: res, experts: expertRes, connectors: connectorRes });
   await prisma.$disconnect();
 }
 

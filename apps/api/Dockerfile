@@ -31,6 +31,8 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV DATABASE_URL=file:/app/data/skill-market.db
 ENV SKILLS_DIR=/app/skills
+ENV EXPERTS_DIR=/app/experts
+ENV CONNECTORS_DIR=/app/connectors
 COPY --from=base /repo /app
 COPY apps/api/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh && mkdir -p /app/data

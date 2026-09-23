@@ -1,0 +1,33 @@
+{
+  "id": "mcp/sqlite",
+  "name": "sqlite",
+  "display_name": "SQLite 数据库",
+  "description": "MCP 官方 SQLite 服务器:查询、写入、建表、列出表结构的数据库操作能力。",
+  "version": "1.0.0",
+  "icon": "🗄️",
+  "category": "data_db",
+  "kind": "mcp",
+  "auth_method": "none",
+  "owner": { "name": "modelcontextprotocol", "type": "community", "verified": false },
+  "install_template": {
+    "transport": "stdio",
+    "command": "uvx",
+    "args": ["mcp-server-sqlite", "--db-path", "${SQLITE_DB_PATH}"]
+  },
+  "env_vars": [
+    {
+      "key": "SQLITE_DB_PATH",
+      "description": "SQLite 数据库文件路径",
+      "required": true,
+      "example": "/home/user/data/app.db"
+    }
+  ],
+  "capabilities_summary": "read_query / write_query / create_table / list_tables / describe_table",
+  "tags": ["official", "database", "stdio"],
+  "install_count": 0,
+  "changelog": [
+    { "version": "1.0.0", "date": "2026-09-23", "changes": ["首版上架"], "type": "feature" }
+  ],
+  "created_at": "2026-09-23T00:00:00Z",
+  "updated_at": "2026-09-23T00:00:00Z"
+}

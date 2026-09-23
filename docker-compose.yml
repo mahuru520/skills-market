@@ -6,9 +6,13 @@ services:
     environment:
       - DATABASE_URL=file:/app/data/skill-market.db
       - SKILLS_DIR=/app/skills
+      - EXPERTS_DIR=/app/experts
+      - CONNECTORS_DIR=/app/connectors
       - API_PORT=3001
     volumes:
       - ./skills:/app/skills:ro
+      - ./experts:/app/experts:ro
+      - ./connectors:/app/connectors:ro
       - skill_market_data:/app/data
     # API 不对外暴露，仅 Docker 内部网络通信
     restart: unless-stopped

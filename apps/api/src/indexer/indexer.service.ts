@@ -58,6 +58,64 @@ interface RawSkill {
   updated_at?: string;
 }
 
+interface RawExpert {
+  id?: string;
+  name: string;
+  display_name?: string;
+  description: string;
+  version?: string;
+  icon?: string;
+  category?: string;
+  type?: string;
+  priority?: number;
+  invocation_mode?: string;
+  owner?: { name?: string; type?: string; verified?: boolean };
+  prompt: string;
+  quickstart?: {
+    overview: string;
+    scenarios: string[];
+    example: string;
+    notes: string;
+  };
+  skills?: Array<{ name: string; required?: boolean }>;
+  connectors?: Array<{ name: string; required?: boolean }>;
+  install_count?: number;
+  changelog?: Array<{
+    version: string;
+    date: string;
+    changes: string[];
+    type: string;
+  }>;
+  created_at?: string;
+  updated_at?: string;
+}
+
+interface RawConnector {
+  name: string;
+  display_name?: string;
+  description: string;
+  version?: string;
+  icon?: string;
+  category?: string;
+  kind?: string;
+  auth_method?: string;
+  owner?: { name?: string; type?: string; verified?: boolean };
+  install_template: unknown;
+  env_vars?: unknown[];
+  capabilities_summary?: string;
+  tags?: unknown;
+  quickstart?: {
+    overview: string;
+    scenarios: string[];
+    example: string;
+    notes: string;
+  };
+  changelog?: unknown[];
+  install_count?: number;
+  created_at?: string;
+  updated_at?: string;
+}
+
 @Injectable()
 export class IndexerService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(IndexerService.name);
@@ -69,6 +127,8 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
     // 这样「往 skills/ 加技能 → 重启 api 容器」即可生效,无需手动 exec 跑 indexer。
     this.logger.log("running incremental import on startup...");
     await this.importAll();
+    await this.importExperts();
+    await this.importConnectors();
   }
 
   async onModuleDestroy() {}
@@ -78,6 +138,18 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
     if (configured) return configured;
     // 默认指向项目根 skills 目录(相对于 apps/api)
     return join(__dirname, "..", "..", "..", "..", "skills");
+  }
+
+  get expertsDir(): string {
+    const configured = process.env.EXPERTS_DIR;
+    if (configured) return configured;
+    return join(__dirname, "..", "..", "..", "..", "experts");
+  }
+
+  get connectorsDir(): string {
+    const configured = process.env.CONNECTORS_DIR;
+    if (configured) return configured;
+    return join(__dirname, "..", "..", "..", "..", "connectors");
   }
 
   async importAll(): Promise<{ imported: number; skipped: number }> {
@@ -107,6 +179,66 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
       }
     }
     this.logger.log(`import done: ${imported} imported, ${skipped} skipped`);
+    return { imported, skipped };
+  }
+
+  async importExperts(): Promise<{ imported: number; skipped: number }> {
+    const dir = this.expertsDir;
+    this.logger.log(`scanning ${dir} for expert.json ...`);
+    const entries = existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true })
+          .filter((e) => e.isDirectory())
+          .map((e) => e.name)
+      : [];
+
+    let imported = 0;
+    let skipped = 0;
+    for (const name of entries) {
+      const expertDir = join(dir, name);
+      const jsonPath = join(expertDir, "expert.json");
+      if (!existsSync(jsonPath)) {
+        skipped++;
+        continue;
+      }
+      try {
+        await this.importOneExpert(expertDir);
+        imported++;
+      } catch (err) {
+        this.logger.error(`failed to import expert ${name}: ${(err as Error).message}`);
+        skipped++;
+      }
+    }
+    this.logger.log(`expert import done: ${imported} imported, ${skipped} skipped`);
+    return { imported, skipped };
+  }
+
+  async importConnectors(): Promise<{ imported: number; skipped: number }> {
+    const dir = this.connectorsDir;
+    this.logger.log(`scanning ${dir} for connector.json ...`);
+    const entries = existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true })
+          .filter((e) => e.isDirectory())
+          .map((e) => e.name)
+      : [];
+
+    let imported = 0;
+    let skipped = 0;
+    for (const name of entries) {
+      const connectorDir = join(dir, name);
+      const jsonPath = join(connectorDir, "connector.json");
+      if (!existsSync(jsonPath)) {
+        skipped++;
+        continue;
+      }
+      try {
+        await this.importOneConnector(connectorDir);
+        imported++;
+      } catch (err) {
+        this.logger.error(`failed to import connector ${name}: ${(err as Error).message}`);
+        skipped++;
+      }
+    }
+    this.logger.log(`connector import done: ${imported} imported, ${skipped} skipped`);
     return { imported, skipped };
   }
 
@@ -240,6 +372,173 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
     }
 
     this.logger.log(`imported: ${slug} v${raw.version}`);
+  }
+
+  private async importOneExpert(expertDir: string) {
+    const jsonPath = join(expertDir, "expert.json");
+    const rawText = readFileSync(jsonPath, "utf-8");
+    const sha = createHash("sha1").update(rawText).digest("hex").slice(0, 16);
+
+    const raw: RawExpert = JSON.parse(rawText);
+    const slug = raw.name;
+
+    // sha 未变则跳过;已存在的 installCount 不抹零(与 skill 同机制)
+    const existing = await this.prisma.expert.findUnique({
+      where: { slug },
+      select: { sha: true, installCount: true },
+    });
+    if (existing?.sha === sha) {
+      this.logger.debug(`skip unchanged expert: ${slug}`);
+      return;
+    }
+
+    const installCount =
+      existing != null ? existing.installCount : raw.install_count ?? 0;
+    // 专家计分:priority 即人工运营权重,首版无 stars/hot
+    const score = raw.priority ?? 0;
+    const createdAt = raw.created_at
+      ? new Date(raw.created_at)
+      : new Date("2026-01-01T00:00:00Z");
+    const updatedAt = raw.updated_at ? new Date(raw.updated_at) : new Date();
+
+    await this.prisma.expert.upsert({
+      where: { slug },
+      create: {
+        slug,
+        displayName: raw.display_name ?? slug,
+        description: raw.description ?? "",
+        version: raw.version ?? "1.0.0",
+        icon: raw.icon ?? "",
+        category: raw.category ?? "other",
+        type: raw.type ?? "expert",
+        priority: raw.priority ?? 0,
+        invocationMode: raw.invocation_mode ?? null,
+        ownerName: raw.owner?.name ?? "official",
+        ownerVerified: raw.owner?.verified ?? true,
+        prompt: raw.prompt ?? "",
+        quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        skills: raw.skills ? JSON.stringify(raw.skills) : null,
+        connectors: raw.connectors ? JSON.stringify(raw.connectors) : null,
+        installCount,
+        score,
+        sha,
+        createdAt,
+        updatedAt,
+      },
+      update: {
+        displayName: raw.display_name ?? slug,
+        description: raw.description ?? "",
+        version: raw.version ?? "1.0.0",
+        icon: raw.icon ?? "",
+        category: raw.category ?? "other",
+        type: raw.type ?? "expert",
+        priority: raw.priority ?? 0,
+        invocationMode: raw.invocation_mode ?? null,
+        ownerName: raw.owner?.name ?? "official",
+        ownerVerified: raw.owner?.verified ?? true,
+        prompt: raw.prompt ?? "",
+        quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        skills: raw.skills ? JSON.stringify(raw.skills) : null,
+        connectors: raw.connectors ? JSON.stringify(raw.connectors) : null,
+        score,
+        sha,
+        updatedAt,
+      },
+    });
+
+    // 同步版本(changelog)
+    await this.prisma.expertVersion.deleteMany({ where: { expert: { slug } } });
+    const saved = await this.prisma.expert.findUnique({
+      where: { slug },
+      select: { id: true },
+    });
+    if (saved && raw.changelog?.length) {
+      for (const c of raw.changelog) {
+        const date = new Date(c.date || updatedAt);
+        await this.prisma.expertVersion.create({
+          data: {
+            expertId: saved.id,
+            version: c.version,
+            changelog: JSON.stringify(c),
+            date: isNaN(date.getTime()) ? updatedAt : date,
+          },
+        });
+      }
+    }
+
+    this.logger.log(`imported expert: ${slug} v${raw.version ?? "1.0.0"}`);
+  }
+
+  private async importOneConnector(connectorDir: string) {
+    const jsonPath = join(connectorDir, "connector.json");
+    const rawText = readFileSync(jsonPath, "utf-8");
+    const sha = createHash("sha1").update(rawText).digest("hex").slice(0, 16);
+
+    const raw: RawConnector = JSON.parse(rawText);
+    const slug = raw.name;
+
+    const existing = await this.prisma.connector.findUnique({
+      where: { slug },
+      select: { sha: true, installCount: true },
+    });
+    if (existing?.sha === sha) {
+      this.logger.debug(`skip unchanged connector: ${slug}`);
+      return;
+    }
+
+    const installCount =
+      existing != null ? existing.installCount : raw.install_count ?? 0;
+    const createdAt = raw.created_at
+      ? new Date(raw.created_at)
+      : new Date("2026-01-01T00:00:00Z");
+    const updatedAt = raw.updated_at ? new Date(raw.updated_at) : new Date();
+
+    await this.prisma.connector.upsert({
+      where: { slug },
+      create: {
+        slug,
+        displayName: raw.display_name ?? slug,
+        description: raw.description ?? "",
+        version: raw.version ?? "1.0.0",
+        icon: raw.icon ?? "",
+        category: raw.category ?? "other",
+        kind: raw.kind ?? "mcp",
+        authMethod: raw.auth_method ?? "none",
+        ownerName: raw.owner?.name ?? "official",
+        ownerVerified: raw.owner?.verified ?? true,
+        installTemplate: JSON.stringify(raw.install_template ?? {}),
+        envVars: raw.env_vars ? JSON.stringify(raw.env_vars) : null,
+        capabilitiesSummary: raw.capabilities_summary ?? null,
+        tags: raw.tags ? JSON.stringify(raw.tags) : null,
+        quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        changelog: raw.changelog ? JSON.stringify(raw.changelog) : null,
+        installCount,
+        sha,
+        createdAt,
+        updatedAt,
+      },
+      update: {
+        displayName: raw.display_name ?? slug,
+        description: raw.description ?? "",
+        version: raw.version ?? "1.0.0",
+        icon: raw.icon ?? "",
+        category: raw.category ?? "other",
+        kind: raw.kind ?? "mcp",
+        authMethod: raw.auth_method ?? "none",
+        ownerName: raw.owner?.name ?? "official",
+        ownerVerified: raw.owner?.verified ?? true,
+        installTemplate: JSON.stringify(raw.install_template ?? {}),
+        envVars: raw.env_vars ? JSON.stringify(raw.env_vars) : null,
+        capabilitiesSummary: raw.capabilities_summary ?? null,
+        tags: raw.tags ? JSON.stringify(raw.tags) : null,
+        quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        changelog: raw.changelog ? JSON.stringify(raw.changelog) : null,
+        sha,
+        updatedAt,
+      },
+    });
+
+    this.logger.log(`imported connector: ${slug} v${raw.version ?? "1.0.0"}`);
   }
 
   private scanFiles(rootDir: string): Array<{

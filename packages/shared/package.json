@@ -7,7 +7,9 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./types/skill": "./src/types/skill.ts"
+    "./types/skill": "./src/types/skill.ts",
+    "./types/expert": "./src/types/expert.ts",
+    "./types/connector": "./src/types/connector.ts"
   },
   "scripts": {
     "build": "tsc -b",

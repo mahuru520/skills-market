@@ -1,0 +1,35 @@
+{
+  "id": "mcp/brave-search",
+  "name": "brave-search",
+  "display_name": "Brave 网页搜索",
+  "description": "MCP 官方网页搜索服务器:网页搜索、本地搜索、图片搜索,基于 Brave Search API。",
+  "version": "1.0.0",
+  "icon": "🔍",
+  "category": "web_search",
+  "kind": "mcp",
+  "auth_method": "env_key",
+  "owner": { "name": "modelcontextprotocol", "type": "community", "verified": false },
+  "install_template": {
+    "transport": "stdio",
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+    "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
+  },
+  "env_vars": [
+    {
+      "key": "BRAVE_API_KEY",
+      "description": "Brave Search API 密钥",
+      "required": true,
+      "example": "BSA-xxxx",
+      "source": "https://api-dashboard.search.brave.com"
+    }
+  ],
+  "capabilities_summary": "brave_web_search / brave_local_search / brave_image_search",
+  "tags": ["official", "search", "stdio"],
+  "install_count": 0,
+  "changelog": [
+    { "version": "1.0.0", "date": "2026-09-23", "changes": ["首版上架"], "type": "feature" }
+  ],
+  "created_at": "2026-09-23T00:00:00Z",
+  "updated_at": "2026-09-23T00:00:00Z"
+}

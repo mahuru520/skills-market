@@ -4,7 +4,7 @@
 generator client {
   provider      = "prisma-client-js"
   output        = "../generated/prisma"
-  binaryTargets = ["debian-openssl-3.0.x"]
+  binaryTargets = ["debian-openssl-3.0.x", "windows"]
 }
 
 datasource db {
@@ -70,7 +70,81 @@ model Category {
   key       String   @id
   name      String
   nameEn    String
+  kind      String   @default("skill") // skill | expert | connector
   sortOrder Int      @default(0)
   level     Int      @default(1)
   active    Boolean  @default(true)
+
+  @@unique([kind, name])
+}
+
+// 专家条目:prompt 内嵌(方案 A),安装 = 详情拉取 + 客户端本地落盘
+model Expert {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  displayName    String
+  description    String
+  version        String
+  icon           String   @default("")
+  category       String
+  type           String   @default("expert") // expert | expert_team
+  priority       Int      @default(0)
+  invocationMode String?
+  ownerName      String   @default("")
+  ownerVerified  Boolean  @default(true)
+  prompt         String
+  quickstart     String?
+  skills         String? // JSON: ExpertDependency[]
+  connectors     String? // JSON: ExpertDependency[]
+  installCount   Int      @default(0)
+  score          Int      @default(0)
+  sha            String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  versions ExpertVersion[]
+
+  @@index([category])
+  @@index([priority(sort: Desc)])
+}
+
+model ExpertVersion {
+  id        String   @id @default(cuid())
+  expert    Expert   @relation(fields: [expertId], references: [id], onDelete: Cascade)
+  expertId  String
+  version   String
+  changelog String
+  date      DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expertId])
+}
+
+// 连接器条目:核心是 install_template(MCP 配置模板),无 zip 下载
+model Connector {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  displayName         String
+  description         String
+  version             String
+  icon                String   @default("")
+  category            String
+  kind                String   @default("mcp")
+  authMethod          String   @default("none") // none | env_key | oauth
+  ownerName           String   @default("")
+  ownerVerified       Boolean  @default(true)
+  installTemplate     String // JSON: ConnectorInstallTemplate
+  envVars             String?
+  capabilitiesSummary String?
+  tags                String?
+  quickstart          String?
+  changelog           String?
+  installCount        Int      @default(0)
+  score               Int      @default(0)
+  sha                 String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([category])
+  @@index([kind])
 }
