@@ -65,6 +65,8 @@ export interface ConnectorDetail {
   capabilitiesSummary?: string;
   tags?: string[];
   quickstart?: QuickstartData;
+  /** 客户端首拉耗时提示(如 uvx 首次从 PyPI 下载依赖),安装 UI 展示 */
+  runtimeHint?: string;
   installCount: number;
   score: number;
   createdAt: string;

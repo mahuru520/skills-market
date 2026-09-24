@@ -2,17 +2,18 @@
   "id": "mcp/brave-search",
   "name": "brave-search",
   "display_name": "Brave 网页搜索",
-  "description": "MCP 官方网页搜索服务器:网页搜索、本地搜索、图片搜索,基于 Brave Search API。",
-  "version": "1.0.0",
+  "description": "Brave 官方网页搜索服务器:网页搜索、本地搜索、图片搜索,基于 Brave Search API。",
+  "version": "1.1.0",
   "icon": "🔍",
   "category": "web_search",
   "kind": "mcp",
   "auth_method": "env_key",
-  "owner": { "name": "modelcontextprotocol", "type": "community", "verified": false },
+  "owner": { "name": "brave", "type": "official", "verified": true },
+  "runtime_hint": "npx 首次启动需从 npm 下载依赖,约数秒",
   "install_template": {
     "transport": "stdio",
     "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+    "args": ["-y", "@brave/brave-search-mcp-server"],
     "env": { "BRAVE_API_KEY": "${BRAVE_API_KEY}" }
   },
   "env_vars": [
@@ -24,12 +25,21 @@
       "source": "https://api-dashboard.search.brave.com"
     }
   ],
-  "capabilities_summary": "brave_web_search / brave_local_search / brave_image_search",
+  "capabilities_summary": "brave_web_search / brave_local_search / brave_image_and_video_search",
   "tags": ["official", "search", "stdio"],
   "install_count": 0,
   "changelog": [
+    {
+      "version": "1.1.0",
+      "date": "2026-09-24",
+      "changes": [
+        "包源从已弃用的 @modelcontextprotocol/server-brave-search 迁移到 Brave 官方 @brave/brave-search-mcp-server",
+        "owner 更正为 Brave 官方并标记 verified"
+      ],
+      "type": "fix"
+    },
     { "version": "1.0.0", "date": "2026-09-23", "changes": ["首版上架"], "type": "feature" }
   ],
   "created_at": "2026-09-23T00:00:00Z",
-  "updated_at": "2026-09-23T00:00:00Z"
+  "updated_at": "2026-09-24T00:00:00Z"
 }

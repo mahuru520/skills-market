@@ -3,16 +3,24 @@
   "name": "git",
   "display_name": "Git",
   "description": "MCP 官方 Git 服务器:仓库状态、diff、日志、分支管理、提交等本地 Git 操作。",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "icon": "🌿",
   "category": "dev_tools",
   "kind": "mcp",
   "auth_method": "none",
-  "owner": { "name": "modelcontextprotocol", "type": "community", "verified": false },
+  "owner": {
+    "name": "modelcontextprotocol",
+    "type": "official",
+    "verified": true
+  },
   "install_template": {
     "transport": "stdio",
     "command": "uvx",
-    "args": ["mcp-server-git", "--repository", "${GIT_REPO_PATH}"]
+    "args": [
+      "mcp-server-git",
+      "--repository",
+      "${GIT_REPO_PATH}"
+    ]
   },
   "env_vars": [
     {
@@ -23,11 +31,32 @@
     }
   ],
   "capabilities_summary": "git_status / git_diff / git_log / git_create_branch / git_commit / git_push",
-  "tags": ["official", "git", "stdio"],
+  "tags": [
+    "official",
+    "git",
+    "stdio"
+  ],
   "install_count": 0,
   "changelog": [
-    { "version": "1.0.0", "date": "2026-09-23", "changes": ["首版上架"], "type": "feature" }
+    {
+      "version": "1.0.1",
+      "date": "2026-09-24",
+      "changes": [
+        "补充 runtime_hint 首拉耗时提示",
+        "官方维护包 owner 标记 verified"
+      ],
+      "type": "fix"
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-09-23",
+      "changes": [
+        "首版上架"
+      ],
+      "type": "feature"
+    }
   ],
   "created_at": "2026-09-23T00:00:00Z",
-  "updated_at": "2026-09-23T00:00:00Z"
+  "updated_at": "2026-09-24T00:00:00Z",
+  "runtime_hint": "uvx 首次启动需从 PyPI 下载约 5MB 依赖,慢网络可能超过 30 秒"
 }

@@ -82,7 +82,7 @@ export function ConnectorDetail() {
         {/* 左侧主区 */}
         <div className="min-w-0 space-y-6">
           {/* 安装配置模板 —— 连接器详情核心 */}
-          <InstallTemplateCard template={c.installTemplate} slug={c.slug} />
+          <InstallTemplateCard template={c.installTemplate} slug={c.slug} runtimeHint={c.runtimeHint} />
 
           {/* 环境变量表 */}
           <EnvVarsCard envVars={c.envVars} authMethod={c.authMethod} />
@@ -151,9 +151,11 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 function InstallTemplateCard({
   template,
   slug,
+  runtimeHint,
 }: {
   template: ConnectorInstallTemplate;
   slug: string;
+  runtimeHint?: string;
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -187,6 +189,14 @@ function InstallTemplateCard({
           按此模板写入你的 Agent MCP 配置即可接入。
           {VAR_HINT(template)}
         </p>
+        {runtimeHint && (
+          <div className="flex items-start gap-2 rounded-[10px] bg-[#ff9500]/10 border border-[#ff9500]/25 px-3 py-2 mb-3">
+            <span className="text-sm shrink-0">⏳</span>
+            <p className="text-xs text-ink-soft leading-relaxed font-sans">
+              首次启动提示:{runtimeHint}
+            </p>
+          </div>
+        )}
         <pre className="overflow-x-auto rounded-[14px] bg-[#f2f2f7]/80 backdrop-blur-xl border border-line p-4 text-sm shadow-[inset_0_1px_#ffffff,0_2px_8px_rgba(0,0,0,0.04)]">
           <code className="text-ink font-mono">
             {JSON.stringify(template, null, 2)}

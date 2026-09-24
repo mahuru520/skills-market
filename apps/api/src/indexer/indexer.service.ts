@@ -110,6 +110,7 @@ interface RawConnector {
     example: string;
     notes: string;
   };
+  runtime_hint?: string;
   changelog?: unknown[];
   install_count?: number;
   created_at?: string;
@@ -511,6 +512,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         capabilitiesSummary: raw.capabilities_summary ?? null,
         tags: raw.tags ? JSON.stringify(raw.tags) : null,
         quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        runtimeHint: raw.runtime_hint ?? null,
         changelog: raw.changelog ? JSON.stringify(raw.changelog) : null,
         installCount,
         sha,
@@ -532,6 +534,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         capabilitiesSummary: raw.capabilities_summary ?? null,
         tags: raw.tags ? JSON.stringify(raw.tags) : null,
         quickstart: raw.quickstart ? JSON.stringify(raw.quickstart) : null,
+        runtimeHint: raw.runtime_hint ?? null,
         changelog: raw.changelog ? JSON.stringify(raw.changelog) : null,
         sha,
         updatedAt,

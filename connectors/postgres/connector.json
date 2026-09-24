@@ -2,17 +2,32 @@
   "id": "mcp/postgres",
   "name": "postgres",
   "display_name": "PostgreSQL",
-  "description": "MCP 官方 Postgres 服务器:只读 SQL 查询、schema 检查、执行计划分析。",
-  "version": "1.0.0",
+  "description": "微软官方 PostgreSQL MCP 服务器:自然语言查询、schema 检查,支持只读/受限写两种模式。",
+  "version": "1.1.0",
   "icon": "🐘",
   "category": "data_db",
   "kind": "mcp",
   "auth_method": "env_key",
-  "owner": { "name": "modelcontextprotocol", "type": "community", "verified": false },
+  "owner": {
+    "name": "microsoft",
+    "type": "official",
+    "verified": true
+  },
+  "runtime_hint": "npx 首次启动需从 npm 下载依赖,约数秒",
   "install_template": {
     "transport": "stdio",
     "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-postgres", "${POSTGRES_CONNECTION_STRING}"]
+    "args": [
+      "-y",
+      "@microsoft/postgres-mcp",
+      "--transport",
+      "stdio",
+      "--access-mode",
+      "restricted"
+    ],
+    "env": {
+      "POSTGRES_CONNECTION_STRING": "${POSTGRES_CONNECTION_STRING}"
+    }
   },
   "env_vars": [
     {
@@ -22,12 +37,32 @@
       "example": "postgresql://user:pass@localhost:5432/mydb"
     }
   ],
-  "capabilities_summary": "query(只读 SQL) / list_tables / describe_table",
-  "tags": ["official", "database", "stdio"],
+  "capabilities_summary": "自然语言查询 / schema 检查 / 执行计划分析(默认受限写模式)",
+  "tags": [
+    "official",
+    "database",
+    "stdio"
+  ],
   "install_count": 0,
   "changelog": [
-    { "version": "1.0.0", "date": "2026-09-23", "changes": ["首版上架"], "type": "feature" }
+    {
+      "version": "1.1.0",
+      "date": "2026-09-24",
+      "changes": [
+        "包源从已弃用的 @modelcontextprotocol/server-postgres 迁移到微软官方 @microsoft/postgres-mcp",
+        "改为受限写模式启动,连接串通过环境变量传入"
+      ],
+      "type": "fix"
+    },
+    {
+      "version": "1.0.0",
+      "date": "2026-09-23",
+      "changes": [
+        "首版上架"
+      ],
+      "type": "feature"
+    }
   ],
   "created_at": "2026-09-23T00:00:00Z",
-  "updated_at": "2026-09-23T00:00:00Z"
+  "updated_at": "2026-09-24T00:00:00Z"
 }

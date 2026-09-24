@@ -138,6 +138,7 @@ model Connector {
   capabilitiesSummary String?
   tags                String?
   quickstart          String?
+  runtimeHint         String? // 客户端首拉耗时提示(如 uvx 首次从 PyPI 下载依赖)
   changelog           String?
   installCount        Int      @default(0)
   score               Int      @default(0)

@@ -99,6 +99,7 @@ export class ConnectorsService {
       capabilitiesSummary: r.capabilitiesSummary ?? undefined,
       tags: parseJson<string[]>(r.tags),
       quickstart: parseJson<QuickstartData>(r.quickstart),
+      runtimeHint: r.runtimeHint ?? undefined,
       installCount: r.installCount,
       score: r.score,
       createdAt: r.createdAt.toISOString(),

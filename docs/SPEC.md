@@ -317,7 +317,58 @@ services:
 
 ---
 
-## 8. 分阶段实施
+## 8. 专家(expert)协议(摘要)
+
+专家 = 可安装的 subagent 提示词包。数据源 `experts/*/expert.json`,Prisma 模型 `Expert`/`ExpertVersion`,API `GET /api/v1/experts`(priority desc 排序)、`GET /api/v1/experts/:slug`(含 prompt 全文)、`POST /api/v1/experts/:slug/install`。安装 = 客户端把 `prompt` 字段全文落盘为本地 subagent 技能 `local-expert:<slug>`。prompt 为 4 块结构:`expert_identity / expert_method / tool_policy / delivery`。`skills[]`/`connectors[]` 声明依赖,`required=true` 的客户端应提示先装。
+
+---
+
+## 9. 连接器(connector)协议
+
+> 连接器 = MCP server 预设。与技能不同:**无 zip 下载**,安装 = 客户端按 `install_template` 合成 MCP 配置。
+
+### 9.1 数据源与模型
+
+- 数据源:`connectors/*/connector.json`(indexer 启动时增量导入,sha-skip 幂等,与技能同机制)
+- Prisma 模型 `Connector`(独立于 Skill),API 路径 `GET /api/v1/connectors`、`GET /api/v1/connectors/:slug`、`POST /api/v1/connectors/:slug/install`(显式安装上报,非下载计数)
+
+### 9.2 `${VAR}` 占位符解析协议 ★核心
+
+**`env_vars` 是唯一正源**:每个变量的 `key / description / required / example / source` 全部且仅在 `env_vars[]` 中声明。`install_template`(args 与 env 的值)中出现的 `${KEY}` 是**引用**,不是字面量。
+
+客户端安装流程(协议约定):
+
+```
+1. GET /api/v1/connectors/:slug 拿到 {install_template, env_vars, auth_method}
+2. 扫描 install_template 中所有 ${KEY}(args 数组 + env 值,正则 /\$\{([A-Z0-9_]+)\}/g)
+3. 对每个命中的 KEY,从 env_vars 查 required:
+   - required=true → 必须在安装 UI 向用户收集值(展示 description/example/source)
+   - required=false → 可留空,空值时按空字符串替换
+4. 替换规则(按占位符出现位置分两种):
+   a. 出现在 env 值中("BRAVE_API_KEY": "${BRAVE_API_KEY}")
+      → 将用户收集的值写入 MCP 配置的 env 段(即 env["BRAVE_API_KEY"] = <用户值>)
+      → auth_method="env_key" 的连接器走这条路;用户后续可在 MCP 编辑器中改值
+   b. 出现在 args 数组中("${FS_ROOT}" 作为独立元素)
+      → 用用户值直接替换该元素(args: [..., "/home/user/projects"])
+      → env_vars 声明仅为收集 UI 服务,值不进 env 段
+5. 合成后的配置交付 Luca/MCP 编辑器;字面量 ${...} 不得出现在最终配置中
+```
+
+**服务端责任**:只透传原始模板与 env_vars,不做替换(值是用户环境相关的,服务端无值可填)。**校验责任在客户端**:安装时若 required 变量未收集到值,应拒绝合成并提示。
+
+### 9.3 包源时效性维护
+
+- 上架前逐个核对 npm/PyPI 现状(`npm view <pkg> deprecated`),deprecated 的换官方新包或下架
+- `runtime_hint`(可选字段):客户端首拉耗时提示,如 `"uvx 首次启动需从 PyPI 下载约 16MB 依赖"`——客户端在安装 UI 展示,提醒首拉超时属预期
+- 连接器模板以「官方 current 维护包」为优先(npm `@modelcontextprotocol/server-*` 已进入分批 deprecate,新包迁移到各官方 owner 名下)
+
+### 9.4 owner.verified 认证标准
+
+`verified: true` 仅授予两类:①官方 owner(`modelcontextprotocol`、`upstash` 等包的直接维护方,包名前缀即其 npm scope);②市场内完成认证流程的发布方。其余 `community` 类型一律 `false`。前端「已验证」徽章只对 `verified: true` 显示。
+
+---
+
+## 10. 分阶段实施
 
 | 阶段 | 目标 | 产出 | 验证 |
 |------|------|------|------|
@@ -331,7 +382,7 @@ services:
 
 ---
 
-## 9. 验证方案
+## 11. 验证方案
 
 1. **M1**:`pnpm sync` → `pnpm prisma studio` 看到 25 条 skill;`readme` 非空;`files` 为清单数组;`billing` = 18 free + 7 paid
 2. **M2**:`curl 'localhost:3001/api/skills?sortBy=score&pageSize=2'` 返回 `{code:0,data:{skills:[...],total:25}}`;`curl localhost:3001/api/v1/skills/comfyui-image-generation` 返回含 readme/files;`curl -O localhost:3001/api/v1/skills/comfyui-image-generation/download` 得到 zip 且 installCount +1
