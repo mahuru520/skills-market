@@ -198,9 +198,12 @@ function ExpertCard({
         <span className="font-mono text-[10.5px] px-2 py-0.5 rounded-[6px] border bg-brand-soft text-brand border-[#b3d4ff]">
           EXPERT
         </span>
-        <span className="font-mono text-xs text-ink-mute ml-auto">
-          ⬇ {expert.installCount}
-        </span>
+        {/* 安装计数:0 值不展示(全部为 0 时观感差,上线自然增长后自动出现) */}
+        {expert.installCount > 0 && (
+          <span className="font-mono text-xs text-ink-mute ml-auto">
+            ⬇ {expert.installCount}
+          </span>
+        )}
       </div>
     </Link>
   );

@@ -487,6 +487,30 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
       return;
     }
 
+    // 协议校验(SPEC §9.2):install_template 中的 ${VAR} 引用必须在 env_vars 里声明
+    const envKeys = new Set(
+      Array.isArray(raw.env_vars)
+        ? (raw.env_vars as Array<{ key?: string }>)
+            .map((v) => v?.key)
+            .filter((k): k is string => !!k)
+        : [],
+    );
+    const referenced = new Set<string>();
+    const scanVars = (v: unknown) => {
+      if (typeof v === "string") {
+        for (const m of v.matchAll(/\$\{([A-Z0-9_]+)\}/g)) referenced.add(m[1]);
+      } else if (Array.isArray(v)) v.forEach(scanVars);
+      else if (v && typeof v === "object") Object.values(v).forEach(scanVars);
+    };
+    scanVars(raw.install_template);
+    const undeclared = [...referenced].filter((k) => !envKeys.has(k));
+    if (undeclared.length > 0) {
+      this.logger.error(
+        `connector ${slug}: 占位符 ${undeclared.join(", ")} 未在 env_vars 中声明,跳过导入(协议 SPEC §9.2)`,
+      );
+      return;
+    }
+
     const installCount =
       existing != null ? existing.installCount : raw.install_count ?? 0;
     const createdAt = raw.created_at
