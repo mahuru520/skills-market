@@ -44,7 +44,7 @@ python scripts/text_to_video.py \
 | 参数 | 说明 | 默认 |
 |------|------|------|
 | `--prompt` | 视频描述提示词（最多 7000 字符，必须） | — |
-| `--resolution` | 分辨率：`768P` / `2K`（当前网关仅支持 768P，2K 暂不可用） | `768P` |
+| `--resolution` | 分辨率：`768P` / `2K` | `768P` |
 | `--ratio` | 画面比例：`21:9` `16:9` `4:3` `1:1` `3:4` `9:16` | `16:9` |
 | `--duration` | 视频时长（4–15 秒整数） | `5` |
 | `--output` | 本地 mp4 保存路径 | 当前目录 `minimax_h3_t2v.mp4` |
@@ -61,7 +61,7 @@ python scripts/text_to_video.py --prompt "A bird spreading its wings and flying 
 # 竖屏 10 秒
 python scripts/text_to_video.py --prompt "..." --ratio 9:16 --duration 10
 
-# 2K 高清（当前网关暂不支持，仅 768P 可用）
+# 2K 高清
 python scripts/text_to_video.py --prompt "..." --resolution 2K
 ```
 
@@ -112,7 +112,7 @@ curl -L "$VIDEO_URL" -o result.mp4
 ## 限制
 
 - 输出 mp4（**带音频**），默认 768P / 16:9 / 5 秒
-- 时长 4–15 秒，分辨率 768P / 2K（当前网关仅支持 768P）
+- 时长 4–15 秒，分辨率 768P / 2K 均支持
 - 英文提示词效果最佳，支持长篇分镜脚本
 - 异步任务总耗时通常 3–8 分钟（视排队与负载）
 - 下载地址 `task.content.url` 为 OSS 预签名直链，有时效，需及时下载；仅支持查询最近 7 天内的任务

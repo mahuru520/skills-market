@@ -30,7 +30,7 @@ def main():
     parser.add_argument("--image", default=None, help="首帧图片路径或公网 URL（与 --last-image 至少给一张）")
     parser.add_argument("--last-image", default=None, help="尾帧图片路径或公网 URL（可选；不填 --image 时为仅尾帧模式）")
     parser.add_argument("--prompt", required=True, help="视频动作和镜头描述提示词")
-    parser.add_argument("--resolution", default="768P", choices=["768P", "2K"], help="分辨率（当前网关仅支持 768P，2K 暂不可用）")
+    parser.add_argument("--resolution", default="768P", choices=["768P", "2K"], help="分辨率")
     parser.add_argument("--ratio", "--aspect-ratio", dest="ratio", default="adaptive", help="图生视频通常使用 adaptive")
     parser.add_argument("--duration", type=int, default=5, help="视频时长（4-15 秒）")
     parser.add_argument("--output", default=None, help="输出 mp4 路径（默认当前目录/minimax_h3_i2v.mp4）")

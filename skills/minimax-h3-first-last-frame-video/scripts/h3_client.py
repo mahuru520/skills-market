@@ -122,8 +122,6 @@ def require_api_key(cli_value):
 def validate_common(resolution, duration, ratio, allow_adaptive=False):
     if resolution not in {"768P", "2K"}:
         raise SystemExit("ERROR: resolution 必须是 768P 或 2K")
-    if resolution == "2K":
-        raise SystemExit("ERROR: 2K 当前网关暂不支持，仅 768P 可用")
     if not 4 <= duration <= 15:
         raise SystemExit("ERROR: duration 必须是 4-15 秒的整数")
     allowed = {"21:9", "16:9", "4:3", "1:1", "3:4", "9:16"}

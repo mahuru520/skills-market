@@ -74,7 +74,7 @@ python scripts/reference_to_video.py \
 | `--ref-video-url` | 参考视频 URL，可重复 | — |
 | `--ref-audio-url` | 参考音频 URL，可重复 | — |
 | `--prompt` | 视频描述及参考素材使用方式（最多 7000 字符，必须） | — |
-| `--resolution` | 分辨率：`768P` / `2K`（当前网关仅支持 768P，2K 暂不可用） | `768P` |
+| `--resolution` | 分辨率：`768P` / `2K` | `768P` |
 | `--ratio` | 画面比例（默认 `adaptive`） | `adaptive` |
 | `--duration` | 视频时长（4–15 秒整数） | `5` |
 | `--output` | 本地 mp4 保存路径 | 当前目录 `minimax_h3_r2v.mp4` |
@@ -146,7 +146,7 @@ curl -L "$VIDEO_URL" -o result.mp4
 ## 限制
 
 - 输出 mp4（**带音频**），默认 768P / 比例 adaptive / 5 秒
-- 时长 4–15 秒，分辨率 768P / 2K（当前网关仅支持 768P）
+- 时长 4–15 秒，分辨率 768P / 2K 均支持
 - 至少 2 张参考图（`--ref0` / `--ref1`），混合参考素材总数最多 12 个
 - 英文提示词效果最佳，支持长篇分镜脚本
 - 异步任务总耗时通常 3–8 分钟（视排队与负载）
