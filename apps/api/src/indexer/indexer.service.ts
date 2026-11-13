@@ -252,12 +252,13 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
     const raw: RawSkill = JSON.parse(rawText);
     const slug = raw.name;
 
-    // sha 未变则跳过
+    // sha 未变则跳过;INDEXER_FORCE=1 时忽略 sha 强制重导(修复字段缺失/回填)
+    const force = process.env.INDEXER_FORCE === "1";
     const existing = await this.prisma.skill.findUnique({
       where: { slug },
       select: { sha: true, installCount: true },
     });
-    if (existing?.sha === sha) {
+    if (existing?.sha === sha && !force) {
       this.logger.debug(`skip unchanged: ${slug}`);
       return;
     }
