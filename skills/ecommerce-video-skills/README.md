@@ -6,15 +6,6 @@
 **13 个电商短视频 Agent Skills · 一张商品图 → 带配音、字幕、BGM 的 9:16 带货视频**<br>
 **13 Agent Skills for ecommerce short videos — 抖音 · TikTok Shop · 视频号 · 小红书 · 淘宝主图视频 · Amazon**
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-13-8b5cf6)](#-skills--技能列表)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-ready-d97757)](#-安装)
-[![Codex](https://img.shields.io/badge/Codex-ready-111111)](#-安装)
-[![Cursor](https://img.shields.io/badge/Cursor-ready-2563eb)](#-安装)
-[![ffmpeg](https://img.shields.io/badge/ffmpeg-local%20render-007808)](skills/ffmpeg-auto-assemble/SKILL.md)
-[![edge-tts](https://img.shields.io/badge/edge--tts-free%20voice-0ea5e9)](skills/ai-voiceover-edge-tts/SKILL.md)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![姊妹仓库](https://img.shields.io/badge/%E5%A7%8A%E5%A6%B9%E4%BB%93%E5%BA%93-ecommerce--image--skills-f97316)](https://github.com/xianyu110/ecommerce-image-skills)
-
 [中文](#-中文) · [English](#-english) · [效果 Demo](#-效果--demo) · [Skills](#-skills--技能列表) · [Related](#-related--相关链接)
 
 <br>
@@ -26,9 +17,6 @@
 
 <img src="https://upload.maynor1024.live/file/1791169828136_evs-one-photo-to-video.jpg" width="860" alt="one product photo in, 15-second 9:16 video out">
 
-```bash
-npx skills add xianyu110/ecommerce-video-skills
-```
 
 </div>
 
@@ -50,25 +38,6 @@ npx skills add xianyu110/ecommerce-video-skills
 - 📐 **平台规格 + 安全区**：抖音 / TikTok Shop / 视频号 / 小红书 / 淘宝主图视频 / Amazon 一键导出，字幕自动避开底部商品卡和右侧按钮。
 - 🌏 **出海友好**：同一份 storyboard 加 `line_en` 等字段，`--lang en` 直接渲染英文版（东南亚、日韩、拉美音色已列好）。
 - ⚖️ **合规意识**：钩子/评测模板内置广告法绝对化用语检查、「只写测过的数据」、公平对比规则。
-
-### 📦 安装
-
-```bash
-npx skills add xianyu110/ecommerce-video-skills          # 一行安装（skills CLI）
-# 或在 Claude Code 里：/plugin marketplace add xianyu110/ecommerce-video-skills
-```
-
-手动安装：
-
-```bash
-git clone https://github.com/xianyu110/ecommerce-video-skills.git && cd ecommerce-video-skills
-mkdir -p ~/.claude/skills && cp -r skills/* ~/.claude/skills/     # Claude Code（或项目内 .claude/skills/）
-mkdir -p ~/.codex/skills  && cp -r skills/* ~/.codex/skills/      # Codex
-mkdir -p .cursor/skills   && cp -r skills/* .cursor/skills/       # Cursor（项目内）
-pip install -r requirements.txt                                    # pillow numpy edge-tts；另需 ffmpeg（含 libass）
-```
-
-每个 skill 文件夹自带所需脚本，互不依赖，只复制需要的即可。
 
 ### ⚡ 30 秒跑通示例
 
@@ -154,30 +123,11 @@ python scripts/cover_ab.py out/aura.mp4 --images build/still00.png build/still03
 
 ---
 
-## 👭 姊妹仓库 / Sister repo
-
-- **[ecommerce-image-skills](https://github.com/xianyu110/ecommerce-image-skills)** —— 12 个电商出图 Skill（白底主图、场景图、卖点图、A+、小红书封面、详情长图…）。**先出图，再用本仓库把图变成视频**：本仓库示例视频的素材就来自它。
-- **[gptimage2.asia](https://gptimage2.asia/?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-video-skills)** —— 在线使用 GPT Image 2.5，无需 API Key，快速做出视频要用的商品图 / run GPT Image 2.5 online.
-
-## 🤝 Contributing
-
-详见 [CONTRIBUTING.md](CONTRIBUTING.md)。欢迎 PR：新的平台规格（附官方链接）、更好的钩子/分镜模板、更多脚本。请保持每个 skill 自包含（`skills/<name>/SKILL.md` + `scripts/`）；修改 `scripts/` 后运行 `python tools/sync_scripts.py` 同步到各 skill。
-
-## 📜 致谢与许可
-
-MIT © xianyu110。内容为原创编写；参考项目（MoneyPrinterTurbo · MIT、shuohao-skills · Apache-2.0、reelbench-skills · Apache-2.0、ffmpeg-skill · MIT 等）只借鉴了结构思路，未复制文本或代码，详见 [docs/credits.md](docs/credits.md)。edge-tts 为 LGPL-3.0 依赖；FFmpeg 由用户自行安装。平台规则经常变化，上传前请以各平台官方说明为准。
-
----
 
 ## 🇺🇸 English
 
 Thirteen installable Agent Skills that take an ecommerce product from **a few photos to a finished 9:16 short video** — hooks, storyboards, model-agnostic image-to-video prompts, free edge-tts voice-over, styled subtitles, **a working local ffmpeg render pipeline**, platform exports (TikTok Shop, Douyin, WeChat Channels, Xiaohongshu, Taobao, Amazon), live-stream clipping, unboxing/comparison templates, multilingual dubbing and cover/title A/B tests. Chinese-first, English included.
 
-```bash
-npx skills add xianyu110/ecommerce-video-skills        # or: /plugin marketplace add xianyu110/ecommerce-video-skills
-pip install -r requirements.txt                          # + ffmpeg with libass
-python scripts/assemble.py examples/aura-bottle/storyboard.json --lang en --voice en-US-AndrewNeural -o out/aura-en.mp4
-```
 
 - **Viral remake**: paste a Douyin/TikTok link or transcript → 5-beat breakdown → map to your product → `storyboard.json` ready to render.
 - **Real pipeline, no API key**: storyboard.json → per-line edge-tts → Ken Burns shots → xfade → ASS captions & pop-up titles → ducked BGM → two-pass loudnorm (≈ -14 LUFS) → MP4 + SRT.
@@ -185,31 +135,4 @@ python scripts/assemble.py examples/aura-bottle/storyboard.json --lang en --voic
 - **Localisation**: add `line_en` / `sub_en` / `title_en` fields and render with `--lang en`; voices listed for US/UK/SEA/JP/KR/LATAM.
 - Skills: `viral-remake` · `image-to-video-shots` · `hook-3s-script` · `selling-point-storyboard` · `multi-model-shot-prompts` · `ai-voiceover-edge-tts` · `subtitles-and-text-effects` · `ffmpeg-auto-assemble` · `platform-spec-export` · `live-stream-clips` · `unboxing-comparison-review` · `multilingual-dubbing` · `cover-title-ab` (see the table above).
 - No API key needed for the render. Third-party model/API options are listed under [Related](#-related--相关链接).
-- Need product images first? `https://gptimage2.asia/` runs GPT Image 2.5 in the browser.
-- Images first? See the sister repo **[ecommerce-image-skills](https://github.com/xianyu110/ecommerce-image-skills)**.
-
 ---
-
-## 🔗 Related / 相关链接
-
-> 以下为第三方服务，**与本项目无隶属关系**；标注「推广链接」的为作者的邀请/返利链接。本仓库的脚本不依赖其中任何一个。<br>
-> Third-party services, not affiliated with this project. Links marked *referral* are the author's affiliate links. Nothing in this repo requires them.
-
-- [claude-opus.top](https://claude-opus.top/) — Claude 国内镜像站，可把 SKILL.md 粘进对话按步骤出脚本、分镜和提示词 / Claude mirror for mainland China.
-- [tryallapi.com](https://tryallapi.com/register?aff=5A6A)（推广链接 / *referral*）— 一站式 OpenAI 兼容 API（视频 / 图像 / 大模型）；需要在脚本里调模型时可设 `OPENAI_BASE_URL=https://tryallapi.com/v1`（任何 OpenAI 兼容网关均可）。
-
-## 🔗 友情链接 / Friends
-
-- [LINUX DO](https://linux.do) — 新的理想型社区 / A new ideal community
-
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=xianyu110/ecommerce-video-skills&type=Date)](https://star-history.com/#xianyu110/ecommerce-video-skills&Date)
-
----
-
-<div align="center">
-
-我是 MaynorAI 团队，分享 AI 编程、AI SaaS 工具出海、一人团队搭建经验。
-
-</div>

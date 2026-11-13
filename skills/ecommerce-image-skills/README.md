@@ -5,35 +5,16 @@
 **12 个电商出图 Agent Skills · GPT Image 2.5（Flare / Sunburst）**<br>
 **12 Agent Skills for ecommerce product images — Amazon · 淘宝天猫 · Shopee · TikTok Shop · 小红书**
 
-[![Agent Skills](https://img.shields.io/badge/Agent%20Skills-12-8b5cf6)](#-skills--技能列表)
-[![Claude Code](https://img.shields.io/badge/Claude%20Code-ready-d97757)](#-安装)
-[![Codex](https://img.shields.io/badge/Codex-ready-111111)](#-安装)
-[![Cursor](https://img.shields.io/badge/Cursor-ready-2563eb)](#-安装)
-[![GPT Image 2.5](https://img.shields.io/badge/GPT%20Image%202.5-Flare%20%2F%20Sunburst-0d9488)](#模型选择--model-routing)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/xianyu110/ecommerce-image-skills?style=social)](https://github.com/xianyu110/ecommerce-image-skills/stargazers)
-[![Try online](https://img.shields.io/badge/Try%20online-gptimage2.asia-34d399)](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=badge)
-
-[中文](#-中文) · [English](#-english) · [效果展示 Showcase](#-效果展示--showcase) · [Skills](#-skills--技能列表) · [Star History](#-star-history)
+[中文](#-中文) · [English](#-english) · [效果展示 Showcase](#-效果展示--showcase) · [Skills](#-skills--技能列表)
 
 <a href="#-效果展示--showcase"><img src="https://upload.maynor1024.live/file/1791116626949_ecomskills-gallery-wall.jpg" width="900" alt="Gallery wall: one product photo in, Amazon white-background main image, lifestyle scene, infographic, Xiaohongshu cover, sale banner and on-model try-on out — real GPT Image 2.5 outputs"></a>
 
 <sub>↑ 全部是本仓库 skill 的真实输出（GPT Image 2.5，未 PS） · All real outputs from these skills, no retouching</sub>
 
-### ⚡ 一行安装 / One-line install
-
-```bash
-npx skills add xianyu110/ecommerce-image-skills
-```
-
-<sub>或 / or：Claude Code 里 `/plugin marketplace add xianyu110/ecommerce-image-skills` · 手动复制见 [安装](#-安装) / manual copy: [Install](#install)</sub>
-
 <img src="https://upload.maynor1024.live/file/1791116577817_ecomskills-before-after.gif" width="760" alt="Before → after slideshow: casual phone photo of a bottle and a flat-lay hoodie turned into six platform-ready ecommerce images">
 
 <sub>Before → After：同一张随手拍 → 6 种平台图 · one casual photo → six platform-ready images</sub>
 
-**如果对你有用，欢迎点个 ⭐ Star，让更多卖家看到。**<br>
-**If this saves you a designer's afternoon, a ⭐ helps others find it.**
 
 </div>
 
@@ -42,11 +23,6 @@ npx skills add xianyu110/ecommerce-image-skills
 ## 🇨🇳 中文
 
 > ### 🚀 使用方式 / 在哪里用
->
-> - **国内使用地址**：<https://chatgpt-plus.top/list/#/home>
-> - **API 使用地址**：[https://tryallapi.com/](https://tryallapi.com/?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=zh-where-to-use)（OpenAI 兼容，`GPTIMAGE_BASE_URL=https://tryallapi.com/v1`）
-> - **Codex 使用**：<https://wzyp.cn/item/aus7lo>
-> - **国外使用地址**：[https://gptimage2.asia/](https://gptimage2.asia/?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=zh-where-to-use)
 
 把「拍商品图 + 美工做图」拆成 12 个可单独安装的 Agent Skill。丢一张手机随手拍的商品照片给 Claude Code / Codex / Cursor，它就会按平台规则出白底主图、场景图、卖点图、A+、尺寸图、模特图、大促 Banner、小红书封面、淘宝详情长图……
 
@@ -58,25 +34,6 @@ npx skills add xianyu110/ecommerce-image-skills
 - 🛠 **脚本做确定性的事**：白底/占比检查与修复、A+ 裁切、拼图、详情页拼接切片、批量换背景（断点续跑 + 预算上限）。
 - 🚦 **三种出图方式**：①agent 自带生图工具 ②配置 `GPTIMAGE_API_KEY`（任意 OpenAI 兼容接口）用 `scripts/generate.py` ③都没有时输出最终提示词 + 一个在线运行链接。
 
-### 📦 安装
-
-```bash
-git clone https://github.com/xianyu110/ecommerce-image-skills.git
-cd ecommerce-image-skills
-
-# Claude Code（全局；或复制到项目内 .claude/skills/）
-mkdir -p ~/.claude/skills && cp -r skills/* ~/.claude/skills/
-
-# Codex
-mkdir -p ~/.codex/skills && cp -r skills/* ~/.codex/skills/
-
-# Cursor（项目内）
-mkdir -p .cursor/skills && cp -r skills/* .cursor/skills/
-```
-
-只想要某一个？复制对应文件夹即可，例如 `cp -r skills/amazon-white-background ~/.claude/skills/`。每个 skill 文件夹自带所需脚本，互不依赖。
-
-也可以用 [skills CLI](https://skills.sh)：`npx skills add xianyu110/ecommerce-image-skills`，或在 Claude Code 里 `/plugin marketplace add xianyu110/ecommerce-image-skills`。
 
 ### 🚀 使用
 
@@ -105,15 +62,6 @@ mkdir -p .cursor/skills && cp -r skills/* .cursor/skills/
 | 文生图概念图 | 局部编辑：换背景、换色、去杂物 |
 | 草稿供挑选 | 最终主图、文字密集的信息图 / 尺寸表 |
 
-### 🙋 没有 Claude / API？ / No Claude or API key?
-
-这些 skill 跑在 Claude Code / Codex / Cursor 等 agent 里；用脚本出图时需要一个 OpenAI 兼容接口。还没有的话：
-
-- **方法一 · Claude 国内镜像站**：`https://claude-opus.top/` —— 国内直接使用 Claude
-- **方法二 · 一站式 API**：`https://tryallapi.com/register?aff=5A6A` —— Claude / GPT / Gemini 一个 Key 全搞定，`GPTIMAGE_BASE_URL=https://tryallapi.com/v1` 即可给 `scripts/generate.py` 出图
-
-<sub>Need a Claude account or an OpenAI-compatible key? Option 1: Claude mirror for mainland China `https://claude-opus.top/` · Option 2: one key for Claude / GPT / Gemini `https://tryallapi.com/register?aff=5A6A`. Any OpenAI-compatible endpoint works — these are just convenient options.</sub>
-
 ---
 
 ## 🖼 效果展示 / Showcase
@@ -123,12 +71,12 @@ One casual phone photo in → real GPT Image 2.5 outputs, no manual retouching (
 
 | Skill | 输入 Input | 输出 Output | |
 |---|---|---|---|
-| **白底主图 · White-bg main**<br>`amazon-white-background`<br><sub>Sunburst，`check_main_image.py --fix` 后 100% #FFFFFF · coverage 87%</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083782849_ecomskills-01-white-bg.webp" width="240" alt="amazon-white-background output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-amazon-white-background) |
-| **生活场景 · Lifestyle**<br>`lifestyle-scene`<br><sub>Flare，户外徒步场景</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083783179_ecomskills-02-lifestyle.webp" width="240" alt="lifestyle-scene output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-lifestyle-scene) |
-| **卖点信息图 · Infographic**<br>`selling-point-infographic`<br><sub>Sunburst，英文文案逐字渲染</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083790675_ecomskills-03-infographic.webp" width="240" alt="selling-point-infographic output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-selling-point-infographic) |
-| **模特上身 · Try-on**<br>`model-try-on`<br><sub>Flare，平铺卫衣 → 模特</sub> | <img src="https://upload.maynor1024.live/file/1791083790600_ecomskills-input-hoodie.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083786719_ecomskills-04-model-tryon.webp" width="240" alt="model-try-on output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-model-try-on) |
-| **小红书封面 · RED cover**<br>`xiaohongshu-cover`<br><sub>Flare，中文大字标题 3:4</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083788447_ecomskills-05-xhs-cover.webp" width="240" alt="xiaohongshu-cover output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-xiaohongshu-cover) |
-| **大促 Banner · Sale banner**<br>`sale-banner`<br><sub>Flare，11.11 Shopee / TikTok Shop 风格</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083786654_ecomskills-06-sale-banner.webp" width="360" alt="sale-banner output"> | [在线试试 / Try online →](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=showcase-sale-banner) |
+| **白底主图 · White-bg main**<br>`amazon-white-background`<br><sub>Sunburst，`check_main_image.py --fix` 后 100% #FFFFFF · coverage 87%</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083782849_ecomskills-01-white-bg.webp" width="240" alt="amazon-white-background output"> 
+| **生活场景 · Lifestyle**<br>`lifestyle-scene`<br><sub>Flare，户外徒步场景</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083783179_ecomskills-02-lifestyle.webp" width="240" alt="lifestyle-scene output"> 
+| **卖点信息图 · Infographic**<br>`selling-point-infographic`<br><sub>Sunburst，英文文案逐字渲染</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083790675_ecomskills-03-infographic.webp" width="240" alt="selling-point-infographic output"> 
+| **模特上身 · Try-on**<br>`model-try-on`<br><sub>Flare，平铺卫衣 → 模特</sub> | <img src="https://upload.maynor1024.live/file/1791083790600_ecomskills-input-hoodie.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083786719_ecomskills-04-model-tryon.webp" width="240" alt="model-try-on output"> 
+| **小红书封面 · RED cover**<br>`xiaohongshu-cover`<br><sub>Flare，中文大字标题 3:4</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083788447_ecomskills-05-xhs-cover.webp" width="240" alt="xiaohongshu-cover output"> 
+| **大促 Banner · Sale banner**<br>`sale-banner`<br><sub>Flare，11.11 Shopee / TikTok Shop 风格</sub> | <img src="https://upload.maynor1024.live/file/1791083794791_ecomskills-input-bottle.webp" width="200" alt="input"> | <img src="https://upload.maynor1024.live/file/1791083786654_ecomskills-06-sale-banner.webp" width="360" alt="sale-banner output">
 
 > 输入图本身也是 AI 生成的虚构产品「AURA」，仅作演示。 The input product "AURA" is fictional (AI-generated) for demo purposes.
 
@@ -155,8 +103,6 @@ One casual phone photo in → real GPT Image 2.5 outputs, no manual retouching (
 
 ## 🇺🇸 English
 
-> **Where to use** — run online at [gptimage2.asia](https://gptimage2.asia/?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=en-where-to-use) (international) · API via [tryallapi.com](https://tryallapi.com/?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=en-where-to-use) (OpenAI-compatible, `GPTIMAGE_BASE_URL=https://tryallapi.com/v1`) · mainland China: [chatgpt-plus.top](https://chatgpt-plus.top/list/#/home) · Codex: [momoai.czvip.cn](https://wzyp.cn/item/aus7lo)
-
 Twelve installable Agent Skills that turn a casual product photo into platform-ready ecommerce images — Amazon main images, lifestyle scenes, infographics, A+ modules, size charts, on-model shots, sale banners, Xiaohongshu covers and Taobao detail pages — from inside Claude Code, Codex, Cursor or any agent that reads `SKILL.md`.
 
 **What makes it different from a prompt pack**
@@ -167,17 +113,6 @@ Twelve installable Agent Skills that turn a casual product photo into platform-r
 - 🛠 **Scripts for deterministic steps** — white-background/coverage check & fix, A+ crops, grids, long-image stitching, batch edits with resume and a budget cap.
 - 🚦 **Three generation routes** — (a) the agent's built-in image tool, (b) `GPTIMAGE_API_KEY` + any OpenAI-compatible `GPTIMAGE_BASE_URL` via `scripts/generate.py`, (c) otherwise the final prompt plus a one-click link to run it online.
 
-### Install
-
-```bash
-git clone https://github.com/xianyu110/ecommerce-image-skills.git && cd ecommerce-image-skills
-cp -r skills/* ~/.claude/skills/     # Claude Code (or <project>/.claude/skills/)
-cp -r skills/* ~/.codex/skills/      # Codex
-cp -r skills/* .cursor/skills/       # Cursor (project)
-```
-
-Each skill folder is self-contained (its scripts are bundled), so you can copy just the ones you need. Alternatives: `npx skills add xianyu110/ecommerce-image-skills`, or `/plugin marketplace add xianyu110/ecommerce-image-skills` in Claude Code.
-
 ### Use
 
 ```text
@@ -185,18 +120,6 @@ Use amazon-white-background on ./photos/bottle.jpg and run the check script.
 Plan a full 7-image Amazon set for this bottle with ecommerce-listing-suite — show me the plan first.
 Batch-replace backgrounds in ./photos with pure white, cap at 40 API calls.
 ```
-
-### Optional API key
-
-```bash
-export GPTIMAGE_API_KEY=sk-...
-export GPTIMAGE_BASE_URL=https://tryallapi.com/v1  # recommended; or https://api.openai.com / any OpenAI-compatible gateway
-python skills/amazon-white-background/scripts/generate.py --model sunburst \
-  --image bottle.jpg --size 1024x1024 --prompt-file prompt.txt --out out/main.png
-python skills/amazon-white-background/scripts/check_main_image.py out/main.png --fix out/main-fixed.png
-```
-
-No key and no built-in tool? The skill prints the final prompt and a single link to run it in the browser at [gptimage2.asia](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=en-route-c).
 
 ### Skills
 
@@ -216,37 +139,3 @@ No key and no built-in tool? The skill prints the final prompt and a single link
 | [`ecommerce-listing-suite`](skills/ecommerce-listing-suite/SKILL.md) | Orchestrator: plans a full listing set per platform, calls the 11 skills, QA every image | Auto |
 
 ---
-
-## 🤝 Contributing
-
-New platform specs, better templates, more scripts — PRs welcome. Please keep each skill self-contained (`skills/<name>/SKILL.md` + `scripts/`) and only cite platform rules you can link to.
-
-## Related
-
-- [ecommerce-video-skills](https://github.com/xianyu110/ecommerce-video-skills) — 姊妹仓库：电商短视频 Skills（主图转视频 · 钩子脚本 · ffmpeg 自动成片）
-- [brand-ip-kit-skills](https://github.com/xianyu110/brand-ip-kit-skills) — 品牌 IP 视觉套件 Skills（IP 形象 · Logo · VI · 包装 · 表情包）
-- [golive-china-skills](https://github.com/xianyu110/golive-china-skills) — 国内上线 Skills（ICP 备案 · 微信/支付宝支付 · 小程序 · 隐私合规）
-- [awesome-gpt-image2.5](https://github.com/xianyu110/awesome-gpt-image2.5) — GPT Image 2.5 prompt gallery (Flare · Sunburst · Sketch)
-- [awesome-gptimage2](https://github.com/xianyu110/awesome-gptimage2) — GPT Image 2 中文提示词实战手册
-- [gptimage2.asia](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=related) — run GPT Image 2.5 online
-
-## 🔗 友情链接 / Friends
-
-- [LINUX DO](https://linux.do) — 新的理想型社区 / A new ideal community
-
-## ⭐ Star History
-
-<a href="https://star-history.com/#xianyu110/ecommerce-image-skills&amp;Date"><img src="https://api.star-history.com/svg?repos=xianyu110/ecommerce-image-skills&amp;type=Date" width="640" alt="Star History Chart"></a>
-
-## License
-
-MIT © xianyu110. Platform rules change — always double-check the current seller-centre guidelines before uploading.
-
----
-
-<div align="center">
-
-**关于作者 / About** — 我是 MaynorAI 团队，分享 AI 编程、AI SaaS 工具出海、一人团队搭建经验。<br>
-<sub>We're the MaynorAI team, sharing AI coding, taking AI SaaS tools global, and building as a one-person team.</sub>
-
-</div>

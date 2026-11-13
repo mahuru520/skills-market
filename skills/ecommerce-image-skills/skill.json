@@ -1,8 +1,8 @@
 {
   "id": "osprey/ecommerce-image-skills",
   "name": "ecommerce-image-skills",
-  "display_name": "电商出图技能包 Ecommerce Image Skills",
-  "description": "电商出图 Agent 技能包（12 个子技能，GPT Image 2.5）：Amazon 白底主图、A+ 页面模块图、淘宝详情长图、小红书封面、大促海报、卖点信息图、尺寸规格图、多角度套图、模特试穿、生活场景图、批量换背景与全套 Listing 编排，覆盖 Amazon / 淘宝天猫 / Shopee / TikTok Shop / 小红书。整体下载后按 skills/<子技能>/SKILL.md 逐个触发。",
+  "display_name": "电商出图技能包",
+  "description": "把「拍商品图 + 美工做图」拆成 12 个可单独触发的子技能：丢一张手机随手拍的商品照片，按平台规则出白底主图、场景图、卖点图、A+、尺寸图、模特图、大促 Banner、小红书封面、淘宝详情长图，覆盖 Amazon / 淘宝天猫 / Shopee / TikTok Shop / 小红书。产品身份锁定防改图、平台规格内置、白底检查等确定性步骤脚本化。当用户要拍商品图、出主图、做详情页、换背景、上模特时使用；可整包安装，也可单独下载任意子技能。",
   "version": "1.0.0",
   "icon": "🛒",
   "category": "ecommerce",
@@ -491,5 +491,15 @@
     }
   ],
   "created_at": "2026-11-13T00:00:00.000Z",
-  "updated_at": "2026-11-13T00:00:00.000Z"
+  "updated_at": "2026-11-13T00:00:00.000Z",
+  "quickstart": {
+    "overview": "一张手机随手拍的商品照片 → 按平台规则出白底主图、场景图、卖点图、A+、模特图、Banner、详情长图",
+    "scenarios": [
+      "用 amazon-white-background 出亚马逊白底主图并跑检查脚本",
+      "按平台规划整套 Listing 图（Amazon 7 张 / 淘宝 5+详情 / 小红书）并逐张质检",
+      "批量换背景 / SKU 换色（断点续跑 + 预算上限）、大促 Banner、小红书封面"
+    ],
+    "example": "用 amazon-white-background 把 ./photos/bottle.jpg 做成亚马逊白底主图，并跑检查脚本",
+    "notes": "三种出图方式：agent 自带生图工具 / 配 GPTIMAGE_API_KEY 走 scripts/generate.py / 都没有时输出提示词 + 在线运行链接。默认 Flare 模型，需保留 Logo 文字时切 Sunburst。"
+  }
 }

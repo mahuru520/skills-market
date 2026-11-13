@@ -3,11 +3,6 @@
 中文 · [English](README.en.md)
 
 # ecommerce-skills
-
-[![ci](https://github.com/dlazy-ai/ecommerce-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/dlazy-ai/ecommerce-skills/actions/workflows/ci.yml)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![repolish](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/dlazy-ai/ecommerce-skills/main/.repolish/badge.json)](https://github.com/asale-ai/repolish)
-
 <img src=".repolish/overview.svg" alt="ecommerce-skills at a glance" width="880">
 
 
@@ -489,37 +484,6 @@ dlazy gpt-image-2 \
 
 ## 快速开始
 
-技能用 [`npx skills`](https://github.com/vercel-labs/skills) 安装，它会扫描本仓库的 `skills/` 目录，把技能装进 Claude Code / Codex / Cursor 等 agent 的技能目录。
-
-```bash
-npx skills add https://github.com/dlazy-ai/ecommerce-skills --all       # 一次装全部 26 个
-npx skills add https://github.com/dlazy-ai/ecommerce-skills --list      # 先看看有哪些
-```
-
-`--all` 等价于 `--skill '*' --agent '*' -y`。想收窄范围，用 `--agent claude-code` 指定 agent，
-用 `--skill flat-lay --skill detect-task`（技能名就是下面索引表第一列）只装用得上的几个。
-默认装到当前项目 `.claude/skills/<name>/`，加 `-g` 装到用户级、所有项目共用；后续 `npx skills update` / `remove`。
-
-不想装也行：任何一份 `skill.md` 的内容直接贴进对话，Agent 照着执行即可——每份技能都保留了不依赖脚本的等价手动步骤。
-
-### 三种用法
-
-同一份资产，三个消费面：
-
-```bash
-# 1. 作为 Agent 技能（Claude Code / Cursor / Codex）
-npx skills add https://github.com/dlazy-ai/ecommerce-skills --all
-
-# 2. 作为命令行流水线
-node shared/scripts/batch.mjs --input skus.csv --task flat-lay \
-  --template prompt.txt --outdir out/ --concurrency 4 --max-credits 3000
-
-# 3. 作为 MCP server（任意 MCP 客户端）
-node mcp/server.mjs
-```
-
-MCP 配置：`{ "mcpServers": { "ecommerce": { "command": "node", "args": ["/abs/path/to/ecommerce-skills/mcp/server.mjs"] } } }`
-
 ### 依赖
 
 <img src=".repolish/tables/t-0744f9.svg" alt="依赖" width="880">
@@ -760,24 +724,3 @@ docs/flat-lay/example-output.jpg  ·  Amazon 主图  ·  有驳回风险
 - **视频模型不写死**。各家视频模型 ID 差异大更新快，写死只会误导，所以要你显式指定 `DLAZY_VIDEO_MODEL`。
 
 ---
-
-## 参与与维护
-
-外部贡献看 [CONTRIBUTING.md](CONTRIBUTING.md)。维护者的本地构建、回归与 ClawHub 发布流程见 **[docs/maintainers.md](docs/maintainers.md)**。
-
-一条最容易踩的规则先放这儿：`shared/` 是单一真相源，`skills/<name>/` 下的脚本由构建脚本同步生成，
-**改完共享文件一定要跑 `npm run build`**，否则技能目录不自包含、`npx skills add` 装出来是坏的。
-
-```bash
-npm run build && npm test && npm run eval
-```
-
-## License
-
-见 [LICENSE](LICENSE)。
-
-## 用 repolish 打磨
-
-<img src=".repolish/card.svg" alt="repolish report card" width="880">
-
-这张卡片由 [repolish](https://github.com/asale-ai/repolish) 生成，是仓库里的一个普通文件——没有外部字体、没有脚本、不由任何第三方托管。想给自己的仓库打一次分：`npx @asale/repolish`。

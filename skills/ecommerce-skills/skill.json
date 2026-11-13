@@ -1,8 +1,8 @@
 {
   "id": "osprey/ecommerce-skills",
   "name": "ecommerce-skills",
-  "display_name": "电商视觉生产技能包 Ecommerce Skills (dLazy)",
-  "description": "电商视觉生产 Agent 技能包（26 个子技能，dLazy）：把拍商品图拆成可组合链路——平铺图上身、鞋包配饰穿戴、多单品融图、换模特换背景、裂变套图、详情页模块、投前 AI 图质检、平台合规校验、批量生图流水线、主图视频、UGC 口播、去水印等；确定性动作交给脚本（并发/重试/断点续跑/成本熔断），后端可切 dLazy / OpenAI / Gemini / fal / Replicate / 火山方舟，也内置 MCP server。",
+  "display_name": "电商视觉生产技能包",
+  "description": "面向电商视觉生产的 26 个可组合子技能：平铺图上身、鞋包配饰穿戴、多单品融图、换模特换背景、裂变套图、详情页模块、投前 AI 图质检、平台合规校验、批量生图流水线、主图视频、UGC 口播、去水印等，覆盖平铺图 → 上身图 → 套图 → 详情页 → 主图视频 → 投前质检 → 平台合规全链路，不用摄影棚、不约模特。不锁后端（dLazy / OpenAI / Gemini / fal / Replicate / 火山方舟）、确定性动作交给脚本、上架前机检可验收。当用户要商品上身、出一套图、批量生图、上架前质检时使用；可整包安装，也可单独下载任意子技能。",
   "version": "1.0.0",
   "icon": "🏭",
   "category": "ecommerce",
@@ -2691,5 +2691,15 @@
     }
   ],
   "created_at": "2026-11-13T00:00:00.000Z",
-  "updated_at": "2026-11-13T00:00:00.000Z"
+  "updated_at": "2026-11-13T00:00:00.000Z",
+  "quickstart": {
+    "overview": "平铺图 → 模特上身 → 裂变套图 → 详情页 → 主图视频 → 投前质检 → 平台合规，整条链路脚本化可验收",
+    "scenarios": [
+      "服装平铺图一键上身试穿、鞋包配饰真人穿戴、多单品融图成套 Look",
+      "一张商品图裂变成多角度多场景整套素材，带中文排版的详情页与卖点主图",
+      "批量生图流水线（并发/断点续跑/成本熔断）与投前质检、平台合规机检闭环重跑"
+    ],
+    "example": "用 flat-lay 把这件毛衣的平铺图转成模特上身图，再用 fission-pattern 裂变出一套详情页素材",
+    "notes": "不锁后端：dLazy 默认，也可用 OpenAI / Gemini / fal / Replicate / 火山方舟，没配 key 也能 --dry-run 空跑；生成 → 质检 → 修正句回填 → 重跑的真闭环由 run_loop.mjs 驱动。"
+  }
 }
