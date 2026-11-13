@@ -94,4 +94,14 @@ export class SkillsController {
   ): Promise<void> {
     await this.service.download(slug, res!, path);
   }
+
+  // 技能目录内静态资源(README 相对路径图片等):/v1/skills/:slug/assets/<path>
+  @Get("v1/skills/:slug/assets/*")
+  async serveAsset(
+    @Param("slug") slug: string,
+    @Param("0") assetPath: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    this.service.serveAsset(slug, assetPath, res);
+  }
 }

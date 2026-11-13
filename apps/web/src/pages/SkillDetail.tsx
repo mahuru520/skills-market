@@ -111,7 +111,7 @@ export function SkillDetail() {
           </div>
 
           {tab === "overview" ? (
-            <OverviewTab readme={s.readme} />
+            <OverviewTab readme={s.readme} slug={s.slug} />
           ) : tab === "quickstart" ? (
             <QuickStartTab
               quickstart={s.quickstart}
@@ -237,14 +237,20 @@ const README_SANITIZE = {
   },
 };
 
-function OverviewTab({ readme }: { readme?: string }) {
+function OverviewTab({ readme, slug }: { readme?: string; slug: string }) {
+  // README 里的相对路径图片(docs/xxx.jpg 等)重写为 API 静态资源端点;外链/绝对路径不动
+  const resolved = (readme ?? "").replace(
+    /(<img[^>]+src=["'])(?!https?:|data:|\/)([^"']+)(["'])/g,
+    (_m, pre, src, post) =>
+      `${pre}${BASE}/v1/skills/${encodeURIComponent(slug)}/assets/${src.split("/").map(encodeURIComponent).join("/")}${post}`,
+  );
   return (
     <article className={PROSE}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw, [rehypeSanitize, README_SANITIZE]]}
       >
-        {stripFrontMatter(readme || "（无说明文档）")}
+        {stripFrontMatter(resolved || "（无说明文档）")}
       </ReactMarkdown>
     </article>
   );

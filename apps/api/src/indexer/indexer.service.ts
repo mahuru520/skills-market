@@ -328,6 +328,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         displayName: raw.display_name ?? slug,
         description: raw.description ?? "",
         descriptionEn: raw.description_en ?? null,
+        summary: raw.quickstart ? JSON.stringify(raw.quickstart) : "",
         version: raw.version ?? "",
         icon: raw.icon ?? "",
         category: raw.category ?? "other",

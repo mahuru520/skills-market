@@ -1,9 +1,7 @@
-<img src=".repolish/hero.svg" alt="" width="100%">
 
 中文 · [English](README.en.md)
 
 # ecommerce-skills
-<img src=".repolish/overview.svg" alt="ecommerce-skills at a glance" width="880">
 
 
 一套面向**电商视觉生产**的 Agent 技能库：把「拍商品图」这件事拆成 26 个可组合的技能，
@@ -486,7 +484,6 @@ dlazy gpt-image-2 \
 
 ### 依赖
 
-<img src=".repolish/tables/t-0744f9.svg" alt="依赖" width="880">
 
 <details>
 <summary>依赖（表格原文）</summary>
@@ -508,7 +505,6 @@ dlazy gpt-image-2 \
 node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 ```
 
-<img src=".repolish/tables/t-d63743.svg" alt="选后端" width="880">
 
 <details>
 <summary>选后端（表格原文）</summary>
@@ -532,7 +528,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 商品上身 — 让商品出现在人身上
 
-<img src=".repolish/tables/t-b843e0.svg" alt="商品上身 — 让商品出现在人身上" width="880">
 
 <details>
 <summary>商品上身 — 让商品出现在人身上（表格原文）</summary>
@@ -547,7 +542,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 单图变多图 — 一张图裂变成一屏
 
-<img src=".repolish/tables/t-d00410.svg" alt="单图变多图 — 一张图裂变成一屏" width="880">
 
 <details>
 <summary>单图变多图 — 一张图裂变成一屏（表格原文）</summary>
@@ -568,7 +562,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 视频 — 静态素材之外的另一半
 
-<img src=".repolish/tables/t-fc8aae.svg" alt="视频 — 静态素材之外的另一半" width="880">
 
 <details>
 <summary>视频 — 静态素材之外的另一半（表格原文）</summary>
@@ -583,7 +576,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 企业功能 — 规模化与质量把关
 
-<img src=".repolish/tables/t-c2b901.svg" alt="企业功能 — 规模化与质量把关" width="880">
 
 <details>
 <summary>企业功能 — 规模化与质量把关（表格原文）</summary>
@@ -599,7 +591,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 上架与投放 — 交付指标而不只是图
 
-<img src=".repolish/tables/t-778aef.svg" alt="上架与投放 — 交付指标而不只是图" width="880">
 
 <details>
 <summary>上架与投放 — 交付指标而不只是图（表格原文）</summary>
@@ -613,7 +604,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 ### 自定义功能 — 单点能力
 
-<img src=".repolish/tables/t-f493ea.svg" alt="自定义功能 — 单点能力" width="880">
 
 <details>
 <summary>自定义功能 — 单点能力（表格原文）</summary>
@@ -642,7 +632,6 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 技能正文只写「要生成什么」，其余交给脚本。全部支持 `--dry-run`。
 
-<img src=".repolish/tables/t-2d53e8.svg" alt="工程化：脚本干了什么" width="880">
 
 <details>
 <summary>工程化：脚本干了什么（表格原文）</summary>
@@ -692,7 +681,6 @@ docs/flat-lay/example-output.jpg  ·  Amazon 主图  ·  有驳回风险
 
 每个技能都支持 `--dry-run`：只打印参数与算力估价、不真正生成。下表是各模型的实测估价（credits / 张）：
 
-<img src=".repolish/tables/t-fd8e10.svg" alt="算力成本参考" width="880">
 
 <details>
 <summary>算力成本参考（表格原文）</summary>

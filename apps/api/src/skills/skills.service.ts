@@ -4,7 +4,7 @@ import {
 } from "@nestjs/common";
 import type { Response } from "express";
 import { createReadStream, existsSync, statSync } from "node:fs";
-import { join, sep } from "node:path";
+import { extname, join, resolve, sep } from "node:path";
 import archiver from "archiver";
 import { PrismaService } from "../prisma/prisma.service";
 import type {
@@ -255,6 +255,39 @@ export class SkillsService {
       `attachment;filename="${encodeURIComponent(slug)}.md"`,
     );
     createReadStream(filePath).pipe(res);
+  }
+
+  /**
+   * 技能目录内静态资源(README 里的相对路径图片等):
+   * GET /v1/skills/:slug/assets/<path> — 只读,防目录穿越,MIME 白名单。
+   */
+  serveAsset(slug: string, assetPath: string, res: Response): void {
+    const skillsDir = process.env.SKILLS_DIR ?? "";
+    const root = resolve(skillsDir, slug);
+    const target = resolve(root, assetPath);
+    if (
+      !skillsDir ||
+      !target.startsWith(root + sep) ||
+      !existsSync(target) ||
+      !statSync(target).isFile()
+    ) {
+      throw new NotFoundException(`asset not found: ${slug}/${assetPath}`);
+    }
+    const MIME: Record<string, string> = {
+      ".png": "image/png",
+      ".jpg": "image/jpeg",
+      ".jpeg": "image/jpeg",
+      ".webp": "image/webp",
+      ".gif": "image/gif",
+      ".svg": "image/svg+xml",
+      ".mp4": "video/mp4",
+      ".md": "text/markdown; charset=utf-8",
+      ".txt": "text/plain; charset=utf-8",
+    };
+    const mime = MIME[extname(target).toLowerCase()];
+    if (!mime) throw new NotFoundException(`asset type not allowed: ${assetPath}`);
+    res.setHeader("Content-Type", mime);
+    createReadStream(target).pipe(res);
   }
 
   async versions(slug: string): Promise<ChangelogEntry[]> {
