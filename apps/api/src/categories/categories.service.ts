@@ -13,6 +13,7 @@ const SEED: SeedCategory[] = [
   // ---- skill 分类(原有) ----
   { key: "comfyui", name: "ComfyUI", nameEn: "ComfyUI", kind: "skill", sortOrder: 15 },
   { key: "image_video", name: "图像视频", nameEn: "Image & Video", kind: "skill", sortOrder: 10 },
+  { key: "ecommerce", name: "电商", nameEn: "E-commerce", kind: "skill", sortOrder: 12 },
   { key: "document", name: "文档处理", nameEn: "Document", kind: "skill", sortOrder: 20 },
   { key: "code_debug", name: "代码调试", nameEn: "Code & Debug", kind: "skill", sortOrder: 30 },
   { key: "mail_communication", name: "邮件通信", nameEn: "Mail & Communication", kind: "skill", sortOrder: 40 },

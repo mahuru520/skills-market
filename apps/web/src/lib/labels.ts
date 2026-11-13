@@ -34,6 +34,7 @@ export const SOURCE_COLOR: Record<string, string> = {
 
 export const CATEGORY_LABEL: Record<string, string> = {
   image_video: "图像视频",
+  ecommerce: "电商",
   comfyui: "ComfyUI",
   document: "文档处理",
   code_debug: "代码调试",
@@ -46,6 +47,7 @@ export const CATEGORY_LABEL: Record<string, string> = {
 // 分类三字母代号,用作紧凑的结构标签(registry 面板、分类索引色块等)
 export const CATEGORY_CODE: Record<string, string> = {
   image_video: "IMG",
+  ecommerce: "ECM",
   comfyui: "CFU",
   document: "DOC",
   code_debug: "COD",

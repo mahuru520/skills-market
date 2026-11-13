@@ -1,0 +1,62 @@
+{
+  "id": "osprey/multi-angle-set",
+  "name": "multi-angle-set",
+  "display_name": "Multi-Angle Set · 多角度套图",
+  "description": "Generate a consistent multi-angle product image set (front, back, left/right side, top, 45°, detail macro, packaging, in-hand) with identical lighting and background, optionally combined into a grid. Use for 多角度图, 多视角套图, 360 view, angle set, gallery images.",
+  "version": "1.0.0",
+  "icon": "🔄",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-image-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/generate.py",
+      "size": 4809,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_grid.py",
+      "size": 937,
+      "type": "file"
+    },
+    {
+      "path": "scripts/online_link.py",
+      "size": 788,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 5477,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商图像技能包导入（GitHub xianyu110/ecommerce-image-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

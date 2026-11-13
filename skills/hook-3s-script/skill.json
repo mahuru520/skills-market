@@ -1,0 +1,42 @@
+{
+  "id": "osprey/hook-3s-script",
+  "name": "hook-3s-script",
+  "display_name": "3 秒钩子脚本 · 3-Second Hook",
+  "description": "3 秒钩子脚本：为电商短视频写前 3 秒开场（台词 + 画面 + 花字），按痛点/反差/结果先行/提问/数字/场景代入等钩子类型一次给出多版，并做合规自检。Use when the user asks for a hook, 开头, 黄金 3 秒, 前三秒, opening line, scroll-stopper, 完播率, or wants to rewrite a weak opening for 抖音 / TikTok Shop / 视频号 / Reels.",
+  "version": "1.0.0",
+  "icon": "🎣",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "SKILL.md",
+      "size": 6078,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商视频技能包导入（GitHub xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

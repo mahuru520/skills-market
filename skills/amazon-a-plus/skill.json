@@ -1,0 +1,62 @@
+{
+  "id": "osprey/amazon-a-plus",
+  "name": "amazon-a-plus",
+  "display_name": "Amazon A+ Content Modules · A+ 页面模块图",
+  "description": "Plan and generate Amazon A+ Content / Premium A+ module images (970×600 header, 970×300 banner, 300×300 / 220×220 tiles, 350×175 comparison, 1464×600 premium) with a consistent campaign style lock across all modules. Use for A+ content, A+ 页面, EBC, brand story, enhanced brand content.",
+  "version": "1.0.0",
+  "icon": "🧩",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-image-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/crop_to_modules.py",
+      "size": 1136,
+      "type": "file"
+    },
+    {
+      "path": "scripts/generate.py",
+      "size": 4809,
+      "type": "file"
+    },
+    {
+      "path": "scripts/online_link.py",
+      "size": 788,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 6321,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商图像技能包导入（GitHub xianyu110/ecommerce-image-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

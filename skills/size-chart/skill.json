@@ -1,0 +1,57 @@
+{
+  "id": "osprey/size-chart",
+  "name": "size-chart",
+  "display_name": "Size Chart · 尺寸规格图",
+  "description": "Create size / dimension / specification chart images: product line drawing or photo with measurement callouts (cm + inch), apparel size tables, capacity and compatibility charts, with a human-hand or object reference for scale. Numbers come only from the user. Use for 尺寸图, 规格图, size chart, dimension image, spec sheet.",
+  "version": "1.0.0",
+  "icon": "📏",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-image-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/generate.py",
+      "size": 4809,
+      "type": "file"
+    },
+    {
+      "path": "scripts/online_link.py",
+      "size": 788,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 5809,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商图像技能包导入（GitHub xianyu110/ecommerce-image-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

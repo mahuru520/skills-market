@@ -1,0 +1,52 @@
+{
+  "id": "osprey/ai-voiceover-edge-tts",
+  "name": "ai-voiceover-edge-tts",
+  "display_name": "AI 口播配音 · Voice-over with edge-tts",
+  "description": "AI 口播配音：用免费的 edge-tts（微软 Edge 在线语音）为带货短视频逐句生成配音，自动去首尾静音、统计每句时长、缓存复用，可选音色/语速/音调，并给出口播稿改写规则。Use when the user needs a voice-over, 配音, 口播, 旁白, TTS, text-to-speech, AI 主播声音, or wants to turn a script into audio for 抖音 / TikTok / 视频号 videos.",
+  "version": "1.0.0",
+  "icon": "🗣️",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/tts_edge.py",
+      "size": 4628,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 4146,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商视频技能包导入（GitHub xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

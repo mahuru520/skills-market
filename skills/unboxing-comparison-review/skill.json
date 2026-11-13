@@ -1,0 +1,52 @@
+{
+  "id": "osprey/unboxing-comparison-review",
+  "name": "unboxing-comparison-review",
+  "display_name": "开箱 / 对比评测模板 · Unboxing & Comparison Review",
+  "description": "开箱 / 对比评测模板：生成电商开箱视频与 A/B 对比评测的结构、口播稿、拍摄清单与分镜（含公平对比规则、测试设计、缺点与适合人群），可直接转成 storyboard.json 渲染。Use when the user wants an unboxing video, 开箱, 测评, 评测, 横评, 对比, review script, product comparison, versus video, or UGC-style creator review for an ecommerce product.",
+  "version": "1.0.0",
+  "icon": "🎁",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/make_cards.py",
+      "size": 8184,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 4819,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商视频技能包导入（GitHub xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

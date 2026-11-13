@@ -1,0 +1,52 @@
+{
+  "id": "osprey/platform-spec-export",
+  "name": "platform-spec-export",
+  "display_name": "平台规格导出 · Platform Spec Export",
+  "description": "TikTok Shop / 抖音 / 视频号 / 小红书 / 淘宝主图视频 / Amazon 规格导出：把一条母版视频一键转成各平台推荐画幅与编码（9:16、3:4、1:1、16:9，模糊填充或智能裁切），输出规格报告，并可叠加 UI 安全区预览。Use when the user asks for export settings, 导出规格, 尺寸, 分辨率, 画幅, 上传要求, re-encode for TikTok Shop / Douyin / WeChat Channels / Xiaohongshu / Taobao / Amazon, or safe zones.",
+  "version": "1.0.0",
+  "icon": "📐",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/export_platform.py",
+      "size": 6320,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 3940,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商视频技能包导入（GitHub xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

@@ -1,0 +1,72 @@
+{
+  "id": "osprey/ffmpeg-auto-assemble",
+  "name": "ffmpeg-auto-assemble",
+  "display_name": "ffmpeg 自动拼接成片 · Auto-assemble with ffmpeg",
+  "description": "ffmpeg 自动拼接成片：一条命令把 storyboard.json（商品图/视频片段 + 口播稿）渲染成带配音、字幕花字、转场、BGM 自动闪避、响度标准化的 9:16 MP4，纯本地运行。Use when the user wants to assemble/edit/render a product video, 自动剪辑, 一键成片, 拼接视频, 图片转视频, Ken Burns, add BGM/subtitles/voice-over with ffmpeg, or batch-produce short videos without an editor.",
+  "version": "1.0.0",
+  "icon": "🎞️",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "SKILL.md",
+  "files": [
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/assemble.py",
+      "size": 14821,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_bgm.py",
+      "size": 2909,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_cards.py",
+      "size": 8184,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_subs.py",
+      "size": 5751,
+      "type": "file"
+    },
+    {
+      "path": "scripts/tts_edge.py",
+      "size": 4628,
+      "type": "file"
+    },
+    {
+      "path": "SKILL.md",
+      "size": 5125,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "api": null,
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商视频技能包导入（GitHub xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}
