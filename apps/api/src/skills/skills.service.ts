@@ -4,7 +4,7 @@ import {
 } from "@nestjs/common";
 import type { Response } from "express";
 import { createReadStream, existsSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 import archiver from "archiver";
 import { PrismaService } from "../prisma/prisma.service";
 import type {
@@ -157,6 +157,9 @@ export class SkillsService {
       readme: r.readme,
       quickstart: parseJson<QuickstartData>(r.summary),
       files: parseJson<SkillFile[]>(r.files),
+      sub_skills: parseJson<Array<{ name: string; path: string }>>(
+        r.subSkills,
+      ),
       createdAt: r.createdAt.toISOString(),
       updatedAt: r.updatedAt.toISOString(),
       latestVersion,
@@ -167,8 +170,11 @@ export class SkillsService {
   /**
    * 下载技能整目录 zip:installCount +1,流式返回 zip。
    * 用 GET 而非 POST,使前端 <a download> 能直接触发浏览器原生下载。
+   * 可选 path 参数:下载技能目录下的某个子目录(如整包技能内的单个子技能,
+   * /v1/skills/ecommerce-skills/download?path=skills/flat-lay),
+   * 防目录穿越:resolve 后必须仍位于技能目录内。
    */
-  async download(slug: string, res: Response): Promise<void> {
+  async download(slug: string, res: Response, subPath?: string): Promise<void> {
     const skill = await this.prisma.skill.findUnique({
       where: { slug },
       select: { slug: true },
@@ -181,6 +187,22 @@ export class SkillsService {
       throw new NotFoundException(`skill directory not found: ${slug}`);
     }
 
+    let targetDir = dir;
+    let zipName = slug;
+    if (subPath) {
+      const resolved = join(dir, subPath);
+      if (
+        !resolved.startsWith(dir + sep) ||
+        !existsSync(resolved) ||
+        !statSync(resolved).isDirectory()
+      ) {
+        throw new NotFoundException(`sub path not found: ${subPath}`);
+      }
+      targetDir = resolved;
+      // zip 名:取子路径最后一段,如 skills/flat-lay → flat-lay.zip
+      zipName = subPath.split("/").filter(Boolean).pop() ?? slug;
+    }
+
     // 原子自增下载数(不阻塞下载流程,失败仅日志)
     this.prisma.skill
       .update({ where: { slug }, data: { installCount: { increment: 1 } } })
@@ -189,7 +211,7 @@ export class SkillsService {
     res.setHeader("Content-Type", "application/zip");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${encodeURIComponent(slug)}.zip"`,
+      `attachment; filename="${encodeURIComponent(zipName)}.zip"`,
     );
 
     const archive = archiver("zip", { zlib: { level: 5 } });
@@ -199,7 +221,7 @@ export class SkillsService {
         reject(err);
       });
       archive.pipe(res);
-      archive.directory(dir, false);
+      archive.directory(targetDir, false);
       archive.finalize().then(() => resolve());
     });
   }

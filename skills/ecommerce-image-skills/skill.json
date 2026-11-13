@@ -1,0 +1,495 @@
+{
+  "id": "osprey/ecommerce-image-skills",
+  "name": "ecommerce-image-skills",
+  "display_name": "电商出图技能包 Ecommerce Image Skills",
+  "description": "电商出图 Agent 技能包（12 个子技能，GPT Image 2.5）：Amazon 白底主图、A+ 页面模块图、淘宝详情长图、小红书封面、大促海报、卖点信息图、尺寸规格图、多角度套图、模特试穿、生活场景图、批量换背景与全套 Listing 编排，覆盖 Amazon / 淘宝天猫 / Shopee / TikTok Shop / 小红书。整体下载后按 skills/<子技能>/SKILL.md 逐个触发。",
+  "version": "1.0.0",
+  "icon": "🛒",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-image-skills"
+  },
+  "readme": "README.md",
+  "files": [
+    {
+      "path": "docs",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/showcase-prompts.md",
+      "size": 5202,
+      "type": "file"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1087,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "size": 20757,
+      "type": "file"
+    },
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/batch_edit.py",
+      "size": 2893,
+      "type": "file"
+    },
+    {
+      "path": "scripts/check_main_image.py",
+      "size": 4843,
+      "type": "file"
+    },
+    {
+      "path": "scripts/crop_to_modules.py",
+      "size": 1163,
+      "type": "file"
+    },
+    {
+      "path": "scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_grid.py",
+      "size": 960,
+      "type": "file"
+    },
+    {
+      "path": "scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "scripts/stitch_long_image.py",
+      "size": 1324,
+      "type": "file"
+    },
+    {
+      "path": "skill.json",
+      "size": 10896,
+      "type": "file"
+    },
+    {
+      "path": "skills",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/amazon-a-plus",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/amazon-a-plus/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/amazon-a-plus/scripts/crop_to_modules.py",
+      "size": 1163,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-a-plus/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-a-plus/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-a-plus/SKILL.md",
+      "size": 6427,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-white-background",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/amazon-white-background/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/amazon-white-background/scripts/check_main_image.py",
+      "size": 4843,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-white-background/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-white-background/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/amazon-white-background/SKILL.md",
+      "size": 6999,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-background-swap",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-background-swap/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-background-swap/scripts/batch_edit.py",
+      "size": 2893,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-background-swap/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-background-swap/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-background-swap/SKILL.md",
+      "size": 6071,
+      "type": "file"
+    },
+    {
+      "path": "skills/ecommerce-listing-suite",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ecommerce-listing-suite/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ecommerce-listing-suite/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/ecommerce-listing-suite/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/ecommerce-listing-suite/SKILL.md",
+      "size": 6642,
+      "type": "file"
+    },
+    {
+      "path": "skills/lifestyle-scene",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/lifestyle-scene/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/lifestyle-scene/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/lifestyle-scene/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/lifestyle-scene/SKILL.md",
+      "size": 6019,
+      "type": "file"
+    },
+    {
+      "path": "skills/model-try-on",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/model-try-on/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/model-try-on/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/model-try-on/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/model-try-on/SKILL.md",
+      "size": 6012,
+      "type": "file"
+    },
+    {
+      "path": "skills/multi-angle-set",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/multi-angle-set/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/multi-angle-set/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/multi-angle-set/scripts/make_grid.py",
+      "size": 960,
+      "type": "file"
+    },
+    {
+      "path": "skills/multi-angle-set/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/multi-angle-set/SKILL.md",
+      "size": 5570,
+      "type": "file"
+    },
+    {
+      "path": "skills/sale-banner",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/sale-banner/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/sale-banner/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/sale-banner/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/sale-banner/SKILL.md",
+      "size": 6265,
+      "type": "file"
+    },
+    {
+      "path": "skills/selling-point-infographic",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/selling-point-infographic/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/selling-point-infographic/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/selling-point-infographic/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/selling-point-infographic/SKILL.md",
+      "size": 6080,
+      "type": "file"
+    },
+    {
+      "path": "skills/size-chart",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/size-chart/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/size-chart/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/size-chart/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/size-chart/SKILL.md",
+      "size": 5904,
+      "type": "file"
+    },
+    {
+      "path": "skills/taobao-detail-long-image",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/taobao-detail-long-image/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/taobao-detail-long-image/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/taobao-detail-long-image/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/taobao-detail-long-image/scripts/stitch_long_image.py",
+      "size": 1324,
+      "type": "file"
+    },
+    {
+      "path": "skills/taobao-detail-long-image/SKILL.md",
+      "size": 5931,
+      "type": "file"
+    },
+    {
+      "path": "skills/xiaohongshu-cover",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/xiaohongshu-cover/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/xiaohongshu-cover/scripts/generate.py",
+      "size": 4932,
+      "type": "file"
+    },
+    {
+      "path": "skills/xiaohongshu-cover/scripts/online_link.py",
+      "size": 815,
+      "type": "file"
+    },
+    {
+      "path": "skills/xiaohongshu-cover/SKILL.md",
+      "size": 5802,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "tags": [
+    "amazon-a-plus",
+    "amazon-white-background",
+    "batch-background-swap",
+    "ecommerce-listing-suite",
+    "lifestyle-scene",
+    "model-try-on",
+    "multi-angle-set",
+    "sale-banner",
+    "selling-point-infographic",
+    "size-chart",
+    "taobao-detail-long-image",
+    "xiaohongshu-cover"
+  ],
+  "sub_skills": [
+    {
+      "name": "amazon-a-plus",
+      "path": "skills/amazon-a-plus"
+    },
+    {
+      "name": "amazon-white-background",
+      "path": "skills/amazon-white-background"
+    },
+    {
+      "name": "batch-background-swap",
+      "path": "skills/batch-background-swap"
+    },
+    {
+      "name": "ecommerce-listing-suite",
+      "path": "skills/ecommerce-listing-suite"
+    },
+    {
+      "name": "lifestyle-scene",
+      "path": "skills/lifestyle-scene"
+    },
+    {
+      "name": "model-try-on",
+      "path": "skills/model-try-on"
+    },
+    {
+      "name": "multi-angle-set",
+      "path": "skills/multi-angle-set"
+    },
+    {
+      "name": "sale-banner",
+      "path": "skills/sale-banner"
+    },
+    {
+      "name": "selling-point-infographic",
+      "path": "skills/selling-point-infographic"
+    },
+    {
+      "name": "size-chart",
+      "path": "skills/size-chart"
+    },
+    {
+      "name": "taobao-detail-long-image",
+      "path": "skills/taobao-detail-long-image"
+    },
+    {
+      "name": "xiaohongshu-cover",
+      "path": "skills/xiaohongshu-cover"
+    }
+  ],
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商技能包整包导入（https://github.com/xianyu110/ecommerce-image-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

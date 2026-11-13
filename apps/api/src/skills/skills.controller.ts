@@ -83,13 +83,15 @@ export class SkillsController {
     await this.service.serveSkillMd(slug, res);
   }
 
-  // 下载技能整目录 zip,同时 installCount +1。
+  // 下载技能整目录 zip(可选 ?path= 子目录,下载整包技能内的单个子技能),
+  // 同时 installCount +1。
   // 用 GET 让前端 <a download> 直接触发浏览器原生下载。
   @Get("v1/skills/:slug/download")
   async download(
     @Param("slug") slug: string,
-    @Res() res: Response,
+    @Query("path") path?: string,
+    @Res() res?: Response,
   ): Promise<void> {
-    await this.service.download(slug, res);
+    await this.service.download(slug, res!, path);
   }
 }

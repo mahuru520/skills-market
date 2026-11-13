@@ -40,6 +40,7 @@ interface RawSkill {
   platform?: unknown;
   tags?: unknown;
   examples?: string[];
+  sub_skills?: Array<{ name: string; path: string }>;
   install_count?: number;
   hot?: boolean;
   quickstart?: {
@@ -311,6 +312,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         platform: raw.platform ? JSON.stringify(raw.platform) : null,
         tags: raw.tags ? JSON.stringify(raw.tags) : null,
         examples: raw.examples ? JSON.stringify(raw.examples) : null,
+        subSkills: raw.sub_skills ? JSON.stringify(raw.sub_skills) : null,
         hot,
         installCount,
         stars,
@@ -341,6 +343,7 @@ export class IndexerService implements OnModuleInit, OnModuleDestroy {
         platform: raw.platform ? JSON.stringify(raw.platform) : null,
         tags: raw.tags ? JSON.stringify(raw.tags) : null,
         examples: raw.examples ? JSON.stringify(raw.examples) : null,
+        subSkills: raw.sub_skills ? JSON.stringify(raw.sub_skills) : null,
         hot,
         score,
         billing,

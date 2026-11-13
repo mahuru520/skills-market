@@ -34,6 +34,7 @@ model Skill {
   platform      String?
   tags          String?
   examples      String?
+  subSkills     String? // 整包技能的子技能清单 JSON:Array<{name,path}>,非整包为 null
   hot           Boolean  @default(false)
   installCount  Int      @default(0)
   stars         Int      @default(0)

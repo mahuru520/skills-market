@@ -124,6 +124,8 @@ export interface SkillDetail {
   readme: string;
   quickstart?: QuickstartData;
   files?: SkillFile[];
+  // 整包技能(如电商三包)的子技能清单:整包下载或按 sub.path 单独下载
+  sub_skills?: Array<{ name: string; path: string }>;
   createdAt: string;
   updatedAt: string;
   latestVersion?: ChangelogEntry;

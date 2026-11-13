@@ -129,7 +129,11 @@ export function SkillDetail() {
         {/* 右侧基础信息卡 */}
         <aside className="space-y-6">
           <PromptCard slug={s.slug} />
-          <DownloadCard slug={s.slug} onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })} />
+          <DownloadCard
+            slug={s.slug}
+            subSkills={s.sub_skills}
+            onDownloaded={() => queryClient.invalidateQueries({ queryKey: ["skill", slug] })}
+          />
 
           <div className="glass-panel p-5">
             <h3 className="font-heading font-semibold text-ink mb-3">基础信息</h3>
@@ -445,9 +449,11 @@ async function copyText(text: string): Promise<boolean> {
 
 function DownloadCard({
   slug,
+  subSkills,
   onDownloaded,
 }: {
   slug: string;
+  subSkills?: Array<{ name: string; path: string }>;
   onDownloaded: () => void;
 }) {
   const [busy, setBusy] = useState(false);
@@ -474,11 +480,33 @@ function DownloadCard({
             : "btn-apple"
         }`}
       >
-        {busy ? "下载中…" : "⬇ 下载技能(zip)"}
+        {busy ? "下载中…" : subSkills?.length ? "⬇ 下载整包(zip)" : "⬇ 下载技能(zip)"}
       </a>
       <p className="font-mono text-xs text-ink-mute mt-2 text-center">
-        下载整个技能目录打包文件
+        {subSkills?.length
+          ? `整包共 ${subSkills.length} 个子技能,也可在下方单独下载`
+          : "下载整个技能目录打包文件"}
       </p>
+      {subSkills && subSkills.length > 0 && (
+        <div className="mt-4 border-t border-line pt-3">
+          <p className="font-mono text-[11px] text-ink-mute mb-2">子技能单独下载</p>
+          <ul className="space-y-1 max-h-64 overflow-y-auto">
+            {subSkills.map((sub) => (
+              <li key={sub.name}>
+                <a
+                  href={`${downloadUrl}?path=${encodeURIComponent(sub.path)}`}
+                  download={`${sub.name}.zip`}
+                  onClick={onClick}
+                  className="flex items-center justify-between gap-2 rounded-[8px] px-2.5 py-1.5 font-mono text-xs text-ink-soft hover:bg-brand-soft hover:text-brand transition-colors"
+                >
+                  <span className="truncate">{sub.name}</span>
+                  <span className="shrink-0 opacity-60">⬇</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

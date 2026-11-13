@@ -1,0 +1,595 @@
+{
+  "id": "osprey/ecommerce-video-skills",
+  "name": "ecommerce-video-skills",
+  "display_name": "电商短视频技能包 Ecommerce Video Skills",
+  "description": "电商短视频 Agent 技能包（14 个子技能）：一张商品图 → 带配音、字幕、花字、BGM 的 9:16 带货视频。含 3 秒钩子脚本、卖点分镜表、爆款拆解复刻、多模型镜头提示词（Seedance / Kling / Veo / Runway 等）、edge-tts 免费配音、多语言本地化、ffmpeg 本地自动成片（无需 API key）、直播切片、开箱对比评测、平台规格导出、封面标题 A/B、MiniMax H3 文/图生视频（走 Osprey 网关）。",
+  "version": "1.0.0",
+  "icon": "🎬",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "xianyu110",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/xianyu110/ecommerce-video-skills"
+  },
+  "readme": "README.md",
+  "files": [
+    {
+      "path": "CONTRIBUTING.md",
+      "size": 1138,
+      "type": "file"
+    },
+    {
+      "path": "docs",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/credits.md",
+      "size": 2272,
+      "type": "file"
+    },
+    {
+      "path": "docs/media",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/media/aura-bottle-9x16.mp4",
+      "size": 5280629,
+      "type": "file"
+    },
+    {
+      "path": "examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "examples/aura-bottle",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "examples/aura-bottle/assets",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "examples/aura-bottle/assets/desk.webp",
+      "size": 49948,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/end-card.png",
+      "size": 122840,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/infographic.webp",
+      "size": 33816,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/lifestyle.webp",
+      "size": 93686,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/sale-banner.webp",
+      "size": 116820,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/white-bg.webp",
+      "size": 10502,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/assets/xhs-cover.webp",
+      "size": 123926,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/README.md",
+      "size": 767,
+      "type": "file"
+    },
+    {
+      "path": "examples/aura-bottle/storyboard.json",
+      "size": 2166,
+      "type": "file"
+    },
+    {
+      "path": "examples/viral-remake-demo",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "examples/viral-remake-demo/breakdown.md",
+      "size": 1397,
+      "type": "file"
+    },
+    {
+      "path": "examples/viral-remake-demo/README.md",
+      "size": 1103,
+      "type": "file"
+    },
+    {
+      "path": "examples/viral-remake-demo/storyboard.json",
+      "size": 1906,
+      "type": "file"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1087,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "size": 16820,
+      "type": "file"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 40,
+      "type": "file"
+    },
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/assemble.py",
+      "size": 15120,
+      "type": "file"
+    },
+    {
+      "path": "scripts/cover_ab.py",
+      "size": 7288,
+      "type": "file"
+    },
+    {
+      "path": "scripts/export_platform.py",
+      "size": 6418,
+      "type": "file"
+    },
+    {
+      "path": "scripts/live_clip.py",
+      "size": 5666,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_bgm.py",
+      "size": 2982,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_cards.py",
+      "size": 8357,
+      "type": "file"
+    },
+    {
+      "path": "scripts/make_subs.py",
+      "size": 5890,
+      "type": "file"
+    },
+    {
+      "path": "scripts/preview.py",
+      "size": 2838,
+      "type": "file"
+    },
+    {
+      "path": "scripts/tts_edge.py",
+      "size": 4735,
+      "type": "file"
+    },
+    {
+      "path": "skills",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ai-voiceover-edge-tts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ai-voiceover-edge-tts/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ai-voiceover-edge-tts/scripts/tts_edge.py",
+      "size": 4735,
+      "type": "file"
+    },
+    {
+      "path": "skills/ai-voiceover-edge-tts/SKILL.md",
+      "size": 4223,
+      "type": "file"
+    },
+    {
+      "path": "skills/cover-title-ab",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cover-title-ab/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cover-title-ab/scripts/cover_ab.py",
+      "size": 7288,
+      "type": "file"
+    },
+    {
+      "path": "skills/cover-title-ab/SKILL.md",
+      "size": 4077,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts/assemble.py",
+      "size": 15120,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts/make_bgm.py",
+      "size": 2982,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts/make_cards.py",
+      "size": 8357,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts/make_subs.py",
+      "size": 5890,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/scripts/tts_edge.py",
+      "size": 4735,
+      "type": "file"
+    },
+    {
+      "path": "skills/ffmpeg-auto-assemble/SKILL.md",
+      "size": 5202,
+      "type": "file"
+    },
+    {
+      "path": "skills/hook-3s-script",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/hook-3s-script/SKILL.md",
+      "size": 6179,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-to-video-shots",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-to-video-shots/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-to-video-shots/scripts/assemble.py",
+      "size": 15120,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-to-video-shots/scripts/make_bgm.py",
+      "size": 2982,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-to-video-shots/scripts/make_subs.py",
+      "size": 5890,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-to-video-shots/scripts/tts_edge.py",
+      "size": 4735,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-to-video-shots/SKILL.md",
+      "size": 5673,
+      "type": "file"
+    },
+    {
+      "path": "skills/live-stream-clips",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/live-stream-clips/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/live-stream-clips/scripts/live_clip.py",
+      "size": 5666,
+      "type": "file"
+    },
+    {
+      "path": "skills/live-stream-clips/SKILL.md",
+      "size": 3926,
+      "type": "file"
+    },
+    {
+      "path": "skills/minimax-h3-video",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/minimax-h3-video/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/minimax-h3-video/scripts/h3_client.py",
+      "size": 5691,
+      "type": "file"
+    },
+    {
+      "path": "skills/minimax-h3-video/scripts/text_to_video.py",
+      "size": 2655,
+      "type": "file"
+    },
+    {
+      "path": "skills/minimax-h3-video/skill.json",
+      "size": 2243,
+      "type": "file"
+    },
+    {
+      "path": "skills/minimax-h3-video/SKILL.md",
+      "size": 4138,
+      "type": "file"
+    },
+    {
+      "path": "skills/multi-model-shot-prompts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/multi-model-shot-prompts/SKILL.md",
+      "size": 5699,
+      "type": "file"
+    },
+    {
+      "path": "skills/multilingual-dubbing",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/multilingual-dubbing/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/multilingual-dubbing/scripts/assemble.py",
+      "size": 15120,
+      "type": "file"
+    },
+    {
+      "path": "skills/multilingual-dubbing/scripts/make_bgm.py",
+      "size": 2982,
+      "type": "file"
+    },
+    {
+      "path": "skills/multilingual-dubbing/scripts/make_subs.py",
+      "size": 5890,
+      "type": "file"
+    },
+    {
+      "path": "skills/multilingual-dubbing/scripts/tts_edge.py",
+      "size": 4735,
+      "type": "file"
+    },
+    {
+      "path": "skills/multilingual-dubbing/SKILL.md",
+      "size": 4760,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-spec-export",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-spec-export/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-spec-export/scripts/export_platform.py",
+      "size": 6418,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-spec-export/SKILL.md",
+      "size": 4008,
+      "type": "file"
+    },
+    {
+      "path": "skills/selling-point-storyboard",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/selling-point-storyboard/SKILL.md",
+      "size": 5108,
+      "type": "file"
+    },
+    {
+      "path": "skills/subtitles-and-text-effects",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/subtitles-and-text-effects/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/subtitles-and-text-effects/scripts/make_subs.py",
+      "size": 5890,
+      "type": "file"
+    },
+    {
+      "path": "skills/subtitles-and-text-effects/SKILL.md",
+      "size": 3940,
+      "type": "file"
+    },
+    {
+      "path": "skills/unboxing-comparison-review",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/unboxing-comparison-review/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/unboxing-comparison-review/scripts/make_cards.py",
+      "size": 8357,
+      "type": "file"
+    },
+    {
+      "path": "skills/unboxing-comparison-review/SKILL.md",
+      "size": 4907,
+      "type": "file"
+    },
+    {
+      "path": "skills/viral-remake",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/viral-remake/SKILL.md",
+      "size": 10672,
+      "type": "file"
+    },
+    {
+      "path": "tools",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "tools/sync_scripts.py",
+      "size": 1170,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "tags": [
+    "ai-voiceover-edge-tts",
+    "cover-title-ab",
+    "ffmpeg-auto-assemble",
+    "hook-3s-script",
+    "image-to-video-shots",
+    "live-stream-clips",
+    "minimax-h3-video",
+    "multi-model-shot-prompts",
+    "multilingual-dubbing",
+    "platform-spec-export",
+    "selling-point-storyboard",
+    "subtitles-and-text-effects",
+    "unboxing-comparison-review",
+    "viral-remake"
+  ],
+  "sub_skills": [
+    {
+      "name": "ai-voiceover-edge-tts",
+      "path": "skills/ai-voiceover-edge-tts"
+    },
+    {
+      "name": "cover-title-ab",
+      "path": "skills/cover-title-ab"
+    },
+    {
+      "name": "ffmpeg-auto-assemble",
+      "path": "skills/ffmpeg-auto-assemble"
+    },
+    {
+      "name": "hook-3s-script",
+      "path": "skills/hook-3s-script"
+    },
+    {
+      "name": "image-to-video-shots",
+      "path": "skills/image-to-video-shots"
+    },
+    {
+      "name": "live-stream-clips",
+      "path": "skills/live-stream-clips"
+    },
+    {
+      "name": "minimax-h3-video",
+      "path": "skills/minimax-h3-video"
+    },
+    {
+      "name": "multi-model-shot-prompts",
+      "path": "skills/multi-model-shot-prompts"
+    },
+    {
+      "name": "multilingual-dubbing",
+      "path": "skills/multilingual-dubbing"
+    },
+    {
+      "name": "platform-spec-export",
+      "path": "skills/platform-spec-export"
+    },
+    {
+      "name": "selling-point-storyboard",
+      "path": "skills/selling-point-storyboard"
+    },
+    {
+      "name": "subtitles-and-text-effects",
+      "path": "skills/subtitles-and-text-effects"
+    },
+    {
+      "name": "unboxing-comparison-review",
+      "path": "skills/unboxing-comparison-review"
+    },
+    {
+      "name": "viral-remake",
+      "path": "skills/viral-remake"
+    }
+  ],
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商技能包整包导入（https://github.com/xianyu110/ecommerce-video-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}

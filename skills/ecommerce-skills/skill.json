@@ -1,0 +1,2695 @@
+{
+  "id": "osprey/ecommerce-skills",
+  "name": "ecommerce-skills",
+  "display_name": "电商视觉生产技能包 Ecommerce Skills (dLazy)",
+  "description": "电商视觉生产 Agent 技能包（26 个子技能，dLazy）：把拍商品图拆成可组合链路——平铺图上身、鞋包配饰穿戴、多单品融图、换模特换背景、裂变套图、详情页模块、投前 AI 图质检、平台合规校验、批量生图流水线、主图视频、UGC 口播、去水印等；确定性动作交给脚本（并发/重试/断点续跑/成本熔断），后端可切 dLazy / OpenAI / Gemini / fal / Replicate / 火山方舟，也内置 MCP server。",
+  "version": "1.0.0",
+  "icon": "🏭",
+  "category": "ecommerce",
+  "source": "osprey",
+  "runtime_type": "local",
+  "billing": "free",
+  "owner": {
+    "name": "dlazy-ai",
+    "type": "community",
+    "verified": false,
+    "avatar": "👤",
+    "url": "https://github.com/dlazy-ai/ecommerce-skills"
+  },
+  "readme": "README.md",
+  "files": [
+    {
+      "path": "CODE_OF_CONDUCT.md",
+      "size": 4596,
+      "type": "file"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "size": 1005,
+      "type": "file"
+    },
+    {
+      "path": "docs",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/batch-image",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/batch-image/example-output-a-sweater.jpg",
+      "size": 570955,
+      "type": "file"
+    },
+    {
+      "path": "docs/batch-image/example-output-b-shoes.jpg",
+      "size": 435272,
+      "type": "file"
+    },
+    {
+      "path": "docs/batch-image/sku-a-sweater.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/batch-image/sku-b-shoes.jpg",
+      "size": 79760,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-detail",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/clothing-detail/example-output.jpg",
+      "size": 309207,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-detail/garment-flatlay.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-extraction",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/clothing-extraction/example-output.jpg",
+      "size": 185291,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-extraction/source-photo.jpg",
+      "size": 121264,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-grass-planting",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/clothing-grass-planting/example-output.jpg",
+      "size": 306956,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-grass-planting/scene-reference.jpg",
+      "size": 254317,
+      "type": "file"
+    },
+    {
+      "path": "docs/clothing-grass-planting/source-outfit.jpg",
+      "size": 121264,
+      "type": "file"
+    },
+    {
+      "path": "docs/creative-scene",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/creative-scene/example-output.jpg",
+      "size": 796465,
+      "type": "file"
+    },
+    {
+      "path": "docs/detect-task",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/detect-task/candidate.jpg",
+      "size": 258689,
+      "type": "file"
+    },
+    {
+      "path": "docs/detect-task/example-report.md",
+      "size": 1455,
+      "type": "file"
+    },
+    {
+      "path": "docs/fabric-on-body",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/fabric-on-body/example-output.jpg",
+      "size": 77301,
+      "type": "file"
+    },
+    {
+      "path": "docs/fabric-on-body/fabric-swatch.jpg",
+      "size": 98826,
+      "type": "file"
+    },
+    {
+      "path": "docs/fabric-on-body/style-sheet.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/fission-pattern",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/fission-pattern/example-output-1.jpg",
+      "size": 436261,
+      "type": "file"
+    },
+    {
+      "path": "docs/fission-pattern/example-output-2.jpg",
+      "size": 263284,
+      "type": "file"
+    },
+    {
+      "path": "docs/fission-pattern/example-output-3.jpg",
+      "size": 244869,
+      "type": "file"
+    },
+    {
+      "path": "docs/fission-pattern/product-watch.jpg",
+      "size": 96586,
+      "type": "file"
+    },
+    {
+      "path": "docs/flat-lay",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/flat-lay/example-output.jpg",
+      "size": 258689,
+      "type": "file"
+    },
+    {
+      "path": "docs/flat-lay/garment-flatlay.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/flat-lay/pose-reference.jpg",
+      "size": 68022,
+      "type": "file"
+    },
+    {
+      "path": "docs/image-fusion",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/image-fusion/example-output.jpg",
+      "size": 260240,
+      "type": "file"
+    },
+    {
+      "path": "docs/image-fusion/item-hat.jpg",
+      "size": 162465,
+      "type": "file"
+    },
+    {
+      "path": "docs/image-fusion/item-necklace.jpg",
+      "size": 91450,
+      "type": "file"
+    },
+    {
+      "path": "docs/image-fusion/item-sweater.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-change-background",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/item-change-background/example-output.jpg",
+      "size": 244521,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-change-background/product-shoes.jpg",
+      "size": 79760,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-detail",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/item-detail/example-output.jpg",
+      "size": 592473,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-detail/product-flatlay.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-repair",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/item-repair/example-output.jpg",
+      "size": 243206,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-repair/source-flatlay.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-selling-point",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/item-selling-point/example-output.jpg",
+      "size": 353133,
+      "type": "file"
+    },
+    {
+      "path": "docs/item-selling-point/product-shoes.jpg",
+      "size": 79760,
+      "type": "file"
+    },
+    {
+      "path": "docs/maintainers.en.md",
+      "size": 5311,
+      "type": "file"
+    },
+    {
+      "path": "docs/maintainers.md",
+      "size": 4878,
+      "type": "file"
+    },
+    {
+      "path": "docs/material-enhancement",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/material-enhancement/example-output.jpg",
+      "size": 273320,
+      "type": "file"
+    },
+    {
+      "path": "docs/material-enhancement/hires-product.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/material-enhancement/source-image.jpg",
+      "size": 258689,
+      "type": "file"
+    },
+    {
+      "path": "docs/one-shot",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/one-shot/example-output.jpg",
+      "size": 216242,
+      "type": "file"
+    },
+    {
+      "path": "docs/one-shot/source-model.jpg",
+      "size": 68022,
+      "type": "file"
+    },
+    {
+      "path": "docs/pipelines.en.md",
+      "size": 2879,
+      "type": "file"
+    },
+    {
+      "path": "docs/pipelines.md",
+      "size": 2565,
+      "type": "file"
+    },
+    {
+      "path": "docs/remove-watermark",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/remove-watermark/example-output.jpg",
+      "size": 183957,
+      "type": "file"
+    },
+    {
+      "path": "docs/remove-watermark/source-watermarked.jpg",
+      "size": 331716,
+      "type": "file"
+    },
+    {
+      "path": "docs/to-3d",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/to-3d/example-output.jpg",
+      "size": 255048,
+      "type": "file"
+    },
+    {
+      "path": "docs/to-3d/garment-flatlay.jpg",
+      "size": 133949,
+      "type": "file"
+    },
+    {
+      "path": "docs/wear-everything",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "docs/wear-everything/example-output.jpg",
+      "size": 498112,
+      "type": "file"
+    },
+    {
+      "path": "docs/wear-everything/model-reference.jpg",
+      "size": 283472,
+      "type": "file"
+    },
+    {
+      "path": "docs/wear-everything/product-sunglasses.jpg",
+      "size": 36434,
+      "type": "file"
+    },
+    {
+      "path": "evals",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "evals/flat-lay",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "evals/flat-lay/cases.json",
+      "size": 1507,
+      "type": "file"
+    },
+    {
+      "path": "evals/item-change-background",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "evals/item-change-background/cases.json",
+      "size": 581,
+      "type": "file"
+    },
+    {
+      "path": "evals/to-3d",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "evals/to-3d/cases.json",
+      "size": 587,
+      "type": "file"
+    },
+    {
+      "path": "evals/wear-everything",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "evals/wear-everything/cases.json",
+      "size": 733,
+      "type": "file"
+    },
+    {
+      "path": "LICENSE",
+      "size": 1083,
+      "type": "file"
+    },
+    {
+      "path": "mcp",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "mcp/server.mjs",
+      "size": 11451,
+      "type": "file"
+    },
+    {
+      "path": "package-lock.json",
+      "size": 22563,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "size": 1231,
+      "type": "file"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "size": 11598,
+      "type": "file"
+    },
+    {
+      "path": "README.en.md",
+      "size": 51710,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "size": 50030,
+      "type": "file"
+    },
+    {
+      "path": "scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "scripts/build-skills.mjs",
+      "size": 4264,
+      "type": "file"
+    },
+    {
+      "path": "scripts/publish-skills.mjs",
+      "size": 15706,
+      "type": "file"
+    },
+    {
+      "path": "scripts/run-evals.mjs",
+      "size": 7826,
+      "type": "file"
+    },
+    {
+      "path": "scripts/skill-display-names.json",
+      "size": 1943,
+      "type": "file"
+    },
+    {
+      "path": "scripts/skills.config.json",
+      "size": 8778,
+      "type": "file"
+    },
+    {
+      "path": "scripts/slim-skills.mjs",
+      "size": 6111,
+      "type": "file"
+    },
+    {
+      "path": "shared",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "shared/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "shared/examples/board.json",
+      "size": 1373,
+      "type": "file"
+    },
+    {
+      "path": "shared/examples/brand.yaml",
+      "size": 1545,
+      "type": "file"
+    },
+    {
+      "path": "shared/examples/ugc-board.json",
+      "size": 1016,
+      "type": "file"
+    },
+    {
+      "path": "shared/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "shared/references/brand-schema.md",
+      "size": 2532,
+      "type": "file"
+    },
+    {
+      "path": "shared/references/platform-specs.md",
+      "size": 2061,
+      "type": "file"
+    },
+    {
+      "path": "shared/references/provider-cli.md",
+      "size": 4828,
+      "type": "file"
+    },
+    {
+      "path": "shared/references/video-backends.md",
+      "size": 1966,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "shared/scripts/batch.mjs",
+      "size": 11155,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/brand.mjs",
+      "size": 4526,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/check_listing.py",
+      "size": 16198,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/gen.mjs",
+      "size": 9626,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "shared/scripts/lib/miniyaml.mjs",
+      "size": 2785,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/lib/providers.mjs",
+      "size": 12393,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/run_loop.mjs",
+      "size": 9826,
+      "type": "file"
+    },
+    {
+      "path": "shared/scripts/video.mjs",
+      "size": 8713,
+      "type": "file"
+    },
+    {
+      "path": "skill.json",
+      "size": 57910,
+      "type": "file"
+    },
+    {
+      "path": "skills",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image/references/model-flags.md",
+      "size": 1904,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/references/platform-specs.md",
+      "size": 2180,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image/scripts/batch.mjs",
+      "size": 11264,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/check_listing.py",
+      "size": 16313,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/batch-image/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/scripts/run_loop.mjs",
+      "size": 9938,
+      "type": "file"
+    },
+    {
+      "path": "skills/batch-image/skill.md",
+      "size": 13177,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/assets",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/assets/brand.example.yaml",
+      "size": 1661,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/references/brand-schema.md",
+      "size": 2649,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/brand-kit/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/brand-kit/skill.md",
+      "size": 5280,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-detail/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-detail/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-detail/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-detail/skill.md",
+      "size": 10550,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-extraction/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-extraction/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-extraction/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-extraction/skill.md",
+      "size": 10749,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-grass-planting/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-grass-planting/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-grass-planting/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/clothing-grass-planting/skill.md",
+      "size": 11800,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/creative-scene/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/creative-scene/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/creative-scene/references/model-flags.md",
+      "size": 1938,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/creative-scene/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/creative-scene/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/creative-scene/skill.md",
+      "size": 12355,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cross-border-localize/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cross-border-localize/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cross-border-localize/references/platform-specs.md",
+      "size": 2180,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/check_listing.py",
+      "size": 16313,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/cross-border-localize/skill.md",
+      "size": 5894,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/detect-task/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/detect-task/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/detect-task/references/model-flags.md",
+      "size": 1617,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/references/platform-specs.md",
+      "size": 2180,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/detect-task/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/check_listing.py",
+      "size": 16313,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/detect-task/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/scripts/run_loop.mjs",
+      "size": 9938,
+      "type": "file"
+    },
+    {
+      "path": "skills/detect-task/skill.md",
+      "size": 14586,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fabric-on-body/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fabric-on-body/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fabric-on-body/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/fabric-on-body/skill.md",
+      "size": 11742,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fission-pattern/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fission-pattern/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fission-pattern/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/fission-pattern/skill.md",
+      "size": 13249,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/flat-lay/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/flat-lay/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/flat-lay/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/flat-lay/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/flat-lay/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/flat-lay/skill.md",
+      "size": 11590,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-fusion/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-fusion/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-fusion/references/model-flags.md",
+      "size": 1904,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-fusion/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/image-fusion/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/image-fusion/skill.md",
+      "size": 11786,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-change-background/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-change-background/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-change-background/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-change-background/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-change-background/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-change-background/skill.md",
+      "size": 11783,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-detail/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-detail/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-detail/references/model-flags.md",
+      "size": 1874,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-detail/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-detail/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-detail/skill.md",
+      "size": 12666,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-repair/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-repair/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-repair/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-repair/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-repair/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-repair/skill.md",
+      "size": 11325,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-selling-point/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-selling-point/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-selling-point/references/model-flags.md",
+      "size": 1874,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/item-selling-point/skill.md",
+      "size": 11789,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/listing-optimizer/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/listing-optimizer/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/listing-optimizer/references/platform-specs.md",
+      "size": 2180,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/check_listing.py",
+      "size": 16313,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/listing-optimizer/skill.md",
+      "size": 5250,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/main-image-video/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/main-image-video/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/main-image-video/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/references/video-backends.md",
+      "size": 2085,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/main-image-video/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/main-image-video/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/scripts/video.mjs",
+      "size": 8822,
+      "type": "file"
+    },
+    {
+      "path": "skills/main-image-video/skill.md",
+      "size": 4798,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/material-enhancement/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/material-enhancement/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/material-enhancement/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/material-enhancement/skill.md",
+      "size": 11485,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/one-shot/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/one-shot/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/one-shot/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/one-shot/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/one-shot/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/one-shot/skill.md",
+      "size": 11472,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-compliance/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-compliance/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-compliance/references/platform-specs.md",
+      "size": 2180,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/check_listing.py",
+      "size": 16313,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/platform-compliance/skill.md",
+      "size": 7818,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/product-video-ad/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/product-video-ad/examples/board.json",
+      "size": 1373,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/product-video-ad/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/references/video-backends.md",
+      "size": 2085,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/scripts/video.mjs",
+      "size": 8822,
+      "type": "file"
+    },
+    {
+      "path": "skills/product-video-ad/skill.md",
+      "size": 5418,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/remove-watermark/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/remove-watermark/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/remove-watermark/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/remove-watermark/skill.md",
+      "size": 11696,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/to-3d/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/to-3d/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/to-3d/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/to-3d/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/to-3d/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/to-3d/skill.md",
+      "size": 10149,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ugc-testimonial/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ugc-testimonial/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/examples/ugc-board.json",
+      "size": 1016,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ugc-testimonial/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/references/video-backends.md",
+      "size": 2085,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/scripts/video.mjs",
+      "size": 8822,
+      "type": "file"
+    },
+    {
+      "path": "skills/ugc-testimonial/skill.md",
+      "size": 5147,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/wear-everything/examples",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/wear-everything/examples/brand.yaml",
+      "size": 1655,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/references",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/wear-everything/references/model-flags.md",
+      "size": 2144,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/references/provider-cli.md",
+      "size": 4945,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/scripts",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/wear-everything/scripts/brand.mjs",
+      "size": 4635,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/scripts/gen.mjs",
+      "size": 9733,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/scripts/lib",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "skills/wear-everything/scripts/lib/miniyaml.mjs",
+      "size": 2901,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/scripts/lib/providers.mjs",
+      "size": 12510,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/scripts/lib/tasks.json",
+      "size": 3234,
+      "type": "file"
+    },
+    {
+      "path": "skills/wear-everything/skill.md",
+      "size": 12526,
+      "type": "file"
+    },
+    {
+      "path": "tests",
+      "size": 0,
+      "type": "dir"
+    },
+    {
+      "path": "tests/test_compliance.py",
+      "size": 4953,
+      "type": "file"
+    },
+    {
+      "path": "tests/unit.test.mjs",
+      "size": 6804,
+      "type": "file"
+    }
+  ],
+  "env_vars": [],
+  "tags": [
+    "batch-image",
+    "brand-kit",
+    "clothing-detail",
+    "clothing-extraction",
+    "clothing-grass-planting",
+    "creative-scene",
+    "cross-border-localize",
+    "detect-task",
+    "fabric-on-body",
+    "fission-pattern",
+    "flat-lay",
+    "image-fusion",
+    "item-change-background",
+    "item-detail",
+    "item-repair",
+    "item-selling-point",
+    "listing-optimizer",
+    "main-image-video",
+    "material-enhancement",
+    "one-shot",
+    "platform-compliance",
+    "product-video-ad",
+    "remove-watermark",
+    "to-3d",
+    "ugc-testimonial",
+    "wear-everything"
+  ],
+  "sub_skills": [
+    {
+      "name": "batch-image",
+      "path": "skills/batch-image"
+    },
+    {
+      "name": "brand-kit",
+      "path": "skills/brand-kit"
+    },
+    {
+      "name": "clothing-detail",
+      "path": "skills/clothing-detail"
+    },
+    {
+      "name": "clothing-extraction",
+      "path": "skills/clothing-extraction"
+    },
+    {
+      "name": "clothing-grass-planting",
+      "path": "skills/clothing-grass-planting"
+    },
+    {
+      "name": "creative-scene",
+      "path": "skills/creative-scene"
+    },
+    {
+      "name": "cross-border-localize",
+      "path": "skills/cross-border-localize"
+    },
+    {
+      "name": "detect-task",
+      "path": "skills/detect-task"
+    },
+    {
+      "name": "fabric-on-body",
+      "path": "skills/fabric-on-body"
+    },
+    {
+      "name": "fission-pattern",
+      "path": "skills/fission-pattern"
+    },
+    {
+      "name": "flat-lay",
+      "path": "skills/flat-lay"
+    },
+    {
+      "name": "image-fusion",
+      "path": "skills/image-fusion"
+    },
+    {
+      "name": "item-change-background",
+      "path": "skills/item-change-background"
+    },
+    {
+      "name": "item-detail",
+      "path": "skills/item-detail"
+    },
+    {
+      "name": "item-repair",
+      "path": "skills/item-repair"
+    },
+    {
+      "name": "item-selling-point",
+      "path": "skills/item-selling-point"
+    },
+    {
+      "name": "listing-optimizer",
+      "path": "skills/listing-optimizer"
+    },
+    {
+      "name": "main-image-video",
+      "path": "skills/main-image-video"
+    },
+    {
+      "name": "material-enhancement",
+      "path": "skills/material-enhancement"
+    },
+    {
+      "name": "one-shot",
+      "path": "skills/one-shot"
+    },
+    {
+      "name": "platform-compliance",
+      "path": "skills/platform-compliance"
+    },
+    {
+      "name": "product-video-ad",
+      "path": "skills/product-video-ad"
+    },
+    {
+      "name": "remove-watermark",
+      "path": "skills/remove-watermark"
+    },
+    {
+      "name": "to-3d",
+      "path": "skills/to-3d"
+    },
+    {
+      "name": "ugc-testimonial",
+      "path": "skills/ugc-testimonial"
+    },
+    {
+      "name": "wear-everything",
+      "path": "skills/wear-everything"
+    }
+  ],
+  "hot": false,
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2026-11-13",
+      "changes": [
+        "从 Osprey 来源电商技能包整包导入（https://github.com/dlazy-ai/ecommerce-skills）"
+      ],
+      "type": "MINOR"
+    }
+  ],
+  "created_at": "2026-11-13T00:00:00.000Z",
+  "updated_at": "2026-11-13T00:00:00.000Z"
+}
