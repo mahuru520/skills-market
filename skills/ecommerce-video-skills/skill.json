@@ -504,7 +504,22 @@
       "type": "file"
     }
   ],
-  "env_vars": [],
+  "env_vars": [
+    {
+      "key": "API_KEY",
+      "description": "Osprey 网关 key（minimax-h3-video 子技能用）",
+      "required": false,
+      "source": "Osprey 平台控制台 https://ai.ospreyai.cn 申请",
+      "example": "sk-xxx"
+    },
+    {
+      "key": "GW",
+      "description": "Osprey 网关地址",
+      "required": false,
+      "source": "固定 https://open.ospreyai.cn",
+      "example": "https://open.ospreyai.cn"
+    }
+  ],
   "tags": [
     "ai-voiceover-edge-tts",
     "cover-title-ab",

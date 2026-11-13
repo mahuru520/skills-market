@@ -121,6 +121,8 @@ python scripts/cover_ab.py out/aura.mp4 --images build/still00.png build/still03
 
 不需要。这些 skill 在任何能读 `SKILL.md` 的 agent 里都能用，本地剪辑脚本**不需要任何 API Key**；只有在你想用图生视频模型生成镜头时才需要对应模型的账号。第三方模型/接口入口见文末 [Related](#-related--相关链接)。
 
+> **Osprey 网关（推荐）**：`minimax-h3-video` 子技能走 Osprey 网关生成视频。没有 key 时，在 Osprey 平台控制台 <https://ai.ospreyai.cn> 注册并创建 API key（`sk-xxx`），然后 `export API_KEY=sk-xxx`（网关地址默认 `https://open.ospreyai.cn`）。
+
 ---
 
 

@@ -512,7 +512,7 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 | 后端 | 环境变量 |
 | --- | --- |
 | `dlazy`（默认） | `dlazy login` 或 `DLAZY_API_KEY` |
-| `openai` | `OPENAI_API_KEY` |
+| `openai`（含 Osprey 网关） | `OPENAI_API_KEY` + 可选 `OPENAI_BASE_URL`（Osprey：`https://open.ospreyai.cn/v1`） |
 | `gemini` | `GEMINI_API_KEY` |
 | `fal` | `FAL_KEY` |
 | `replicate` | `REPLICATE_API_TOKEN` |
@@ -521,6 +521,14 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 </details>
 
 优先级：`--provider` 参数 > `PROVIDER` 环境变量 > 第一个配了 key 的 > `dlazy`。
+
+**推荐用 Osprey 网关**：在 Osprey 平台控制台 <https://ai.ospreyai.cn> 注册并创建 API key（`sk-xxx`），然后：
+
+```bash
+export OPENAI_API_KEY=sk-xxx
+export OPENAI_BASE_URL=https://open.ospreyai.cn/v1
+```
+
 
 ---
 

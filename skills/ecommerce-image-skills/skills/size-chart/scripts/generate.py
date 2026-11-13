@@ -3,7 +3,7 @@
 
 Env:
   GPTIMAGE_API_KEY   (required)  your API key
-  GPTIMAGE_BASE_URL  (optional)  default https://api.openai.com; recommended https://tryallapi.com/v1 (any OpenAI-compatible gateway works, with or without /v1)
+  GPTIMAGE_BASE_URL  (optional)  default https://api.openai.com; recommended Osprey gateway https://open.ospreyai.cn/v1 (key: https://ai.ospreyai.cn) (any OpenAI-compatible gateway works, with or without /v1)
   GPTIMAGE_MODEL     (optional)  overrides --model
 
 Examples:
@@ -50,7 +50,7 @@ def _multipart(fields, files):
 def generate(prompt, model="flare", size="1024x1024", images=None, n=1, quality=None, timeout=300):
     key = os.environ.get("GPTIMAGE_API_KEY")
     if not key:
-        sys.exit("GPTIMAGE_API_KEY is not set. Without a key, open the one-click link printed by the skill instead.")
+        sys.exit("GPTIMAGE_API_KEY is not set. Get one from the Osprey console at https://ai.ospreyai.cn (register, then create an API token under API Keys), set GPTIMAGE_API_KEY and GPTIMAGE_BASE_URL=https://open.ospreyai.cn/v1, or open the one-click link printed by the skill instead.")
     base = os.environ.get("GPTIMAGE_BASE_URL", "https://api.openai.com").rstrip("/")
     if base.endswith("/v1"):
         base = base[:-3]

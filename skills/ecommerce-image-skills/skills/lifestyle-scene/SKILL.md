@@ -79,7 +79,7 @@ Tips: describe the **story** (who/where/when) in one sentence; name one referenc
 
 ```bash
 # recommended endpoint (OpenAI-compatible, has gpt-image-2.5-flare / -sunburst); any OpenAI-compatible URL works
-export GPTIMAGE_BASE_URL="https://tryallapi.com/v1"   # default if unset: https://api.openai.com
+export GPTIMAGE_BASE_URL="https://open.ospreyai.cn/v1"   # Osprey gateway (get key at https://ai.ospreyai.cn); default if unset: https://api.openai.com
 python scripts/generate.py --model flare --image product.jpg --size 1024x1536 \
   --prompt-file prompt.txt --out out/lifestyle-scene.png
 ```

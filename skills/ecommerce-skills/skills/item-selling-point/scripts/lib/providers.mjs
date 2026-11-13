@@ -1,4 +1,3 @@
-// ⚠️ 由 scripts/build-skills.mjs 从 shared/scripts/lib/providers.mjs 同步生成，不要直接改这里。
 /**
  * 多后端路由 —— 每个 provider 暴露同一组接口：
  *   { id, kind, hasCredentials(), describe(req), run(req) }
@@ -129,9 +128,10 @@ const openai = {
   kind: 'http',
   hasCredentials: () => Boolean(env.OPENAI_API_KEY),
   model: () => env.GEN_MODEL_OPENAI || 'gpt-image-1',
+  baseUrl: () => (env.OPENAI_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, ''),
   describe(req) {
     const ep = req.images?.length ? 'images/edits' : 'images/generations'
-    return `POST https://api.openai.com/v1/${ep}  model=${openai.model()} size=${mapSize(req.size)} n=${req.batch}`
+    return `POST ${openai.baseUrl()}/${ep}  model=${openai.model()} size=${mapSize(req.size)} n=${req.batch}`
   },
   async run(req) {
     const key = env.OPENAI_API_KEY
@@ -150,11 +150,11 @@ const openai = {
           : await readFile(p)
         fd.append('image[]', new Blob([buf], { type: mimeOf(p) }), path.basename(p))
       }
-      r = await fetch('https://api.openai.com/v1/images/edits', {
+      r = await fetch(`${openai.baseUrl()}/images/edits`, {
         method: 'POST', headers: { authorization: `Bearer ${key}` }, body: fd,
       })
     } else {
-      r = await fetch('https://api.openai.com/v1/images/generations', {
+      r = await fetch(`${openai.baseUrl()}/images/generations`, {
         method: 'POST',
         headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
         body: JSON.stringify({

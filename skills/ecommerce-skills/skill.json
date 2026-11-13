@@ -2544,7 +2544,29 @@
       "type": "file"
     }
   ],
-  "env_vars": [],
+  "env_vars": [
+    {
+      "key": "OPENAI_API_KEY",
+      "description": "生图 API key（OpenAI 兼容，含 Osprey 网关）",
+      "required": false,
+      "source": "Osprey 平台控制台 https://ai.ospreyai.cn 申请（或 dlazy login / 各后端官网）",
+      "example": "sk-xxx"
+    },
+    {
+      "key": "OPENAI_BASE_URL",
+      "description": "OpenAI 兼容网关地址",
+      "required": false,
+      "source": "推荐 Osprey 网关 https://open.ospreyai.cn/v1",
+      "example": "https://open.ospreyai.cn/v1"
+    },
+    {
+      "key": "DLAZY_API_KEY",
+      "description": "dLazy 后端 key（默认后端，可选）",
+      "required": false,
+      "source": "https://dlazy.com/dashboard/organization/api-key",
+      "example": "sk-xxx"
+    }
+  ],
   "tags": [
     "batch-image",
     "brand-kit",
