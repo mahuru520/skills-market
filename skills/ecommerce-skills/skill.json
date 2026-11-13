@@ -2549,7 +2549,7 @@
       "key": "OPENAI_API_KEY",
       "description": "生图 API key（OpenAI 兼容，含 Osprey 网关）",
       "required": false,
-      "source": "Osprey 平台控制台 https://ai.ospreyai.cn 申请（或 dlazy login / 各后端官网）",
+      "source": "Osprey 平台控制台 https://open.ospreyai.cn 申请（或 dlazy login / 各后端官网）",
       "example": "sk-xxx"
     },
     {

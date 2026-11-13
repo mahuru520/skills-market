@@ -83,7 +83,7 @@ Chinese copy works well (e.g. `"双11 狂欢价"`, `"第二件半价"`) — quot
 
 ```bash
 # recommended endpoint (OpenAI-compatible, has gpt-image-2.5-flare / -sunburst); any OpenAI-compatible URL works
-export GPTIMAGE_BASE_URL="https://open.ospreyai.cn/v1"   # Osprey gateway (get key at https://ai.ospreyai.cn); default if unset: https://api.openai.com
+export GPTIMAGE_BASE_URL="https://open.ospreyai.cn/v1"   # Osprey gateway (get key at https://open.ospreyai.cn); default if unset: https://api.openai.com
 python scripts/generate.py --model flare --image product.jpg --size 1536x1024 \
   --prompt-file prompt.txt --out out/sale-banner.png
 ```

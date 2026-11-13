@@ -34,7 +34,7 @@ key 按组织隔离，可随时轮换或吊销。
 | `replicate` | `REPLICATE_API_TOKEN` | |
 | `ark` | `ARK_API_KEY` + `ARK_MODEL` | 火山方舟，模型 ID 需按开通情况填 |
 
-**Osprey 网关（推荐）**：key 在 Osprey 平台控制台 <https://ai.ospreyai.cn> 注册后于 API Keys 页面创建（`sk-xxx`）。Osprey 是 new-api（OpenAI 兼容），无需单独 provider：
+**Osprey 网关（推荐）**：key 在 Osprey 平台控制台 <https://open.ospreyai.cn> 注册后于 API Keys 页面创建（`sk-xxx`）。Osprey 是 new-api（OpenAI 兼容），无需单独 provider：
 
 ```bash
 export OPENAI_API_KEY=sk-xxx          # Osprey 平台创建的 key

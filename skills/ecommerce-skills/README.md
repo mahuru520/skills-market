@@ -522,7 +522,7 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 优先级：`--provider` 参数 > `PROVIDER` 环境变量 > 第一个配了 key 的 > `dlazy`。
 
-**推荐用 Osprey 网关**：在 Osprey 平台控制台 <https://ai.ospreyai.cn> 注册并创建 API key（`sk-xxx`），然后：
+**推荐用 Osprey 网关**：在 Osprey 平台控制台 <https://open.ospreyai.cn> 注册并创建 API key（`sk-xxx`），然后：
 
 ```bash
 export OPENAI_API_KEY=sk-xxx

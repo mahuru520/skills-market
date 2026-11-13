@@ -509,7 +509,7 @@
       "key": "API_KEY",
       "description": "Osprey 网关 key（minimax-h3-video 子技能用）",
       "required": false,
-      "source": "Osprey 平台控制台 https://ai.ospreyai.cn 申请",
+      "source": "Osprey 平台控制台 https://open.ospreyai.cn 申请",
       "example": "sk-xxx"
     },
     {

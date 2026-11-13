@@ -15,7 +15,7 @@ MiniMax H3 原生**音视频联合生成**，输出 mp4 自带同步音频轨（
 
 | 变量 | 必填 | 说明 |
 |---|---|---|
-| `API_KEY` | 是 | Osprey 网关 key（`sk-xxx`），或用 `--api-key` 传入。**没有 key 时：在 Osprey 平台控制台 <https://ai.ospreyai.cn> 注册并创建 API key** |
+| `API_KEY` | 是 | Osprey 网关 key（`sk-xxx`），或用 `--api-key` 传入。**没有 key 时：在 Osprey 平台控制台 <https://open.ospreyai.cn> 注册并创建 API key** |
 | `GW` | 否 | 网关地址，默认 `https://open.ospreyai.cn` |
 
 生成慢（3–8 分钟/条），agent 应**后台运行**脚本并告知用户等待，不要卡住对话。

@@ -125,7 +125,7 @@ def require_api_key(cli_value):
     api_key = cli_value or os.getenv("API_KEY", "")
     if not api_key:
         raise SystemExit(
-            "ERROR: 缺少 API_KEY。请在 Osprey 平台控制台 https://ai.ospreyai.cn 注册并创建 API key（sk-xxx），"
+            "ERROR: 缺少 API_KEY。请在 Osprey 平台控制台 https://open.ospreyai.cn 注册并创建 API key（sk-xxx），"
             "然后用 --api-key 传入或设置环境变量 API_KEY。"
         )
     return api_key

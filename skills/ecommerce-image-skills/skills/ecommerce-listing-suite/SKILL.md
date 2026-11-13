@@ -89,7 +89,7 @@ If a sibling skill isn't installed, use the templates in this repo's `skills/<na
 
 ```bash
 # recommended endpoint (OpenAI-compatible, has gpt-image-2.5-flare / -sunburst); any OpenAI-compatible URL works
-export GPTIMAGE_BASE_URL="https://open.ospreyai.cn/v1"   # Osprey gateway (get key at https://ai.ospreyai.cn); default if unset: https://api.openai.com
+export GPTIMAGE_BASE_URL="https://open.ospreyai.cn/v1"   # Osprey gateway (get key at https://open.ospreyai.cn); default if unset: https://api.openai.com
 python scripts/generate.py --model flare --image product.jpg --size 1024x1024 \
   --prompt-file prompt.txt --out out/ecommerce-listing-suite.png
 ```

@@ -3,7 +3,7 @@
 
 Env:
   GPTIMAGE_API_KEY   (required)  your API key
-  GPTIMAGE_BASE_URL  (optional)  default https://api.openai.com; recommended Osprey gateway https://open.ospreyai.cn/v1 (key: https://ai.ospreyai.cn) (any OpenAI-compatible gateway works, with or without /v1)
+  GPTIMAGE_BASE_URL  (optional)  default https://api.openai.com; recommended Osprey gateway https://open.ospreyai.cn/v1 (key: https://open.ospreyai.cn) (any OpenAI-compatible gateway works, with or without /v1)
   GPTIMAGE_MODEL     (optional)  overrides --model
 
 Examples:
