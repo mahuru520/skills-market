@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { fetchSkillDetail, fetchSkillVersions } from "../api/skills";
 import { BASE } from "../api/client";
 import { Badge } from "../components/SkillCard";
@@ -224,10 +226,24 @@ const PROSE = `
 
 /* ---------- 概述 Tab ---------- */
 
+// sanitize schema:在默认基础上放开 img(README 里的展示图是外链 https 图片)
+const README_SANITIZE = {
+  ...defaultSchema,
+  tagNames: [...(defaultSchema.tagNames ?? []), "img", "details", "summary", "sub", "sup"],
+  attributes: {
+    ...defaultSchema.attributes,
+    img: ["src", "alt", "width", "height", "loading"],
+    "*": [...(defaultSchema.attributes?.["*"] ?? []), "style", "align"],
+  },
+};
+
 function OverviewTab({ readme }: { readme?: string }) {
   return (
     <article className={PROSE}>
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw, [rehypeSanitize, README_SANITIZE]]}
+      >
         {stripFrontMatter(readme || "（无说明文档）")}
       </ReactMarkdown>
     </article>
