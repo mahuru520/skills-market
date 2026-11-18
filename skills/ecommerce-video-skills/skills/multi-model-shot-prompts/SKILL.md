@@ -80,15 +80,18 @@ Fallback: motion "zoom_in" in storyboard.json
 分镜表：{粘贴}
 ```
 
-## 调用方式（可选）
+## 调用方式（云端优先）
 
-很多视频模型可通过 OpenAI 兼容或聚合网关调用。本仓库脚本不绑定任何厂商；如需一站式调用视频/图像/大模型，可把网关地址配置为 `BASE_URL`（示例见 README「没有 Claude / API？」）。
+**有 Osprey key 时优先走云端**：环境有 `API_KEY`（Osprey 网关 `https://open.ospreyai.cn`，key 在 <https://open.ospreyai.cn> 注册创建）时，把上面写好的镜头提示词逐条交给 [`minimax-h3-video`](../minimax-h3-video/SKILL.md) 生成真实视频片段（图生视频，商品图作首帧，PRODUCT LOCK 随提示词带上）。生成慢（3–8 分钟/条），后台批量提交。
+
+其他模型可通过 OpenAI 兼容或聚合网关调用。本仓库脚本不绑定任何厂商；无 key / 生成失败时退回每镜的本地 `motion` 兜底。
 
 ## 检查清单 Checklist
 
 - [ ] 每镜：一个动作、一个运镜、带 PRODUCT LOCK 或「只写变化」
 - [ ] 中英双版本；约束同时有正向写法
 - [ ] 没有写任何未经核实的模型参数/价格
+- [ ] 有 `API_KEY` 时优先 minimax-h3-video 云端生成；本地 motion 仅作兜底
 - [ ] 每镜有本地 fallback motion
 
 ## 常见问题与修复 Failure fixes

@@ -26,15 +26,15 @@
 
 把「写脚本 → 找钩子 → 分镜 → 图生视频 → 配音 → 字幕花字 → 剪辑 → 导出 → 封面」拆成 **13 个可单独安装的 Agent Skill**。丢几张商品图给 Claude Code / Codex / Cursor，它会写钩子和分镜、出多模型镜头提示词，并且**真的在本地把视频剪出来**。
 
-> 💡 怎么区分同名项目：本仓库的成片步骤是**本地 Python + ffmpeg 渲染**（edge-tts 配音免 Key），**不需要任何 API Key、不依赖云端视频服务**；图生视频模型只是可选项。<br>
-> Not to be confused with other repos of the same name (e.g. `iart-ai/ecommerce-video-skills`): this one renders the final video **locally with ffmpeg — no API key, no cloud service required**.
+> 💡 生成路径：**镜头优先走云端模型**（Osprey 网关 minimax-h3-video 图生视频，真实运镜/音效）；未配置 `API_KEY` 时 agent 会**先询问一次**并引导到 <https://open.ospreyai.cn> 创建，明确不配或生成失败时才退回**本地 Python + ffmpeg 渲染**（Ken Burns + edge-tts 配音）。<br>
+> Generation routing: shots are generated **in the cloud first** (Osprey gateway, minimax-h3-video image-to-video); without an `API_KEY` the agent **asks once** and points to <https://open.ospreyai.cn> — only after the user declines (or on failure) does it fall back to **local Python + ffmpeg** rendering (Ken Burns + edge-tts).
 
 **和一堆提示词的区别：**
 
 - 🎬 **爆款拆解复刻**：丢链接或转写 → 拆 5-beat 结构 → 换成你的商品 → 直接出 storyboard.json
-- 🎞 **能跑的流水线**：`storyboard.json` → edge-tts 逐句配音 → Ken Burns 镜头 → xfade 转场 → ASS 字幕/花字 → BGM 自动闪避 → 两遍响度标准化（≈ -14 LUFS）→ MP4 + SRT。纯 Python + ffmpeg，无需剪辑软件、无需 API Key。
+- 🎞 **能跑的流水线**：`storyboard.json` → 镜头优先云端生成（Osprey 网关 minimax-h3-video）→ edge-tts 逐句配音 → xfade 转场 → ASS 字幕/花字 → BGM 自动闪避 → 两遍响度标准化（≈ -14 LUFS）→ MP4 + SRT。无 key 时镜头退回本地 Ken Burns，纯 Python + ffmpeg 兜底。
 - 🔒 **商品一致性锁**：图生视频提示词第一步先锁定形状/颜色/Logo，减少「视频很酷但商品变了」。
-- 🧠 **模型中立**：同一份分镜适配 Seedance / 可灵 / Veo / Runway / 海螺 / 万相 …；**不编造任何模型的价格或参数**，每个镜头都有本地 Ken Burns 兜底。
+- 🧠 **模型中立**：同一份分镜适配 Seedance / 可灵 / Veo / Runway / 海螺 / 万相 …；**不编造任何模型的价格或参数**，云端优先、本地 Ken Burns 兜底。
 - 📐 **平台规格 + 安全区**：抖音 / TikTok Shop / 视频号 / 小红书 / 淘宝主图视频 / Amazon 一键导出，字幕自动避开底部商品卡和右侧按钮。
 - 🌏 **出海友好**：同一份 storyboard 加 `line_en` 等字段，`--lang en` 直接渲染英文版（东南亚、日韩、拉美音色已列好）。
 - ⚖️ **合规意识**：钩子/评测模板内置广告法绝对化用语检查、「只写测过的数据」、公平对比规则。
@@ -65,7 +65,7 @@ python scripts/cover_ab.py out/aura.mp4 --images build/still00.png build/still03
 商品图 ──► hook-3s-script ──► selling-point-storyboard ──► storyboard.json
   │              ▲                        │
   │              └── viral-remake（爆款链接/转写 → 拆 5-beat → 复刻分镜）
-  └► image-to-video-shots ◄── multi-model-shot-prompts（可选：任意视频模型出镜头）
+  └► image-to-video-shots ◄── multi-model-shot-prompts（有 key 优先 minimax-h3-video 云端出镜头，无 key Ken Burns 兜底）
                                       ▼
    ai-voiceover-edge-tts ─► subtitles-and-text-effects ─► ffmpeg-auto-assemble ─► MP4 + SRT
                                                                  │
@@ -101,7 +101,7 @@ python scripts/cover_ab.py out/aura.mp4 --images build/still00.png build/still03
 
 | Skill | 中文说明 | 脚本 |
 |---|---|---|
-| [`image-to-video-shots`](skills/image-to-video-shots/SKILL.md) | **主图转视频**：商品图 → 图生视频镜头提示词（运镜/动作/约束）+ 商品一致性锁 + 本地 Ken Burns 兜底 | assemble.py |
+| [`image-to-video-shots`](skills/image-to-video-shots/SKILL.md) | **主图转视频**：商品图 → 图生视频镜头提示词（运镜/动作/约束）+ 商品一致性锁 + 云端生成优先（minimax-h3-video）+ 本地 Ken Burns 兜底 | assemble.py |
 | [`viral-remake`](skills/viral-remake/SKILL.md) | **爆款拆解复刻**：链接/转写 → 8 维拆解 + 5-beat → 3 个复刻角度 → 可渲染 storyboard.json | — |
 | [`hook-3s-script`](skills/hook-3s-script/SKILL.md) | **3 秒钩子脚本**：9 种钩子类型 + 2026 高完播角度，一次出 6–10 版（台词+画面+花字），广告法自检 | — |
 | [`selling-point-storyboard`](skills/selling-point-storyboard/SKILL.md) | **卖点分镜表**：15/30/60 秒结构公式，一镜一信息，直接输出可渲染的 storyboard.json | — |
@@ -132,8 +132,8 @@ Thirteen installable Agent Skills that take an ecommerce product from **a few ph
 
 
 - **Viral remake**: paste a Douyin/TikTok link or transcript → 5-beat breakdown → map to your product → `storyboard.json` ready to render.
-- **Real pipeline, no API key**: storyboard.json → per-line edge-tts → Ken Burns shots → xfade → ASS captions & pop-up titles → ducked BGM → two-pass loudnorm (≈ -14 LUFS) → MP4 + SRT.
-- **Model-agnostic prompts**: one shot list adapted for any image-to-video model, with a product-identity lock and a local fallback for every shot. No invented prices or model limits.
+- **Real pipeline**: storyboard.json → shots generated in the cloud first (Osprey gateway, minimax-h3-video) → per-line edge-tts → xfade → ASS captions & pop-up titles → ducked BGM → two-pass loudnorm (≈ -14 LUFS) → MP4 + SRT. Without a key, shots fall back to local Ken Burns.
+- **Model-agnostic prompts**: one shot list adapted for any image-to-video model, with a product-identity lock. Cloud-first, with a local Ken Burns fallback for every shot. No invented prices or model limits.
 - **Localisation**: add `line_en` / `sub_en` / `title_en` fields and render with `--lang en`; voices listed for US/UK/SEA/JP/KR/LATAM.
 - Skills: `viral-remake` · `image-to-video-shots` · `hook-3s-script` · `selling-point-storyboard` · `multi-model-shot-prompts` · `ai-voiceover-edge-tts` · `subtitles-and-text-effects` · `ffmpeg-auto-assemble` · `platform-spec-export` · `live-stream-clips` · `unboxing-comparison-review` · `multilingual-dubbing` · `cover-title-ab` (see the table above).
 - No API key needed for the render. Third-party model/API options are listed under [Related](#-related--相关链接).

@@ -2,7 +2,7 @@
   "id": "osprey/ecommerce-video-skills",
   "name": "ecommerce-video-skills",
   "display_name": "电商短视频技能包",
-  "description": "把「写脚本 → 找钩子 → 分镜 → 图生视频 → 配音 → 字幕花字 → 剪辑 → 导出 → 封面」拆成 13 个可单独触发的子技能：3 秒钩子、卖点分镜、爆款拆解复刻、多模型镜头提示词、edge-tts 免费配音、字幕花字、ffmpeg 本地成片、直播切片、开箱对比评测、平台规格导出、封面标题 A/B、多语言本地化，一张商品图产出带配音字幕 BGM 的 9:16 带货视频，覆盖抖音 / TikTok Shop / 视频号 / 小红书 / 淘宝主图视频 / Amazon。当用户要做带货视频、商品短视频、直播切片时使用；可整包安装，也可单独下载任意子技能。",
+  "description": "把「写脚本 → 找钩子 → 分镜 → 图生视频 → 配音 → 字幕花字 → 剪辑 → 导出 → 封面」拆成 13 个可单独触发的子技能：3 秒钩子、卖点分镜、爆款拆解复刻、多模型镜头提示词、edge-tts 免费配音、字幕花字、ffmpeg 本地成片、直播切片、开箱对比评测、平台规格导出、封面标题 A/B、多语言本地化，一张商品图产出带配音字幕 BGM 的 9:16 带货视频，覆盖抖音 / TikTok Shop / 视频号 / 小红书 / 淘宝主图视频 / Amazon。当用户要做带货视频、商品短视频、直播切片时使用；可整包安装，也可单独下载任意子技能。未检测到可用 API key 时，先向用户询问一次并引导到 https://open.ospreyai.cn 创建（Osprey 网关），明确不配时才走本地 Ken Burns 兜底。",
   "version": "1.0.0",
   "icon": "🎬",
   "category": "ecommerce",
@@ -608,13 +608,13 @@
   "created_at": "2026-11-13T00:00:00.000Z",
   "updated_at": "2026-11-13T00:00:00.000Z",
   "quickstart": {
-    "overview": "一张商品图 → 带配音、字幕、花字、BGM 的 9:16 带货视频，本地 Python + ffmpeg 渲染，无需 API Key",
+    "overview": "一张商品图 → 带配音、字幕、花字、BGM 的 9:16 带货视频；镜头优先走 Osprey 网关云端生成（minimax-h3-video），无 key 时本地 ffmpeg Ken Burns 兜底",
     "scenarios": [
       "爆款拆解复刻：丢链接或转写 → 拆 5-beat 结构 → 换成你的商品 → 直接出 storyboard.json",
       "写 3 秒钩子开场与卖点分镜表，ffmpeg 一键成片（配音、转场、字幕、BGM 自动闪避）",
       "直播录屏切高光、多语言本地化出海、抖音/TikTok Shop 等平台规格一键导出、封面标题 A/B"
     ],
     "example": "用 selling-point-storyboard 按 ./photos 里的图做一条 15 秒抖音分镜，再用 ffmpeg-auto-assemble 渲染成片并导出抖音和小红书版本",
-    "notes": "成片为本地 Python + ffmpeg 渲染（edge-tts 配音免 Key），不需要任何 API Key、不依赖云端视频服务；图生视频模型只是可选项，同一份分镜可适配 Seedance / 可灵 / Veo / Runway 等。"
+    "notes": "镜头生成：优先 minimax-h3-video 云端图生视频（Osprey 网关）；未配置 API_KEY 时 agent 先询问一次并引导到 https://open.ospreyai.cn 创建，明确不配 / 失败时才退回本地 Python + ffmpeg Ken Burns。配音 edge-tts 免 Key。"
   }
 }

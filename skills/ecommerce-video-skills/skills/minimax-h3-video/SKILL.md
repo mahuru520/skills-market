@@ -55,11 +55,12 @@ python scripts/text_to_video.py --prompt "..." --resolution 2K --duration 10
 2. 每 10 秒轮询 `GET {GW}/v2/query/video_generation/{task_id}`，直到 `task.status=succeeded`
 3. 从 `task.content.url`（OSS 预签名直链，无需 token，有时效）下载 mp4 到 `--output`
 
-## 电商流程中的位置
+## 电商流程中的位置（首选云端镜头生成）
 
-- **单个镜头**：`image-to-video-shots` 写好商品一致性锁与镜头提示词 → 本 skill 逐条生成
-- **整条片子**：`selling-point-storyboard` 出分镜 → 每个 shot 用本 skill 生成片段 → `ffmpeg-auto-assemble` 拼接成片
-- 生成失败/排队久时，用分镜里的 `motion` 字段走 Ken Burns 本地兜底
+- **无 key 先询问**：环境没有 `API_KEY` 时，先向用户询问一次并引导到 https://open.ospreyai.cn 注册创建（见上方环境表），不要直接跳到本地兜底
+- **单个镜头**：`image-to-video-shots` 写好商品一致性锁与镜头提示词 → **有 `API_KEY` 时本 skill 是首选**，逐条生成
+- **整条片子**：`selling-point-storyboard` 出分镜 → 每个 shot 优先用本 skill 生成片段 → `ffmpeg-auto-assemble` 拼接成片
+- 兜底：用户明确不配 key / 生成失败 / 排队久时，用分镜里的 `motion` 字段走 Ken Burns 本地兜底
 
 ## 提示词技巧
 

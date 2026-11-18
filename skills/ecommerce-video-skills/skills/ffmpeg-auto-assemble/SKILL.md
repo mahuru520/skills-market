@@ -5,7 +5,9 @@ description: "ffmpeg 自动拼接成片：一条命令把 storyboard.json（商�
 
 # ffmpeg 自动拼接成片 · Auto-assemble with ffmpeg
 
-`storyboard.json` → 配音（edge-tts）→ 每镜 Ken Burns / 视频裁切 → xfade 转场 → ASS 字幕花字 → BGM 闪避混音 → 两遍 loudnorm（-14 LUFS）→ `out/video.mp4` + `.srt`。
+`storyboard.json` → 配音（edge-tts）→ 每镜渲染：**有 `video` 片段（云端生成，如 minimax-h3-video）用视频裁切，无则 Ken Burns 兜底** → xfade 转场 → ASS 字幕花字 → BGM 闪避混音 → 两遍 loudnorm（-14 LUFS）→ `out/video.mp4` + `.srt`。
+
+> 💡 镜头来源优先级：配好 `API_KEY`（Osprey 网关）时先用 [`minimax-h3-video`](../minimax-h3-video/SKILL.md) 把每个 `image` shot 生成 `video` 片段再渲染；无 key / 失败时直接 Ken Burns。
 
 > Part of [ecommerce-video-skills](https://github.com/xianyu110/ecommerce-video-skills) · 脚本都在本目录 `scripts/`：`assemble.py`（主程序）· `tts_edge.py` · `make_subs.py` · `make_bgm.py`（免版权合成 BGM）· `make_cards.py`（PIL 商品卡/结尾卡）
 

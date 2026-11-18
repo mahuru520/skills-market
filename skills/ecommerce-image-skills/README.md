@@ -52,7 +52,7 @@
 |---|---|---|
 | ① API Key（优先） | 设置 `GPTIMAGE_API_KEY`，可选 `GPTIMAGE_BASE_URL`（推荐 Osprey 网关 `https://open.ospreyai.cn/v1`，key 在 Osprey 平台 https://open.ospreyai.cn 申请；默认 `https://api.openai.com`，任何 OpenAI 兼容网关都行） | `python scripts/generate.py --model sunburst --image product.jpg --prompt-file p.txt` |
 | ② 内置工具（兜底） | agent 自带生图（如 Codex imagegen）且未配置 key | 自动使用 |
-| ③ 无 key | — | 输出最终提示词 + 一个 [gptimage2.asia](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=zh-route-c) 在线运行链接（预填提示词，上传商品图即可） |
+| ③ 无 key | agent 未配 key 时会**先询问一次**，引导到 https://open.ospreyai.cn 创建；明确不配后才走此路 | 输出最终提示词 + 一个 [gptimage2.asia](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=zh-route-c) 在线运行链接（预填提示词，上传商品图即可） |
 
 ### 模型选择 / Model routing
 
