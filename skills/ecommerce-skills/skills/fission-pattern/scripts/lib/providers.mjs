@@ -121,20 +121,31 @@ function execFileJson(bin, args, timeoutMs) {
   })
 }
 
-/* ---------- OpenAI ---------- */
+/* ---------- OpenAI（默认指向 Osprey 网关）---------- */
 
 const openai = {
   id: 'openai',
   kind: 'http',
   hasCredentials: () => Boolean(env.OPENAI_API_KEY),
-  model: () => env.GEN_MODEL_OPENAI || 'gpt-image-1',
-  baseUrl: () => (env.OPENAI_BASE_URL || 'https://api.openai.com/v1').replace(/\/$/, ''),
+  // Osprey 网关有 gpt-image-2，与 dlazy 目录同名；OpenAI 官方无此模型时用 GEN_MODEL_OPENAI 覆盖
+  model: () => env.GEN_MODEL_OPENAI || 'gpt-image-2',
+  // 默认走 Osprey 网关（new-api 聚合平台，key 在 https://open.ospreyai.cn 注册创建）；
+  // 想用 OpenAI 官方时设 OPENAI_BASE_URL=https://api.openai.com/v1
+  baseUrl: () => (env.OPENAI_BASE_URL || 'https://open.ospreyai.cn/v1').replace(/\/$/, ''),
   describe(req) {
+    if (req.video) {
+      return `POST ${videoGw()}/v2/video_generation  model=${req.model || 'MiniMax-H3'} duration=${req.seconds || 5}s（异步任务，轮询至 succeeded 后下载 mp4）`
+    }
     const ep = req.images?.length ? 'images/edits' : 'images/generations'
     return `POST ${openai.baseUrl()}/${ep}  model=${openai.model()} size=${mapSize(req.size)} n=${req.batch}`
   },
   async run(req) {
     const key = env.OPENAI_API_KEY
+    if (!key) throw new Error(
+      '未配置 API key。Osprey 网关（推荐）：到 https://open.ospreyai.cn 注册并创建 API key，' +
+      '然后 export OPENAI_API_KEY=<你的key>（网关默认 https://open.ospreyai.cn/v1，无需设 OPENAI_BASE_URL）。' +
+      '或换后端：--provider dlazy|gemini|fal|replicate|ark')
+    if (req.video) return runOspreyVideo(req, key)
     const size = mapSize(req.size)
     let r
     if (req.images?.length) {
@@ -174,6 +185,67 @@ const openai = {
       raw: j,
     }
   },
+}
+
+// 视频模型（MiniMax-H3 等）走 Osprey 网关 /v2 异步端点：提交 → 轮询 → 下载 mp4
+function videoGw() {
+  const base = env.OPENAI_BASE_URL || 'https://open.ospreyai.cn/v1'
+  return base.replace(/\/v1\/?$/, '').replace(/\/$/, '')
+}
+
+async function runOspreyVideo(req, key) {
+  const gw = videoGw()
+  const model = req.model || 'MiniMax-H3'
+  const seconds = Math.min(15, Math.max(4, Number(req.seconds) || 5))
+  const content = [{ type: 'text', text: req.prompt }]
+  if (req.images?.length) content.push({ type: 'image_url', image_url: { url: await asDataUri(req.images[0]) } })
+  const ratio = mapRatio(req.size)
+  const sub = await postJson(
+    `${gw}/v2/video_generation`,
+    { model, content, resolution: '768P', duration: seconds, ratio },
+    { authorization: `Bearer ${key}` },
+    req.timeoutMs || 120000,
+  )
+  const taskId = sub.task_id || sub.task?.id
+  if (!taskId) throw new Error(`Osprey 视频提交失败（未返回 task_id）: ${JSON.stringify(sub).slice(0, 300)}`)
+
+  // 轮询，上限 15 分钟
+  const deadline = Date.now() + 15 * 60 * 1000
+  while (true) {
+    await new Promise((r) => setTimeout(r, 10000))
+    const ac = new AbortController()
+    const t = setTimeout(() => ac.abort(), 60000)
+    let q
+    try {
+      const r = await fetch(`${gw}/v2/query/video_generation/${encodeURIComponent(String(taskId))}`, {
+        headers: { authorization: `Bearer ${key}` }, signal: ac.signal,
+      })
+      q = await r.json()
+    } finally { clearTimeout(t) }
+    const task = q.task || {}
+    if (task.status === 'succeeded') {
+      const url = task.content?.url
+      if (!url) throw new Error('Osprey 视频任务成功但未返回 content.url')
+      return { files: [{ url, ext: '.mp4' }], raw: task }
+    }
+    if (task.status === 'failed' || task.status === 'cancelled') {
+      throw new Error(`Osprey 视频任务${task.status}: ${JSON.stringify(task.error || task).slice(0, 300)}`)
+    }
+    if (Date.now() > deadline) throw new Error(`Osprey 视频任务轮询超时（15 分钟），task_id=${taskId}`)
+  }
+}
+
+// Osprey 视频只认 21:9/16:9/4:3/1:1/3:4/9:16，把 1024x1536 之类映射过去
+function mapRatio(size) {
+  if (!size) return '9:16'
+  const [w, h] = String(size).split(/[x×:]/).map(Number)
+  if (!w || !h) return '9:16'
+  const r = w / h
+  if (r > 1.9) return '21:9'
+  if (r > 1.15) return '16:9'
+  if (r > 0.95) return '1:1'
+  if (r > 0.7) return '3:4'
+  return '9:16'
 }
 
 // OpenAI 只认这几档，把 1024x1536 之类映射过去
@@ -311,7 +383,11 @@ const ark = {
 
 export const PROVIDERS = { dlazy, openai, gemini, fal, replicate, ark }
 
-/** 选路：显式 flag > PROVIDER 环境变量 > 有 key 的第一个 > dlazy */
+/** 选路：显式 flag > PROVIDER 环境变量 > 有 key 的第一个 > Osprey（openai，默认兜底）。
+ * 推荐后端是 Osprey 网关（openai provider，默认 baseUrl https://open.ospreyai.cn/v1），
+ * 配了 OPENAI_API_KEY 即优先走 Osprey，消耗 Osprey 额度；
+ * 什么都没配时也回落到 openai——报错文案会引导用户去 https://open.ospreyai.cn 创建 key。
+ * 想用其他后端：--provider dlazy|gemini|fal|replicate|ark。 */
 export function pickProvider(explicit) {
   if (explicit) {
     const p = PROVIDERS[explicit]
@@ -322,7 +398,7 @@ export function pickProvider(explicit) {
   for (const id of ['openai', 'gemini', 'fal', 'replicate', 'ark']) {
     if (PROVIDERS[id].hasCredentials()) return PROVIDERS[id]
   }
-  return dlazy
+  return openai
 }
 
 /** 各后端凭据状态，给 doctor / dry-run 用 */
@@ -332,7 +408,7 @@ export function credentialReport() {
     ready: p.id === 'dlazy' ? 'cli' : p.hasCredentials(),
     envKey: {
       dlazy: 'dlazy login  或  DLAZY_API_KEY',
-      openai: 'OPENAI_API_KEY', gemini: 'GEMINI_API_KEY',
+      openai: 'OPENAI_API_KEY（Osprey 网关，https://open.ospreyai.cn 注册创建）', gemini: 'GEMINI_API_KEY',
       fal: 'FAL_KEY', replicate: 'REPLICATE_API_TOKEN', ark: 'ARK_API_KEY (+ ARK_MODEL)',
     }[p.id],
   }))

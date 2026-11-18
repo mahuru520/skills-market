@@ -7,7 +7,7 @@ ID 差异大、更新快，写死只会误导**。所以视频技能要求你显
 ## 指定模型
 
 ```bash
-export DLAZY_VIDEO_MODEL=<你账号里可用的视频模型 ID>
+export OSPREY_VIDEO_MODEL=<视频模型 ID>   # 默认 MiniMax-H3，一般无需设置
 # 或每次调用时
 node scripts/video.mjs --mode clip --task main-image-video --model <id> ...
 ```
@@ -18,6 +18,7 @@ node scripts/video.mjs --mode clip --task main-image-video --model <id> ...
 
 | 后端 | 怎么配 | 说明 |
 | --- | --- | --- |
+| `openai`（**Osprey 网关，推荐**） | `OPENAI_API_KEY`（+ 可选 `OSPREY_VIDEO_MODEL`） | 默认模型 `MiniMax-H3`，走 `https://open.ospreyai.cn/v1`；key 在 https://open.ospreyai.cn 注册创建 |
 | `dlazy` | `DLAZY_VIDEO_MODEL` | 用 `dlazy --help` 看当前账号可用的视频工具 |
 | `fal` | `FAL_KEY` + `GEN_MODEL_FAL=<视频模型路径>` | 产出在 `videos[]` 或 `video.url` |
 | `replicate` | `REPLICATE_API_TOKEN` + `GEN_MODEL_REPLICATE=<owner/model>` | 产出为 URL |

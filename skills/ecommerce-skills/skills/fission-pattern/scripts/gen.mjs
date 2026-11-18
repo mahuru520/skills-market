@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// ⚠️ 由 scripts/build-skills.mjs 从 shared/scripts/gen.mjs 同步生成，不要直接改这里。
 /**
  * gen.mjs —— 全部技能的统一生成入口。
  *
@@ -41,6 +40,7 @@ function parseArgs(argv) {
       case '--resolution': o.resolution = next(); break
       case '--format': case '--imageFormat': o.format = next(); break
       case '--batch': o.batch = Number(next()); break
+      case '--seconds': o.seconds = Number(next()); break
       case '--save': o.save = next(); break
       case '--provider': o.provider = next(); break
       case '--brand': o.brand = next(); break
@@ -115,9 +115,10 @@ async function main() {
   let model = o.model || profile.model
   if (model?.startsWith('$')) {
     const key = model.slice(1)
-    model = process.env[key]
+    // 视频默认 MiniMax-H3（Osprey 网关），设 OSPREY_VIDEO_MODEL 可覆盖
+    model = process.env.OSPREY_VIDEO_MODEL || (key === 'OSPREY_VIDEO_MODEL' ? undefined : process.env[key]) || 'MiniMax-H3'
     if (!model && !o.dryRun) {
-      die(`${o.task} 是视频技能，需先指定模型：export ${key}=<你后端可用的视频模型 ID>`)
+      die(`${o.task} 是视频技能，需先指定模型：export OSPREY_VIDEO_MODEL=<你后端可用的视频模型 ID>`)
     }
     model = model || `<${key} 未设置>`
   }
@@ -140,6 +141,7 @@ async function main() {
     size: o.size || profile.size,
     quality: o.quality || profile.quality,
     resolution: o.resolution || profile.resolution,
+    seconds: o.seconds,
     format: o.format || profile.format,
     batch: Math.max(1, o.batch),
     timeoutMs: o.timeout * 1000,

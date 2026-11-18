@@ -513,8 +513,8 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 | 后端 | 环境变量 |
 | --- | --- |
-| `dlazy`（默认） | `dlazy login` 或 `DLAZY_API_KEY` |
-| `openai`（含 Osprey 网关） | `OPENAI_API_KEY` + 可选 `OPENAI_BASE_URL`（Osprey：`https://open.ospreyai.cn/v1`） |
+| `openai`（**Osprey 网关，默认**） | `OPENAI_API_KEY`（Osprey：`https://open.ospreyai.cn` 注册创建；网关默认 `https://open.ospreyai.cn/v1`，无需设 `OPENAI_BASE_URL`）。图像默认 `gpt-image-2`，视频默认 `MiniMax-H3`（`OSPREY_VIDEO_MODEL` 可覆盖） |
+| `dlazy`（可选） | `dlazy login` 或 `DLAZY_API_KEY` |
 | `gemini` | `GEMINI_API_KEY` |
 | `fal` | `FAL_KEY` |
 | `replicate` | `REPLICATE_API_TOKEN` |
@@ -522,7 +522,7 @@ node shared/scripts/gen.mjs --doctor      # 看当前哪个后端可用
 
 </details>
 
-优先级：`--provider` 参数 > `PROVIDER` 环境变量 > 第一个配了 key 的 > `dlazy`。
+优先级：`--provider` 参数 > `PROVIDER` 环境变量 > 第一个配了 key 的 > **Osprey（openai）**。配了 `OPENAI_API_KEY` 即优先走 Osprey 消耗 Osprey 额度；图像默认 `gpt-image-2`、视频默认 `MiniMax-H3`。
 
 **推荐用 Osprey 网关**：在 Osprey 平台控制台 <https://open.ospreyai.cn> 注册并创建 API key（`sk-xxx`），然后：
 
@@ -719,6 +719,6 @@ docs/flat-lay/example-output.jpg  ·  Amazon 主图  ·  有驳回风险
 - **合规**：带文案的技能（[item-detail](skills/item-detail/skill.md)、[item-selling-point](skills/item-selling-point/skill.md)）注意绝对化用语与虚假促销；上架前建议过一遍 [detect-task](skills/detect-task/skill.md) 与 [platform-compliance](skills/platform-compliance/skill.md)。
 - **平台规则会变**。`check_listing.py` 内置的是可机检子集，以各平台最新官方文档为准；需要改口径用 `--rules` 传自己的 JSON。
 - **AI 生成内容的标注**：[ugc-testimonial](skills/ugc-testimonial/skill.md) 这类拟真内容不得声称是真实买家评价；部分平台强制标注 AI 生成，投放前确认目标平台规则。
-- **视频模型不写死**。各家视频模型 ID 差异大更新快，写死只会误导，所以要你显式指定 `DLAZY_VIDEO_MODEL`。
+- **视频默认 MiniMax-H3**（Osprey 网关），设 `OSPREY_VIDEO_MODEL` 可换成账号里其他视频模型。
 
 ---

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// ⚠️ 由 scripts/build-skills.mjs 从 shared/scripts/video.mjs 同步生成，不要直接改这里。
 /**
  * video.mjs —— 商品视频：单镜生成、分镜串联、字幕烧录。
  *
@@ -18,8 +17,8 @@
  *   { "shots": [ { "id":"s1", "seconds":3, "image":"a.jpg",
  *                  "prompt":"...", "caption":"三层加厚，零下也不怕" } ] }
  *
- * ⚠️ 视频模型 ID 因后端而异，必须自己指定：
- *      export DLAZY_VIDEO_MODEL=<你账号里可用的视频模型>
+ * 视频模型默认 MiniMax-H3（Osprey 网关，https://open.ospreyai.cn），可覆盖：
+ *      export OSPREY_VIDEO_MODEL=<你账号里可用的视频模型>
  *    或 --model <id>。拼接与字幕需要 ffmpeg。
  */
 import { spawn } from 'node:child_process'
@@ -58,7 +57,7 @@ video.mjs —— 商品视频生成与合成
 
   --mode clip|storyboard   单镜 / 分镜串联
   --task <name>            main-image-video | product-video-ad | ugc-testimonial
-  --model <id>             视频模型（或设 DLAZY_VIDEO_MODEL）
+  --model <id>             视频模型（默认 MiniMax-H3，或设 OSPREY_VIDEO_MODEL）
   clip:       --image <p> --prompt '...' --save out.mp4 [--seconds 3]
   storyboard: --board board.json --outdir out/ [--subtitles]
   通用:       --brand brand.yaml --provider <id> --dry-run
@@ -82,7 +81,8 @@ async function hasFfmpeg() {
 
 async function genOne({ task, model, prompt, image, save, provider, brand, dryRun, seconds }) {
   const args = [path.join(HERE, 'gen.mjs'), '--task', task, '--prompt',
-    `${prompt}${seconds ? ` Duration about ${seconds} seconds.` : ''}`, '--save', save, '--json']
+    `${prompt}${seconds ? ` Duration about ${seconds} seconds.` : ''}`, '--save', save, '--json',
+    '--seconds', String(seconds || 5)]
   if (image) args.push('--images', image)
   if (model) args.push('--model', model)
   if (provider) args.push('--provider', provider)
@@ -115,7 +115,7 @@ function buildSrt(shots) {
 async function main() {
   const o = parseArgs(process.argv.slice(2))
   if (o.help || !o.task) return console.log(HELP)
-  const model = o.model || process.env.DLAZY_VIDEO_MODEL
+  const model = o.model || process.env.OSPREY_VIDEO_MODEL || process.env.DLAZY_VIDEO_MODEL || 'MiniMax-H3'
 
   if (o.mode === 'clip') {
     if (!o.prompt) return console.log(HELP)
