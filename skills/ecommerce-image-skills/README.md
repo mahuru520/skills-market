@@ -32,7 +32,7 @@
 - 📐 **平台规格内置**：Amazon 主图（#FFFFFF、≥85%）、A+ 模块尺寸、淘宝 750 宽详情、小红书 3:4、各平台 Banner 尺寸。
 - 🧠 **模型路由**：默认 **Flare**（快、适合出场景和多版本）；需要保留 Logo/文字、局部编辑时切 **Sunburst**。
 - 🛠 **脚本做确定性的事**：白底/占比检查与修复、A+ 裁切、拼图、详情页拼接切片、批量换背景（断点续跑 + 预算上限）。
-- 🚦 **三种出图方式**：①agent 自带生图工具 ②配置 `GPTIMAGE_API_KEY`（任意 OpenAI 兼容接口）用 `scripts/generate.py` ③都没有时输出最终提示词 + 一个在线运行链接。
+- 🚦 **三种出图方式**：①配置 `GPTIMAGE_API_KEY`（任意 OpenAI 兼容接口，推荐 Osprey 网关）用 `scripts/generate.py`（优先）②agent 自带生图工具（兜底）③都没有时输出最终提示词 + 一个在线运行链接。
 
 
 ### 🚀 使用
@@ -50,8 +50,8 @@
 
 | 方式 | 条件 | 做法 |
 |---|---|---|
-| ① 内置工具 | agent 自带生图（如 Codex imagegen） | 自动使用 |
-| ② API Key | 设置 `GPTIMAGE_API_KEY`，可选 `GPTIMAGE_BASE_URL`（推荐 Osprey 网关 `https://open.ospreyai.cn/v1`，key 在 Osprey 平台 https://open.ospreyai.cn 申请；默认 `https://api.openai.com`，任何 OpenAI 兼容网关都行） | `python scripts/generate.py --model sunburst --image product.jpg --prompt-file p.txt` |
+| ① API Key（优先） | 设置 `GPTIMAGE_API_KEY`，可选 `GPTIMAGE_BASE_URL`（推荐 Osprey 网关 `https://open.ospreyai.cn/v1`，key 在 Osprey 平台 https://open.ospreyai.cn 申请；默认 `https://api.openai.com`，任何 OpenAI 兼容网关都行） | `python scripts/generate.py --model sunburst --image product.jpg --prompt-file p.txt` |
+| ② 内置工具（兜底） | agent 自带生图（如 Codex imagegen）且未配置 key | 自动使用 |
 | ③ 无 key | — | 输出最终提示词 + 一个 [gptimage2.asia](https://gptimage2.asia/ecommerce?utm_source=github&utm_medium=readme&utm_campaign=ecommerce-image-skills&utm_content=zh-route-c) 在线运行链接（预填提示词，上传商品图即可） |
 
 ### 模型选择 / Model routing
@@ -111,7 +111,7 @@ Twelve installable Agent Skills that turn a casual product photo into platform-r
 - 📐 **Platform specs built in** — Amazon main image (#FFFFFF, ≥85% coverage), A+ module sizes, 750-px detail pages, 3:4 RED covers, banner sizes.
 - 🧠 **Model routing** — **Flare** by default; **Sunburst** for text-preserving and local edits.
 - 🛠 **Scripts for deterministic steps** — white-background/coverage check & fix, A+ crops, grids, long-image stitching, batch edits with resume and a budget cap.
-- 🚦 **Three generation routes** — (a) the agent's built-in image tool, (b) `GPTIMAGE_API_KEY` + any OpenAI-compatible `GPTIMAGE_BASE_URL` via `scripts/generate.py`, (c) otherwise the final prompt plus a one-click link to run it online.
+- 🚦 **Three generation routes** — (a) `GPTIMAGE_API_KEY` + any OpenAI-compatible `GPTIMAGE_BASE_URL` via `scripts/generate.py` (preferred), (b) the agent's built-in image tool as fallback when no key is set, (c) otherwise the final prompt plus a one-click link to run it online.
 
 ### Use
 

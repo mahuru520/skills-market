@@ -515,6 +515,6 @@
       "批量换背景 / SKU 换色（断点续跑 + 预算上限）、大促 Banner、小红书封面"
     ],
     "example": "用 amazon-white-background 把 ./photos/bottle.jpg 做成亚马逊白底主图，并跑检查脚本",
-    "notes": "三种出图方式：agent 自带生图工具 / 配 GPTIMAGE_API_KEY 走 scripts/generate.py / 都没有时输出提示词 + 在线运行链接。默认 Flare 模型，需保留 Logo 文字时切 Sunburst。"
+    "notes": "三种出图方式：优先配 GPTIMAGE_API_KEY 走 scripts/generate.py（Osprey 网关） / agent 自带生图工具兜底 / 都没有时输出提示词 + 在线运行链接。默认 Flare 模型，需保留 Logo 文字时切 Sunburst。"
   }
 }

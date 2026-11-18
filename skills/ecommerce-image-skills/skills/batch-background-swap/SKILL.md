@@ -73,9 +73,9 @@ Without a key (route c): give the user the prompt + one-click link once; they ca
 
 ## Generate · three routes (pick the first that works)
 
-**(a) Built-in image tool.** If your agent already has an image generation/editing tool (e.g. Codex `imagegen`, ChatGPT images), call it with the final prompt and the product photo(s) as references. Done.
+**(a) API key — preferred (Osprey gateway).** If the environment has `GPTIMAGE_API_KEY`, run the bundled script (standard library only):
 
-**(b) API key.** If the environment has `GPTIMAGE_API_KEY`, run the bundled script (standard library only):
+**(b) Built-in image tool — fallback.** If no key is configured but your agent already has an image generation/editing tool (e.g. Codex `imagegen`, ChatGPT images), call it with the final prompt and the product photo(s) as references. Done.
 
 ```bash
 # recommended endpoint (OpenAI-compatible, has gpt-image-2.5-flare / -sunburst); any OpenAI-compatible URL works
